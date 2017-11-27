@@ -5,8 +5,10 @@
  */
 package mytunes.GUI;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+
 
 /**
  *
@@ -65,6 +71,14 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickPlay(ActionEvent event)
     {
+        JFXPanel fxPanel = new JFXPanel();
+        String path = "song1.wav";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        MediaView mediaView = new MediaView(mediaPlayer);
+    
+        
     }
 
     @FXML
