@@ -93,13 +93,7 @@ public class MainWindowController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-        volumeControl.setValue(player.getVolume() * 100);
-        volumeControl.valueProperty().addListener(new InvalidationListener(){
-            @Override
-            public void invalidated(Observable observable){ 
-                player.setVolume(volumeControl.getValue() /100);
-         }
-        });
+        volumeControl();
     }   
    
     
@@ -120,7 +114,13 @@ public class MainWindowController implements Initializable
         
     } 
     private void volumeControl(){    
-    
+        volumeControl.setValue(player.getVolume() * 100);
+        volumeControl.valueProperty().addListener(new InvalidationListener(){
+            @Override
+            public void invalidated(Observable observable){ 
+                player.setVolume(volumeControl.getValue() /100);
+         }
+        });
     }
     
     
