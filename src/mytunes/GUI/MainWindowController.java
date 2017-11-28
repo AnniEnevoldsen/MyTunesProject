@@ -5,9 +5,14 @@
  */
 package mytunes.GUI;
 
+import java.io.File;
+ 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +22,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -32,7 +42,7 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnPlay;
     @FXML
-    private ListView<?> lstPlaylists;
+    protected ListView<?> lstPlaylists;
     @FXML
     private Button btnNewPlaylist;
     @FXML
@@ -63,17 +73,46 @@ public class MainWindowController implements Initializable
     private Button btnAddSong;
     @FXML
     protected Label lblName;
+    @FXML
+    private TableView<?> viewPlaylists;
+    @FXML
+    private Slider volumeSlider;
+    
+    JFXPanel fxPanel = new JFXPanel();    
+    String path = new File("C:\\Users\\Anni\\Documents\\1. Semester - uni\\MyTunes\\song1.mp3").getAbsolutePath();    
+    Media me = new Media(new File(path).toURI().toString());
+    MediaPlayer mp = new MediaPlayer(me);
+    MediaView mediaView = new MediaView(mp);
+
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+       slider();
+   
     }    
 
+    private void slider(){
+           volumeSlider.setValue(mp.getVolume() * 100);
+       volumeSlider.valueProperty().addListener(new InvalidationListener() {
+           
+           @Override
+           public void invalidated(Observable observable) {
+               mp.setVolume(volumeSlider.getValue() / 100);
+           }
+       }); 
+    }
+    
     @FXML
     private void clickPlay(ActionEvent event)
     {
-        System.out.println("play music");
+
+        System.out.println("play music"); 
+        
+        String path = "song1.wav";
+        
+        mp.setAutoPlay(true);
     }
     
     /*
@@ -82,21 +121,24 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
-                Stage myNewStage = new Stage(); // new window
-        myNewStage.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader fxLoader = new FXMLLoader(
-            getClass().getResource("NewPlaylist.fxml"));
+ 
+  
+        Stage newWindow = new Stage();
+        
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("NewPlaylist.fxml"));
         
         Parent root = fxLoader.load();
         
-        NewPlaylistController owc = fxLoader.getController();
-        owc.setParentWindowController(this);
+        NewPlaylistController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
         
         Scene scene = new Scene(root);
         
-        myNewStage.setScene(scene);
-        myNewStage.showAndWait();
-       
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+ 
     }
 
     
@@ -136,21 +178,23 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
     {
-        Stage myNewStage = new Stage(); // new window
-        myNewStage.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader fxLoader = new FXMLLoader(
-            getClass().getResource("AddWindow.fxml"));
+
+        Stage newWindow = new Stage();
+        
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
         
         Parent root = fxLoader.load();
         
-        AddWindowController owc = fxLoader.getController();
-        owc.setParentWindowController(this);
+        AddWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
         
         Scene scene = new Scene(root);
         
-        myNewStage.setScene(scene);
-        myNewStage.showAndWait();
-        
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+ 
     }
 
     @FXML
@@ -183,4 +227,12 @@ public class MainWindowController implements Initializable
 //    }
     
      //txtName.setText(parent.getName()); want to add a playlist (Array?) with a name of the playlist
+   
+    
+    public void setName(){
+    lblName.setText(NewPlaylistController.class.getName());
+    //viewPlaylists.setTexts(
+    }
+    
+   
 }

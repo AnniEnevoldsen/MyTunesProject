@@ -28,7 +28,11 @@ public class NewPlaylistController implements Initializable
     private Button btnSave;
     @FXML
     private Button btnCancel;
+
     MainWindowController mainController = new MainWindowController();
+
+    
+    //private MainWindowController parent;
 
     /**
      * Initializes the controller class.
@@ -37,6 +41,7 @@ public class NewPlaylistController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
+
     }    
     
  // figure out set and get name methods
@@ -49,10 +54,19 @@ public class NewPlaylistController implements Initializable
     parent.lblName.setText(getName());
     }
     
-       @FXML
+
+    
+    public void setParentWindowController(MainWindowController parent)
+    {
+        this.parent = parent;
+    }
+
+    @FXML
+
     private void clickSave(ActionEvent event)
     {
-//       setName();
+
+        parent.lblName.setText(getName()); //works for the label, now just need to do listview
         System.out.println("save playlist to list in MainWindow");
         
     }
@@ -63,11 +77,7 @@ public class NewPlaylistController implements Initializable
         stage.close();
     }
     
-        public void setParentWindowController(MainWindowController parent)
-    {
-        this.parent = parent;
-       
-    }
+ 
             
 
 }
