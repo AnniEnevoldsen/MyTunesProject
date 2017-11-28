@@ -77,10 +77,14 @@ public class MainWindowController implements Initializable
     private void clickPlay(ActionEvent event)
     {
         JFXPanel fxPanel = new JFXPanel();
+        
         String path = "song1.wav";
+        
         Media media = new Media(new File(path).toURI().toString());
+        
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
+        
         MediaView mediaView = new MediaView(mediaPlayer);
     }
 
