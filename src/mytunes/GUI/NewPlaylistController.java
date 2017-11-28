@@ -21,18 +21,15 @@ import javafx.stage.Stage;
  */
 public class NewPlaylistController implements Initializable
 {
-    private MainWindowController parent;
+
     @FXML
     private TextField txtName;
     @FXML
     private Button btnSave;
     @FXML
     private Button btnCancel;
-
-    MainWindowController mainController = new MainWindowController();
-
     
-    //private MainWindowController parent;
+    private MainWindowController parent;
 
     /**
      * Initializes the controller class.
@@ -41,20 +38,7 @@ public class NewPlaylistController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-
-    }    
-    
- // figure out set and get name methods
-    public String getName()
-    {
-        return txtName.getText();
-    }
-    
-    public void setName(){
-    parent.lblName.setText(getName());
-    }
-    
-
+    } 
     
     public void setParentWindowController(MainWindowController parent)
     {
@@ -62,14 +46,11 @@ public class NewPlaylistController implements Initializable
     }
 
     @FXML
-
     private void clickSave(ActionEvent event)
     {
-
-        parent.lblName.setText(getName()); //works for the label, now just need to do listview
-        System.out.println("save playlist to list in MainWindow");
         
     }
+
     @FXML
     private void clickCancel(ActionEvent event)
     {
@@ -77,7 +58,4 @@ public class NewPlaylistController implements Initializable
         stage.close();
     }
     
- 
-            
-
 }
