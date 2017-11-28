@@ -5,10 +5,14 @@
  */
 package mytunes.GUI;
 
+
+import javafx.scene.control.Slider;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -35,8 +39,12 @@ import javafx.stage.Stage;
  */
 public class MainWindowController implements Initializable
 {
-    
-    private Label label;
+     
+    JFXPanel fxPanel = new JFXPanel();
+    String path = "C:\\Users\\Samuel\\Documents\\GitHub\\MyTunesProject\\song1.mp3";
+    Media media = new Media(new File(path).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(media);
+    MediaView mediaView = new MediaView(player);
     @FXML
     private ListView<?> lstPlaylists;
     @FXML
@@ -73,23 +81,29 @@ public class MainWindowController implements Initializable
     private Button backButton;
     @FXML
     private Button ppButton;
-    
-    JFXPanel fxPanel = new JFXPanel();
-    String path = "C:\\Users\\Samuel\\Documents\\GitHub\\MyTunesProject\\song1.mp3";
-    Media media = new Media(new File(path).toURI().toString());
-    private MediaPlayer player = new MediaPlayer(media);
-    MediaView mediaView = new MediaView(player);
     @FXML
     private Pane pausePane;
     @FXML
     private Polygon playPane;
+    @FXML
+    private Slider volumeControl;
+    
      
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-        
+        volumeControl.setValue(player.getVolume() * 100);
+        volumeControl.valueProperty().addListener(new InvalidationListener(){
+            @Override
+            public void invalidated(Observable observable){ 
+                player.setVolume(volumeControl.getValue() /100);
+         }
+        });
     }   
+   
+    
+    
     @FXML
     public void clickPlay(ActionEvent event)
     {     
@@ -104,13 +118,13 @@ public class MainWindowController implements Initializable
             playPane.setOpacity(1);
             pausePane.setOpacity(0);}
         
+    } 
+    private void volumeControl(){    
+    
     }
     
-    private void clickPause(ActionEvent event) {
-        
-    }
-
-    @FXML
+    
+   @FXML
     private void clickForw(ActionEvent event) {
     }
 

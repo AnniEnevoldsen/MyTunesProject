@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="573.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.MainWindowController">
+<AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.MainWindowController">
    <children>
-      <ListView fx:id="lstPlaylists" layoutX="23.0" layoutY="76.0" prefHeight="447.0" prefWidth="200.0" />
+      <ListView fx:id="lstPlaylists" layoutX="23.0" layoutY="77.0" prefHeight="447.0" prefWidth="200.0" />
       <Label layoutX="23.0" layoutY="56.0" text="Playlists" />
       <Button fx:id="btnNewPlaylist" layoutX="23.0" layoutY="531.0" mnemonicParsing="false" onAction="#clickNewPlaylist" text="New" />
       <Button fx:id="btnEditPlaylist" layoutX="75.0" layoutY="531.0" mnemonicParsing="false" onAction="#clickEditPlaylist" text="Edit" />
@@ -55,5 +56,6 @@
             <Button fx:id="ppButton" mnemonicParsing="false" onAction="#clickPlay" opacity="0.0" prefHeight="57.0" prefWidth="66.0" />
          </children>
       </Pane>
+      <Slider fx:id="volumeControl" blockIncrement="5.0" layoutX="74.0" layoutY="60.0" prefHeight="14.0" prefWidth="146.0" value="50.0" />
    </children>
 </AnchorPane>
