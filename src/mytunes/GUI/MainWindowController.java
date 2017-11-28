@@ -20,9 +20,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -34,8 +37,6 @@ public class MainWindowController implements Initializable
 {
     
     private Label label;
-    @FXML
-    private Button btnPlay;
     @FXML
     private ListView<?> lstPlaylists;
     @FXML
@@ -66,28 +67,56 @@ public class MainWindowController implements Initializable
     private Button btnSearch;
     @FXML
     private Button btnAddSong;
+    @FXML
+    private Button forwButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button ppButton;
     
+    JFXPanel fxPanel = new JFXPanel();
+    String path = "C:\\Users\\Samuel\\Documents\\GitHub\\MyTunesProject\\song1.mp3";
+    Media media = new Media(new File(path).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(media);
+    MediaView mediaView = new MediaView(player);
+    @FXML
+    private Pane pausePane;
+    @FXML
+    private Polygon playPane;
+     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-    }    
-
+        
+    }   
     @FXML
-    private void clickPlay(ActionEvent event)
-    {
-        JFXPanel fxPanel = new JFXPanel();
+    public void clickPlay(ActionEvent event)
+    {     
+        if(!player.isAutoPlay()){
+            player.setAutoPlay(true);
+            playPane.setOpacity(0);
+            pausePane.setOpacity(1);
+            }
+        else{            
+            player.pause();
+            player.setAutoPlay(false);        
+            playPane.setOpacity(1);
+            pausePane.setOpacity(0);}
         
-        String path = "song1.wav";
+    }
+    
+    private void clickPause(ActionEvent event) {
         
-        Media media = new Media(new File(path).toURI().toString());
-        
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        
-        MediaView mediaView = new MediaView(mediaPlayer);
     }
 
+    @FXML
+    private void clickForw(ActionEvent event) {
+    }
+
+    @FXML
+    private void clickBack(ActionEvent event) {
+    }
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
@@ -173,5 +202,8 @@ public class MainWindowController implements Initializable
     private void clickAddSong(ActionEvent event)
     {
     }
+
+    
+    
     
 }
