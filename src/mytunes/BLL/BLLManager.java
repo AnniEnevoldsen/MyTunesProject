@@ -15,14 +15,29 @@ import mytunes.DAL.DALManager;
  */
 public class BLLManager
 {
-    DALManager dalManager = new DALManager();
+    DALManager dalm = new DALManager();
     
-    public void add(Songs songs)
-    {
-        dalManager.add(songs);
+
+    public List<Songs> getAllSongs() {
+        return dalm.getAllSongs(); 
     }
     
-    public List<Songs> getAllSongs() {
-        return dalManager.getAllSongs();
+    public List<Songs> getAllSongsByTitle(
+             String title) {
+        return dalm.getAllSongsByTitle(title);
+    }        
+
+        
+    public void add(Songs songs)
+    {
+        dalm.add(songs);
+    }
+        
+    public void remove(Songs selectedSongs) {
+        dalm.remove(selectedSongs);
+    }
+
+    public void update(Songs songs) {
+        dalm.update(songs);
     }
 }

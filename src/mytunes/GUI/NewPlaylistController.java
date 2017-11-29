@@ -39,15 +39,11 @@ public class NewPlaylistController implements Initializable
     {
         // TODO
     } 
-    
-    public void setParentWindowController(MainWindowController parent)
-    {
-        this.parent = parent;
-    }
 
     @FXML
     private void clickSave(ActionEvent event)
     {
+         //parent.lblName.setText(getName());
     }
 
     @FXML
@@ -57,4 +53,8 @@ public class NewPlaylistController implements Initializable
         stage.close();
     }
     
+    public void setParentWindowController(MainWindowController parent)
+    {
+        this.parent = parent;
+    }
 }

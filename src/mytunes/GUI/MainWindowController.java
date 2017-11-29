@@ -42,7 +42,7 @@ public class MainWindowController implements Initializable
     
     private Label label;
     @FXML
-    private ListView<?> lstPlaylists;
+    private ListView<?> lstPlaylists; //add something instead of ?
     @FXML
     private Button btnNewPlaylist;
     @FXML
@@ -50,17 +50,15 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnDeletePlaylist;
     @FXML
-    private ListView<?> lstSongsInPlaylist;
+    private ListView<?> lstSongsInPlaylist; //add something instead of ?
     @FXML
     private Button btnUp;
     @FXML
     private Button btnDown;
     @FXML
     private Button btnPlaylistDelete;
-    
     @FXML
     private ListView<Songs> lstSongs;
-    
     @FXML
     private Button btnNewSong;
     @FXML
@@ -73,18 +71,6 @@ public class MainWindowController implements Initializable
     private Button btnSearch;
     @FXML
     private Button btnAddSong;
-    
-    
-    JFXPanel fxPanel = new JFXPanel();
-    
-    String path = "song1.mp3";
-    
-    Media media = new Media(new File(path).toURI().toString());
-    private MediaPlayer player = new MediaPlayer(media);
-    MediaView mediaView = new MediaView(player);
-    
-    
-    Model model = new Model();
     @FXML
     private Button forwButton;
     @FXML
@@ -93,6 +79,19 @@ public class MainWindowController implements Initializable
     private Button ppButton;
     @FXML
     private Slider volumeControl;
+    @FXML
+    private Polygon playPane;
+    @FXML
+    private Pane pausePane;
+    
+    JFXPanel fxPanel = new JFXPanel();
+    String path = "song1.mp3";
+    Media media = new Media(new File(path).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(media);
+    MediaView mediaView = new MediaView(player);
+    
+    Model model = new Model();
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -100,13 +99,6 @@ public class MainWindowController implements Initializable
         volumeControl();
     }    
 
-    @FXML
-    private Polygon playPane;
-    
-    @FXML
-    private Pane pausePane;
-    
-    
     @FXML
     public void clickPlay(ActionEvent event)
     {     
@@ -120,8 +112,7 @@ public class MainWindowController implements Initializable
             player.setAutoPlay(false);        
             playPane.setOpacity(1);
             pausePane.setOpacity(0);
-        }
-         
+        }   
     }
     
     private void volumeControl(){    
@@ -132,23 +123,6 @@ public class MainWindowController implements Initializable
                 player.setVolume(volumeControl.getValue() /100);
          }
         });
-    }
-    
-  
-    
-    
-    private void clickPlays(ActionEvent event)
-    {
-        JFXPanel fxPanel = new JFXPanel();
-        
-        String path = "song1.wav";
-        
-        Media media = new Media(new File(path).toURI().toString());
-        
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        
-        MediaView mediaView = new MediaView(mediaPlayer);
     }
 
     @FXML
@@ -172,31 +146,27 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event)
-    {
+    private void clickEditPlaylist(ActionEvent event){
         model.loadAll();
     }
 
     @FXML
-    private void clickDeletePlaylist(ActionEvent event)
-    {
+    private void clickDeletePlaylist(ActionEvent event){
+        //make in dal
     }
 
     @FXML
-    private void clickUp(ActionEvent event)
-    {
+    private void clickUp(ActionEvent event){
     }
 
     @FXML
-    private void clickDown(ActionEvent event)
-    {
+    private void clickDown(ActionEvent event){
     }
 
     @FXML
-    private void clickPlaylistDelete(ActionEvent event)
-    {
+    private void clickPlaylistDelete(ActionEvent event){
+        //make in dal
     }
-
 
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
@@ -216,26 +186,27 @@ public class MainWindowController implements Initializable
         
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        //make in dal, add upper to dal(?)
     }
 
     @FXML
-    private void clickEditSong(ActionEvent event)
-    {
+    private void clickEditSong(ActionEvent event){
+        
     }
 
     @FXML
-    private void clickDeleteSong(ActionEvent event)
-    {
+    private void clickDeleteSong(ActionEvent event){
+        
     }
 
     @FXML
-    private void clickSearch(ActionEvent event)
-    {
+    private void clickSearch(ActionEvent event){
+        
     }
 
     @FXML
-    private void clickAddSong(ActionEvent event)
-    {
+    private void clickAddSong(ActionEvent event){
+        
     }
 
     @FXML

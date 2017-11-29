@@ -25,7 +25,6 @@ import mytunes.BE.Songs;
  */
 public class AddWindowController implements Initializable
 {
-
     @FXML
     private TextField txtTitle;
     @FXML
@@ -34,6 +33,7 @@ public class AddWindowController implements Initializable
     private TextField txtGenre;
     @FXML
     private TextField txtTime;
+    @FXML
     private TextField txtFile;
     @FXML
     private Button btnChoose;
@@ -41,13 +41,12 @@ public class AddWindowController implements Initializable
     private Button btnCancel;
     @FXML
     private Button btnSave;
-
-    private MainWindowController parent;
-    
-    private Window stage;
     @FXML
     private TextField txtFileLocation;
-
+    private MainWindowController parent;
+    private Window stage;
+    Model model = new Model();
+    
     /**
      * Initializes the controller class.
      */
@@ -88,7 +87,7 @@ public class AddWindowController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-        Model model = new Model();
+        
         
         Songs songs = new Songs();
         songs.setId(-1);
