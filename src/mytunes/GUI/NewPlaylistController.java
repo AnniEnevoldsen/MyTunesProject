@@ -48,7 +48,6 @@ public class NewPlaylistController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-        
     }
 
     @FXML

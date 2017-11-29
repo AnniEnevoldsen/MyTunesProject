@@ -1,18 +1,14 @@
-/* MyTunesP
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package mytunes.GUI;
 
-
-import javafx.scene.control.Slider;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,12 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-<<<<<<< HEAD
-=======
-import javafx.scene.layout.Pane;
->>>>>>> 8d14b5ac4957c8167fed9c1646ec1eb21814be03
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -43,13 +34,8 @@ import mytunes.BE.Songs;
  */
 public class MainWindowController implements Initializable
 {
-     
-    JFXPanel fxPanel = new JFXPanel();
-    String path = "song1.mp3";
-    Media media = new Media(new File(path).toURI().toString());
-    private MediaPlayer player = new MediaPlayer(media);
-    MediaView mediaView = new MediaView(player);
     
+    private Label label;
     @FXML
     private Button btnPlay;
     @FXML
@@ -84,55 +70,29 @@ public class MainWindowController implements Initializable
     private Button btnSearch;
     @FXML
     private Button btnAddSong;
-<<<<<<< HEAD
+    
+    /*
+    JFXPanel fxPanel = new JFXPanel();
+    
+    String path = "song1.mp3";
+    
+    Media media = new Media(new File(path).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(media);
+    MediaView mediaView = new MediaView(player);
+    */
     
     Model model = new Model();
     
-=======
-    @FXML
-    private Button forwButton;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Button ppButton;
-    @FXML
-    private Pane pausePane;
-    @FXML
-    private Polygon playPane;
-    @FXML
-    private Slider volumeControl;
-    
-     
->>>>>>> 8d14b5ac4957c8167fed9c1646ec1eb21814be03
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-<<<<<<< HEAD
     }    
 
-    @FXML
-    private void clickPlay(ActionEvent event)
-    {
-        JFXPanel fxPanel = new JFXPanel();
-        
-        String path = "song1.wav";
-        
-        Media media = new Media(new File(path).toURI().toString());
-        
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        
-        MediaView mediaView = new MediaView(mediaPlayer);
-    }
-
-    @FXML
-=======
-        volumeControl();
-    }   
-   
+    //private Polygon playPane;
+    //@FXML
     
-    
+    /*
     @FXML
     public void clickPlay(ActionEvent event)
     {     
@@ -157,17 +117,31 @@ public class MainWindowController implements Initializable
          }
         });
     }
+    */
     
+    /*
+    @FXML
+    {
+        volumeControl();
+    }   
+    */
     
-   @FXML
-    private void clickForw(ActionEvent event) {
+    @FXML
+    private void clickPlay(ActionEvent event)
+    {
+        JFXPanel fxPanel = new JFXPanel();
+        
+        String path = "song1.wav";
+        
+        Media media = new Media(new File(path).toURI().toString());
+        
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        
+        MediaView mediaView = new MediaView(mediaPlayer);
     }
 
     @FXML
-    private void clickBack(ActionEvent event) {
-    }
-    @FXML
->>>>>>> 8d14b5ac4957c8167fed9c1646ec1eb21814be03
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
         Stage newWindow = new Stage();
