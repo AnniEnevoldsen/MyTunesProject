@@ -18,26 +18,26 @@ public class Model
 {
     private BLLManager bllm = new BLLManager();
     
-    private ObservableList<Songs> lstSongs = FXCollections.observableArrayList();
+    private ObservableList<Songs> sList = FXCollections.observableArrayList();
 
     public ObservableList<Songs> getSongsList() {
-        return lstSongs;
+        return sList;
     }
     
     public void loadAll() {
-        lstSongs.clear();
-        lstSongs.addAll(bllm.getAllSongs());
+        sList.clear();
+        sList.addAll(bllm.getAllSongs());
     }
     
     public void add(Songs songs) {
         bllm.add(songs);
-        lstSongs.add(songs);
+        sList.add(songs);
     }
 
     public void remove(Songs selectedSongs) {
         
         bllm.remove(selectedSongs);
-        lstSongs.remove(selectedSongs);
+        sList.remove(selectedSongs);
     }
 
     public void update(Songs songs) {

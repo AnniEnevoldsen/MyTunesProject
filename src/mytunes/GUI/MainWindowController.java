@@ -58,8 +58,10 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnPlaylistDelete;
     @FXML
+    
     private ListView<Songs> lstSongs;
     @FXML
+    
     private Button btnNewSong;
     @FXML
     private Button btnEditSong;
@@ -97,6 +99,8 @@ public class MainWindowController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         volumeControl();
+        
+        lstSongs.setItems(model.getSongsList());
     }    
 
     @FXML
