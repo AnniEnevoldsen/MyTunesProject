@@ -169,7 +169,7 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickEditPlaylist(ActionEvent event)
     {
-        model.loadAll();
+       
     }
 
     @FXML
@@ -212,7 +212,7 @@ public class MainWindowController implements Initializable
 
         newWindow.setScene(scene);
         newWindow.showAndWait();
-        //make in dal, add upper to dal(?)
+        
     }
 
     @FXML
@@ -224,9 +224,9 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickDeleteSong(ActionEvent event)
     {
-        Songs selectedPrisoner = lstSongs.getSelectionModel().getSelectedItem();
+        Songs selectedSongs = lstSongs.getSelectionModel().getSelectedItem();
 
-        model.remove(selectedPrisoner);
+        model.remove(selectedSongs);
     }
 
     @FXML
@@ -249,6 +249,11 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickBack(ActionEvent event)
     {
+    }
+
+    @FXML
+    private void clickLoadDB(ActionEvent event) {
+         model.loadAll();
     }
 
 }

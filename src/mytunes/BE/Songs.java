@@ -16,7 +16,7 @@ import javafx.beans.property.StringProperty;
  */
 public class Songs
 {
-   private final IntegerProperty id = new SimpleIntegerProperty();
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty artist = new SimpleStringProperty();
     private final StringProperty genre = new SimpleStringProperty();

@@ -87,17 +87,15 @@ public class AddWindowController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-        
-        
-        Songs songs = new Songs();
-        songs.setId(-1);
-        songs.setTitle(txtTitle.getText());
-        songs.setArtist(txtArtist.getText());
-        songs.setGenre(txtGenre.getText());
-        songs.setTime(txtTime.getText());
-        songs.setFileLocation(txtFileLocation.getText());
+        Songs s = new Songs();
+        s.setId(-1);
+        s.setTitle(txtTitle.getText());
+        s.setArtist(txtArtist.getText());
+        s.setGenre(txtGenre.getText());
+        s.setTime(txtTime.getText());
+        s.setFileLocation(txtFileLocation.getText());
 
-        model.add(songs);
+        model.add(s);
     
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
