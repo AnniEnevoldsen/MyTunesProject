@@ -139,6 +139,44 @@ public class DALManager
         }
     }
 
+//     public void addP(Playlists playlists)
+//    {
+//        System.out.println("Adding playlist to database.");
+//
+//        try (Connection con = cm.getConnection())
+//        {
+//            String sql
+//                    = "INSERT INTO Playlists"
+//                    + "(name) "
+//                    + "VALUES(?)";
+//
+//            PreparedStatement pstmt
+//                    = con.prepareStatement(
+//                            sql, Statement.RETURN_GENERATED_KEYS);
+//
+//            pstmt.setString(1, playlists.getName());
+//
+//
+//
+//            int affected = pstmt.executeUpdate();
+//            if (affected < 1)
+//            {
+//                throw new SQLException("Playlist could not be added");
+//            }
+//
+//            // Get database generated id
+//            ResultSet rs = pstmt.getGeneratedKeys();
+//            if (rs.next())
+//            {
+//                playlists.setId(rs.getInt(1));
+//            }
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(DALManager.class.getName()).log(
+//                    Level.SEVERE, null, ex);
+//        }
+//    }
+     
     //songs or song?
     public void remove(Songs selectedSongs)
     {

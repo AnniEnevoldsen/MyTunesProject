@@ -11,30 +11,31 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="619.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.MainWindowController">
    <children>
       <ListView fx:id="lstPlaylists" layoutX="27.0" layoutY="109.0" prefHeight="447.0" prefWidth="200.0" />
       <Label layoutX="33.0" layoutY="92.0" text="Playlists" />
-      <Button fx:id="btnNewPlaylist" layoutX="24.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickNewPlaylist" text="New" />
-      <Button fx:id="btnEditPlaylist" layoutX="76.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickEditPlaylist" text="Edit" />
+      <Button fx:id="btnNewPlaylist" layoutX="24.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickNewPlaylist" text="New..." />
+      <Button fx:id="btnEditPlaylist" layoutX="83.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickEditPlaylist" text="Edit..." />
       <Button fx:id="btnDeletePlaylist" layoutX="176.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" text="Delete" />
-      <ListView fx:id="lstSongsInPlaylist" layoutX="249.0" layoutY="109.0" prefHeight="447.0" prefWidth="200.0" />
+      <ListView fx:id="lstSongsInPlaylist" layoutX="249.0" layoutY="109.0" prefHeight="447.0" prefWidth="172.0" />
       <Label layoutX="249.0" layoutY="92.0" text="Songs in playlist" />
       <Button fx:id="btnUp" layoutX="249.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickUp" text="↑" />
       <Button fx:id="btnDown" layoutX="281.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickDown" text="↓" />
-      <Button fx:id="btnPlaylistDelete" layoutX="398.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickPlaylistDelete" text="Delete" />
+      <Button fx:id="btnPlaylistDelete" layoutX="370.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickPlaylistDelete" text="Delete" />
       <Button fx:id="btnAddSong" layoutX="459.0" layoutY="109.0" mnemonicParsing="false" onAction="#clickAddSong" text="Add" />
       <ListView fx:id="lstSongs" layoutX="499.0" layoutY="109.0" prefHeight="447.0" prefWidth="200.0" />
       <Label layoutX="497.0" layoutY="92.0" text="Songs" />
-      <Button fx:id="btnNewSong" layoutX="499.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickNewSong" text="New" />
-      <Button fx:id="btnEditSong" layoutX="548.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickEditSong" text="Edit" />
+      <Button fx:id="btnNewSong" layoutX="499.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickNewSong" text="New..." />
+      <Button fx:id="btnEditSong" layoutX="555.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickEditSong" text="Edit..." />
       <Button fx:id="btnDeleteSong" layoutX="648.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete" />
       <TextField fx:id="txtSearch" layoutX="498.0" layoutY="25.0" prefHeight="25.0" prefWidth="138.0" />
       <Button fx:id="btnSearch" layoutX="648.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
-      <Button fx:id="forwButton" layoutX="382.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickForw" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
-      <Button fx:id="backButton" layoutX="281.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickBack" text="&lt;&lt;" />
-      <Pane layoutX="315.0" layoutY="8.0" prefHeight="59.0" prefWidth="67.0">
+      <Button fx:id="forwButton" layoutX="155.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickForw" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
+      <Button fx:id="backButton" layoutX="56.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickBack" text="&lt;&lt;" />
+      <Pane layoutX="88.0" layoutY="8.0" prefHeight="59.0" prefWidth="67.0">
          <children>
             <Circle fill="#ffffff45" layoutX="33.0" layoutY="29.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
             <Pane fx:id="pausePane" opacity="0.0" prefHeight="57.0" prefWidth="66.0">
@@ -56,7 +57,12 @@
             <Button fx:id="ppButton" layoutX="1.0" mnemonicParsing="false" onAction="#clickPlay" opacity="0.0" prefHeight="57.0" prefWidth="66.0" />
          </children>
       </Pane>
-      <Slider fx:id="volumeControl" blockIncrement="5.0" layoutX="276.0" layoutY="67.0" prefHeight="14.0" prefWidth="146.0" value="50.0" />
+      <Slider fx:id="volumeControl" blockIncrement="5.0" layoutX="48.0" layoutY="72.0" prefHeight="14.0" prefWidth="146.0" value="50.0" />
       <Button layoutX="648.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickLoadDB" text="Load" />
+      <Label fx:id="currentlyPlaying" layoutX="259.0" layoutY="25.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
