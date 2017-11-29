@@ -102,6 +102,6 @@ public class Songs
 
     @Override
     public String toString() {
-        return "Songs{" + "id=" + id.getValue() + ", title=" + title.getValue() + ", artist=" + artist.getValue() + ", genre=" + genre.getValue() + ", time=" + time.getValue() + ", fileLocation=" + fileLocation.getValue() + '}';
+        return "" + title.getValue() + "\t" + artist.getValue() + "\t" + genre.getValue() + "\t" + time.getValue() + "\t" + fileLocation.getValue();
     }
 }
