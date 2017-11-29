@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import mytunes.BE.Songs;
 
 /**
  * FXML Controller class
@@ -33,7 +34,6 @@ public class AddWindowController implements Initializable
     private TextField txtGenre;
     @FXML
     private TextField txtTime;
-    @FXML
     private TextField txtFile;
     @FXML
     private Button btnChoose;
@@ -45,6 +45,8 @@ public class AddWindowController implements Initializable
     private MainWindowController parent;
     
     private Window stage;
+    @FXML
+    private TextField txtFileLocation;
 
     /**
      * Initializes the controller class.
@@ -73,20 +75,33 @@ public class AddWindowController implements Initializable
             absolutePath = song.getAbsolutePath();
         }
         
-        txtFile.setText(absolutePath);
-        
+        txtFileLocation.setText(absolutePath);    
     }
 
     @FXML
     private void clickCancel(ActionEvent event)
     {
-        Stage stage = (Stage) btnCancel.getScene().getWindow();
-        stage.close();
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
     }
 
     @FXML
     private void clickSave(ActionEvent event)
     {
+        Model model = new Model();
+        
+        Songs songs = new Songs();
+        songs.setId(-1);
+        songs.setTitle(txtTitle.getText());
+        songs.setArtist(txtArtist.getText());
+        songs.setGenre(txtGenre.getText());
+        songs.setTime(txtTime.getText());
+        songs.setFileLocation(txtFileLocation.getText());
+
+        model.add(songs);
+    
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
     }
 
 }

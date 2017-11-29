@@ -20,7 +20,7 @@ public class ConnectionManager
 
     public ConnectionManager()
     {
-        ds.setDatabaseName("");
+        ds.setDatabaseName("Songs");
         ds.setUser("CS2017B_14_java");
         ds.setPassword("javajava");
         ds.setPortNumber(1433);

@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.Double?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="573.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.MainWindowController">
+<AnchorPane id="AnchorPane" prefHeight="573.0" prefWidth="726.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="mytunes.GUI.MainWindowController">
    <children>
+      <Button fx:id="btnPlay" layoutX="104.0" layoutY="19.0" mnemonicParsing="false" onAction="#clickPlay" text="Play" />
       <ListView fx:id="lstPlaylists" layoutX="23.0" layoutY="76.0" prefHeight="447.0" prefWidth="200.0" />
       <Label layoutX="23.0" layoutY="56.0" text="Playlists" />
       <Button fx:id="btnNewPlaylist" layoutX="23.0" layoutY="531.0" mnemonicParsing="false" onAction="#clickNewPlaylist" text="New" />
@@ -31,29 +27,5 @@
       <Button fx:id="btnDeleteSong" layoutX="648.0" layoutY="531.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete" />
       <TextField fx:id="txtSearch" layoutX="497.0" layoutY="19.0" prefHeight="25.0" prefWidth="138.0" />
       <Button fx:id="btnSearch" layoutX="643.0" layoutY="19.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
-      <Button fx:id="forwButton" layoutX="177.0" layoutY="32.0" mnemonicParsing="false" onAction="#clickForw" text="Forw" />
-      <Button fx:id="backButton" layoutX="73.0" layoutY="32.0" mnemonicParsing="false" onAction="#clickBack" text="Back" />
-      <Pane layoutX="112.0" layoutY="4.0" prefHeight="57.0" prefWidth="66.0">
-         <children>
-            <Circle fill="#ffffff45" layoutX="33.0" layoutY="29.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane fx:id="pausePane" opacity="0.0" prefHeight="57.0" prefWidth="66.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="19.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="38.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
-               </children>
-            </Pane>
-            <Polygon fx:id="playPane" fill="WHITE" layoutX="36.0" layoutY="40.0" rotate="90.0" scaleX="0.3" scaleY="0.2" scaleZ="0.4" stroke="BLACK" strokeType="INSIDE">
-              <points>
-                <Double fx:value="-50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="-60.0" />
-              </points>
-            </Polygon>
-            <Button fx:id="ppButton" mnemonicParsing="false" onAction="#clickPlay" opacity="0.0" prefHeight="57.0" prefWidth="66.0" />
-         </children>
-      </Pane>
    </children>
 </AnchorPane>
