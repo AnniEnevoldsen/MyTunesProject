@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +41,7 @@ import mytunes.BE.Songs;
  */
 public class MainWindowController implements Initializable
 {
-    
+
     private Label label;
     @FXML
     private ListView<?> lstPlaylists; //add something instead of ?
@@ -58,10 +60,10 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnPlaylistDelete;
     @FXML
-    
+
     private ListView<Songs> lstSongs;
     @FXML
-    
+
     private Button btnNewSong;
     @FXML
     private Button btnEditSong;
@@ -85,47 +87,62 @@ public class MainWindowController implements Initializable
     private Polygon playPane;
     @FXML
     private Pane pausePane;
-    
+
     JFXPanel fxPanel = new JFXPanel();
     String path = "song1.mp3";
     Media media = new Media(new File(path).toURI().toString());
     private MediaPlayer player = new MediaPlayer(media);
     MediaView mediaView = new MediaView(player);
-    
+
     Model model = new Model();
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         volumeControl();
-        
+
         lstSongs.setItems(model.getSongsList());
-    }    
+
+        lstSongs.getSelectionModel()
+                .selectedItemProperty().addListener(
+                        new ChangeListener()
+                {
+                    @Override
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue)
+                    {
+                        //fillTextFields();
+                    }
+                }
+                );
+    }
 
     @FXML
     public void clickPlay(ActionEvent event)
-    {     
-        if(!player.isAutoPlay()){
+    {
+        if (!player.isAutoPlay())
+        {
             player.setAutoPlay(true);
             playPane.setOpacity(0);
             pausePane.setOpacity(1);
-            }
-        else{            
+        } else
+        {
             player.pause();
-            player.setAutoPlay(false);        
+            player.setAutoPlay(false);
             playPane.setOpacity(1);
             pausePane.setOpacity(0);
-        }   
+        }
     }
-    
-    private void volumeControl(){    
+
+    private void volumeControl()
+    {
         volumeControl.setValue(player.getVolume() * 100);
-        volumeControl.valueProperty().addListener(new InvalidationListener(){
+        volumeControl.valueProperty().addListener(new InvalidationListener()
+        {
             @Override
-            public void invalidated(Observable observable){ 
-                player.setVolume(volumeControl.getValue() /100);
-         }
+            public void invalidated(Observable observable)
+            {
+                player.setVolume(volumeControl.getValue() / 100);
+            }
         });
     }
 
@@ -133,42 +150,47 @@ public class MainWindowController implements Initializable
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
         Stage newWindow = new Stage();
-        
+
         newWindow.initModality(Modality.APPLICATION_MODAL);
-        
+
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("NewPlaylist.fxml"));
-        
+
         Parent root = fxLoader.load();
-        
+
         NewPlaylistController controller = fxLoader.getController();
         controller.setParentWindowController(this);
-        
+
         Scene scene = new Scene(root);
-        
+
         newWindow.setScene(scene);
         newWindow.showAndWait();
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event){
+    private void clickEditPlaylist(ActionEvent event)
+    {
         model.loadAll();
     }
 
     @FXML
-    private void clickDeletePlaylist(ActionEvent event){
+    private void clickDeletePlaylist(ActionEvent event)
+    {
         //make in dal
     }
 
     @FXML
-    private void clickUp(ActionEvent event){
+    private void clickUp(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickDown(ActionEvent event){
+    private void clickDown(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickPlaylistDelete(ActionEvent event){
+    private void clickPlaylistDelete(ActionEvent event)
+    {
         //make in dal
     }
 
@@ -176,49 +198,57 @@ public class MainWindowController implements Initializable
     private void clickNewSong(ActionEvent event) throws IOException
     {
         Stage newWindow = new Stage();
-        
+
         newWindow.initModality(Modality.APPLICATION_MODAL);
-        
+
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
-        
+
         Parent root = fxLoader.load();
-        
+
         AddWindowController controller = fxLoader.getController();
         controller.setParentWindowController(this);
-        
+
         Scene scene = new Scene(root);
-        
+
         newWindow.setScene(scene);
         newWindow.showAndWait();
         //make in dal, add upper to dal(?)
     }
 
     @FXML
-    private void clickEditSong(ActionEvent event){
-        
+    private void clickEditSong(ActionEvent event)
+    {
+
     }
 
     @FXML
-    private void clickDeleteSong(ActionEvent event){
-        
+    private void clickDeleteSong(ActionEvent event)
+    {
+        Songs selectedPrisoner = lstSongs.getSelectionModel().getSelectedItem();
+
+        model.remove(selectedPrisoner);
     }
 
     @FXML
-    private void clickSearch(ActionEvent event){
-        
+    private void clickSearch(ActionEvent event)
+    {
+
     }
 
     @FXML
-    private void clickAddSong(ActionEvent event){
-        
+    private void clickAddSong(ActionEvent event)
+    {
+
     }
 
     @FXML
-    private void clickForw(ActionEvent event) {
+    private void clickForw(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickBack(ActionEvent event) {
+    private void clickBack(ActionEvent event)
+    {
     }
-    
+
 }

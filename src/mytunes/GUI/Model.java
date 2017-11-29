@@ -16,31 +16,36 @@ import mytunes.BLL.BLLManager;
  */
 public class Model
 {
+
     private BLLManager bllm = new BLLManager();
-    
+
     private ObservableList<Songs> sList = FXCollections.observableArrayList();
 
-    public ObservableList<Songs> getSongsList() {
+    public ObservableList<Songs> getSongsList()
+    {
         return sList;
     }
-    
-    public void loadAll() {
+
+    public void loadAll()
+    {
         sList.clear();
         sList.addAll(bllm.getAllSongs());
     }
-    
-    public void add(Songs songs) {
+
+    public void add(Songs songs)
+    {
         bllm.add(songs);
         sList.add(songs);
     }
 
-    public void remove(Songs selectedSongs) {
-        
+    public void remove(Songs selectedSongs)
+    {
         bllm.remove(selectedSongs);
         sList.remove(selectedSongs);
     }
 
-    public void update(Songs songs) {
+    public void update(Songs songs)
+    {
         bllm.update(songs);
     }
 }
