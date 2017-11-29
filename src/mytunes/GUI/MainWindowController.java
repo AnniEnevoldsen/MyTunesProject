@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +21,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,8 +41,6 @@ public class MainWindowController implements Initializable
 {
     
     private Label label;
-    @FXML
-    private Button btnPlay;
     @FXML
     private ListView<?> lstPlaylists;
     @FXML
@@ -71,7 +74,7 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnAddSong;
     
-    /*
+    
     JFXPanel fxPanel = new JFXPanel();
     
     String path = "song1.mp3";
@@ -79,20 +82,31 @@ public class MainWindowController implements Initializable
     Media media = new Media(new File(path).toURI().toString());
     private MediaPlayer player = new MediaPlayer(media);
     MediaView mediaView = new MediaView(player);
-    */
+    
     
     Model model = new Model();
+    @FXML
+    private Button forwButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button ppButton;
+    @FXML
+    private Slider volumeControl;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        volumeControl();
     }    
 
-    //private Polygon playPane;
-    //@FXML
+    @FXML
+    private Polygon playPane;
     
-    /*
+    @FXML
+    private Pane pausePane;
+    
+    
     @FXML
     public void clickPlay(ActionEvent event)
     {     
@@ -105,9 +119,11 @@ public class MainWindowController implements Initializable
             player.pause();
             player.setAutoPlay(false);        
             playPane.setOpacity(1);
-            pausePane.setOpacity(0);}
-        
-    } 
+            pausePane.setOpacity(0);
+        }
+         
+    }
+    
     private void volumeControl(){    
         volumeControl.setValue(player.getVolume() * 100);
         volumeControl.valueProperty().addListener(new InvalidationListener(){
@@ -117,17 +133,11 @@ public class MainWindowController implements Initializable
          }
         });
     }
-    */
     
-    /*
-    @FXML
-    {
-        volumeControl();
-    }   
-    */
+  
     
-    @FXML
-    private void clickPlay(ActionEvent event)
+    
+    private void clickPlays(ActionEvent event)
     {
         JFXPanel fxPanel = new JFXPanel();
         
@@ -226,6 +236,14 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickAddSong(ActionEvent event)
     {
+    }
+
+    @FXML
+    private void clickForw(ActionEvent event) {
+    }
+
+    @FXML
+    private void clickBack(ActionEvent event) {
     }
     
 }
