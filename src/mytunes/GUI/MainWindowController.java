@@ -32,6 +32,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mytunes.BE.Playlists;
 
 import mytunes.BE.Songs;
 
@@ -44,7 +45,7 @@ public class MainWindowController implements Initializable
 
     private Label label;
     @FXML
-    private ListView<?> lstPlaylists; //add something instead of ?
+    private ListView<Playlists> lstPlaylists; //add something instead of ?
     @FXML
     private Button btnNewPlaylist;
     @FXML
@@ -97,6 +98,8 @@ public class MainWindowController implements Initializable
     Model model = new Model();
     @FXML
     private Label currentlyPlaying;
+    @FXML
+    private Button btnLoadSongs;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -104,6 +107,7 @@ public class MainWindowController implements Initializable
         volumeControl();
 
         lstSongs.setItems(model.getSongsList());
+        lstPlaylists.setItems(model.getPlaylistsList());
 
         lstSongs.getSelectionModel()
                 .selectedItemProperty().addListener(
@@ -177,7 +181,9 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickDeletePlaylist(ActionEvent event)
     {
-        //make in dal
+        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+
+        model.removeP(selectedPlaylists);
     }
 
     @FXML
@@ -267,9 +273,15 @@ public class MainWindowController implements Initializable
     {
     }
 
+
     @FXML
-    private void clickLoadDB(ActionEvent event) {
-         model.loadAll();
+    private void clickLoadSDB(ActionEvent event) {
+        model.loadAll();
+    }
+
+    @FXML
+    private void clickLoadPDB(ActionEvent event) {
+        model.loadAllP();
     }
 
 }

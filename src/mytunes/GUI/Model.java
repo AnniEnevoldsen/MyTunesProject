@@ -7,6 +7,7 @@ package mytunes.GUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
 import mytunes.BLL.BLLManager;
 
@@ -21,21 +22,29 @@ public class Model
 
     private ObservableList<Songs> sList = FXCollections.observableArrayList();
     
-   // private ObservableList<PlayLists> pList = FXCollections.observableArrayList();
+    private ObservableList<Playlists> pList = FXCollections.observableArrayList();
 
     public ObservableList<Songs> getSongsList()
     {
         return sList;
     }
+    
+    public ObservableList<Playlists> getPlaylistsList()
+    {
+        return pList;
+    }
 
-//    public ObservableList<Playlists> getPlaylists(){
-//        return pList;
-//    }
     
     public void loadAll()
     {
         sList.clear();
         sList.addAll(bllm.getAllSongs());
+    }
+    
+        public void loadAllP()
+    {
+        pList.clear();
+        pList.addAll(bllm.getAllPlaylists());
     }
 
     public void add(Songs songs)
@@ -44,11 +53,10 @@ public class Model
         sList.add(songs);
     }
     
-        public void addP(Songs songs)
+        public void addP(Playlists playlists)
     {
-        bllm.addP(songs);
-        //pList.add(songs);
-        //remember to add the outcommented stuff in the top
+        bllm.addP(playlists);
+        pList.add(playlists);
     }
     
 
@@ -58,6 +66,12 @@ public class Model
         sList.remove(selectedSongs);
     }
 
+        public void removeP(Playlists selectedPlaylists)
+    {
+        bllm.removeP(selectedPlaylists);
+        pList.remove(selectedPlaylists);
+    }
+    
     public void update(Songs songs)
     {
         bllm.update(songs);

@@ -48,7 +48,7 @@ public class Playlists {
 
   @Override
     public String toString() {
-        return "Playlists{" + "id=" + id.getValue() + ", name=" + name.getValue()+ '}';
+        return "" + name.getValue();
     }
 
  

@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mytunes.BE.Playlists;
 
 /**
  * FXML Controller class
@@ -30,7 +31,7 @@ public class NewPlaylistController implements Initializable
     private Button btnCancel;
     
     private MainWindowController parent;
-
+    private Model model = new Model();
     /**
      * Initializes the controller class.
      */
@@ -43,12 +44,12 @@ public class NewPlaylistController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-//         Playlists p = new Playlists();
-//        p.setId(-1);
-//        p.setName(txtName.getText());
-//  
-//
-//        model.add(p); different add
+         Playlists p = new Playlists();
+        p.setId(-1);
+        p.setName(txtName.getText());
+  
+
+        model.addP(p); 
     
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
 
 /**
@@ -55,7 +56,33 @@ public class DALManager
         }
         return allSongs;
     }
+    public List<Playlists> getAllPlaylists()
+    {
+        System.out.println("Getting all playlists.");
 
+        List<Playlists> allPlaylists = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlists");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Playlists p = new Playlists();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+
+                allPlaylists.add(p);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allPlaylists;
+    }
+    
     public List<Songs> getAllSongsByTitle(
             String title)
     {
@@ -134,43 +161,43 @@ public class DALManager
         }
     }
 
-//     public void addP(Playlists playlists)
-//    {
-//        System.out.println("Adding playlist to database.");
-//
-//        try (Connection con = cm.getConnection())
-//        {
-//            String sql
-//                    = "INSERT INTO Playlists"
-//                    + "(name) "
-//                    + "VALUES(?)";
-//
-//            PreparedStatement pstmt
-//                    = con.prepareStatement(
-//                            sql, Statement.RETURN_GENERATED_KEYS);
-//
-//            pstmt.setString(1, playlists.getName());
-//
-//
-//
-//            int affected = pstmt.executeUpdate();
-//            if (affected < 1)
-//            {
-//                throw new SQLException("Playlist could not be added");
-//            }
-//
-//            // Get database generated id
-//            ResultSet rs = pstmt.getGeneratedKeys();
-//            if (rs.next())
-//            {
-//                playlists.setId(rs.getInt(1));
-//            }
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
-//    }
+     public void addP(Playlists playlists)
+    {
+        System.out.println("Adding playlist to database.");
+
+        try (Connection pcon = cm.getConnection())
+        {
+            String sql
+                    = "INSERT INTO Playlists"
+                    + "(name) "
+                    + "VALUES(?)";
+
+            PreparedStatement pstmt
+                    = pcon.prepareStatement(
+                            sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1, playlists.getName());
+
+
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Playlist could not be added");
+            }
+
+            // Get database generated id
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next())
+            {
+                playlists.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
      
     public void remove(Songs selectedSongs)
     {
@@ -188,7 +215,24 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-
+    
+    public void removeP(Playlists selectedPlaylists)
+    {
+        System.out.println("Removing playlist");
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM Playlists WHERE id=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylists.getId());
+            pstmt.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+    
     public void update(Songs songs)
     {
         try (Connection con = cm.getConnection())
