@@ -44,6 +44,12 @@ public class Playlists {
     public IntegerProperty idProperty() {
         return id;
     }
-    
-    //make a tostring/override
+
+
+  @Override
+    public String toString() {
+        return "Playlists{" + "id=" + id.getValue() + ", name=" + name.getValue()+ '}';
+    }
+
+ 
 }
