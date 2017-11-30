@@ -97,7 +97,7 @@ public class AddWindowController implements Initializable
 
         model.add(s);
     
-        Stage window = (Stage) btnCancel.getScene().getWindow();
+        Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
     }
 

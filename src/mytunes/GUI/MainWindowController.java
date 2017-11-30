@@ -216,9 +216,23 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickEditSong(ActionEvent event)
+    private void clickEditSong(ActionEvent event) throws IOException
     {
+        Stage newWindow = new Stage();
 
+        //newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
+
+        Parent root = fxLoader.load();
+
+        AddWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
     }
 
     @FXML

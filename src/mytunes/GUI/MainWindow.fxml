@@ -24,7 +24,7 @@
       <Button fx:id="btnUp" layoutX="249.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickUp" text="↑" />
       <Button fx:id="btnDown" layoutX="281.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickDown" text="↓" />
       <Button fx:id="btnPlaylistDelete" layoutX="398.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickPlaylistDelete" text="Delete" />
-      <Button fx:id="btnAddSong" layoutX="459.0" layoutY="109.0" mnemonicParsing="false" onAction="#clickAddSong" text="Add" />
+      <Button fx:id="btnAddSong" layoutX="456.0" layoutY="109.0" mnemonicParsing="false" onAction="#clickAddSong" prefHeight="25.0" prefWidth="42.0" text="Add" />
       <ListView fx:id="lstSongs" layoutX="499.0" layoutY="109.0" prefHeight="447.0" prefWidth="200.0" />
       <Label layoutX="497.0" layoutY="92.0" text="Songs" />
       <Button fx:id="btnNewSong" layoutX="499.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickNewSong" text="New" />
@@ -57,6 +57,6 @@
          </children>
       </Pane>
       <Slider fx:id="volumeControl" blockIncrement="5.0" layoutX="276.0" layoutY="67.0" prefHeight="14.0" prefWidth="146.0" value="50.0" />
-      <Button layoutX="648.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickLoadDB" text="Load" />
+      <Button layoutX="623.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickLoadDB" text="Load songs" />
    </children>
 </AnchorPane>

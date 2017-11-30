@@ -64,15 +64,12 @@ public class DALManager
 
         try (Connection con = cm.getConnection())
         {
-            // No good when having userinput, because SQL injection
-            // Statement stmt = con.createStatement();
-
+            
             String query
                     = "SELECT * FROM Songs "
                     + "WHERE title LIKE ? "
                     + "ORDER BY id";
 
-            // Protect against SQL injection
             PreparedStatement pstmt
                     = con.prepareStatement(query);
             pstmt.setString(1, "%" + title + "%");
@@ -110,9 +107,7 @@ public class DALManager
                     + "(title, artist, genre, time, fileLocation) "
                     + "VALUES(?,?,?,?,?)";
 
-            PreparedStatement pstmt
-                    = con.prepareStatement(
-                            sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1, songs.getTitle());
             pstmt.setString(2, songs.getArtist());
@@ -142,6 +137,8 @@ public class DALManager
     //songs or song?
     public void remove(Songs selectedSongs)
     {
+        System.out.println("Removing song");
+        
         try (Connection con = cm.getConnection())
         {
             String sql = "DELETE FROM Songs WHERE id=?";
@@ -163,8 +160,8 @@ public class DALManager
                     = "UPDATE Songs SET "
                     + "title=?, artist=?, genre=?, time=?, fileLocation=? "
                     + "WHERE id=?";
-            PreparedStatement pstmt
-                    = con.prepareStatement(sql);
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, songs.getTitle());
             pstmt.setString(2, songs.getArtist());
             pstmt.setString(3, songs.getGenre());
