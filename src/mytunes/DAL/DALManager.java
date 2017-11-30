@@ -172,7 +172,6 @@ public class DALManager
 //        }
 //    }
      
-    //songs or song?
     public void remove(Songs selectedSongs)
     {
         System.out.println("Removing song");
