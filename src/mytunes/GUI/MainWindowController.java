@@ -95,6 +95,8 @@ public class MainWindowController implements Initializable
     MediaView mediaView = new MediaView(player);
 
     Model model = new Model();
+    @FXML
+    private Label currentlyPlaying;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -246,7 +248,7 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickSearch(ActionEvent event)
     {
-
+        
     }
 
     @FXML

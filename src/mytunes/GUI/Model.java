@@ -20,12 +20,18 @@ public class Model
     private BLLManager bllm = new BLLManager();
 
     private ObservableList<Songs> sList = FXCollections.observableArrayList();
+    
+   // private ObservableList<PlayLists> pList = FXCollections.observableArrayList();
 
     public ObservableList<Songs> getSongsList()
     {
         return sList;
     }
 
+//    public ObservableList<Playlists> getPlaylists(){
+//        return pList;
+//    }
+    
     public void loadAll()
     {
         sList.clear();
@@ -37,6 +43,14 @@ public class Model
         bllm.add(songs);
         sList.add(songs);
     }
+    
+        public void addP(Songs songs)
+    {
+        bllm.addP(songs);
+        //pList.add(songs);
+        //remember to add the outcommented stuff in the top
+    }
+    
 
     public void remove(Songs selectedSongs)
     {

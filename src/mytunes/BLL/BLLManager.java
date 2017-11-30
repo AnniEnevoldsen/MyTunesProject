@@ -32,6 +32,11 @@ public class BLLManager
     {
         dalm.add(songs);
     }
+    
+        public void addP(Songs songs)
+    {
+     //   dalm.addP(playlists);
+    }
 
     public void remove(Songs selectedSongs)
     {

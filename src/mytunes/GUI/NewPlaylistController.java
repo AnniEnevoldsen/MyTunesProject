@@ -43,7 +43,15 @@ public class NewPlaylistController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-         //parent.lblName.setText(getName());
+//         Playlists p = new Playlists();
+//        p.setId(-1);
+//        p.setName(txtName.getText());
+//  
+//
+//        model.add(p); different add
+    
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
     }
 
     @FXML
