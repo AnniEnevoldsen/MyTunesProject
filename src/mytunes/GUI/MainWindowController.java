@@ -56,7 +56,9 @@ public class MainWindowController implements Initializable
     private Label label;
     @FXML
     
+    private ListView<Playlists> lstPlaylists;
     @FXML
+    
     private Button btnNewPlaylist;
     @FXML
     private Button btnEditPlaylist;
@@ -130,8 +132,10 @@ public class MainWindowController implements Initializable
                         //fillTextFields();
                     }
                 }
+
                 );
         lstPlaylists.setEditable(true);
+
             );
         */
 
@@ -144,6 +148,7 @@ public class MainWindowController implements Initializable
                 }
             }
         );
+
     }
 
     @FXML
