@@ -120,6 +120,7 @@ public class DALManager
         return allSongsInPlaylist;
     }
     
+    /*
     public List<Songs> getAllSongsByTitle(
             String title)
     {
@@ -159,6 +160,7 @@ public class DALManager
         return allSongs;
 
     }
+    */
 
     public void add(Songs songs)
     {

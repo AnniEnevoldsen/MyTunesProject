@@ -123,6 +123,7 @@ public class MainWindowController implements Initializable
         lstPlaylists.setItems(model.getPlaylistsList());
         lstSongsInPlaylist.setItems(model.getSongsInPlaylistList());
 
+        /*
         lstSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
                 {
                     @Override
@@ -131,8 +132,9 @@ public class MainWindowController implements Initializable
                         //fillTextFields();
                     }
                 }
-                );
-        
+            );
+        */
+
         lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlists>()
             { 
                 @Override
@@ -221,7 +223,6 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickPlaylistDelete(ActionEvent event)
     {
-        //make in dal
     }
 
     @FXML
@@ -310,8 +311,6 @@ public class MainWindowController implements Initializable
         }
     }
     
-
-
     @FXML
     private void clickForw(ActionEvent event)
     {

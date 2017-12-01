@@ -35,10 +35,12 @@ public class BLLManager
         return dalm.getAllSongsInPlaylist(playlists_id);
     }
     
+    /*
     public List<Songs> getAllSongsByTitle(String title)
     {
         return dalm.getAllSongsByTitle(title);
     }
+    */
 
     public void add(Songs songs)
     {

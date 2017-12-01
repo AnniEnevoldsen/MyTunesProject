@@ -78,7 +78,7 @@ public class Model
         sList.remove(selectedSongs);
     }
 
-        public void removeP(Playlists selectedPlaylists)
+    public void removeP(Playlists selectedPlaylists)
     {
         bllm.removeP(selectedPlaylists);
         pList.remove(selectedPlaylists);
