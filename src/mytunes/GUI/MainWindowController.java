@@ -133,17 +133,15 @@ public class MainWindowController implements Initializable
                 }
                 );
         
-        lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
-            {
-                int playlists_id = 1;
-                    
+        lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlists>()
+            { 
                 @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue)
+                public void changed(ObservableValue<? extends Playlists> observable, Playlists oldValue, Playlists newValue)
                 {
-                    model.loadAllSP(playlists_id);
+                    model.loadAllSP(newValue.getId());
                 }
-                }
-                );
+            }
+        );
     }
 
     @FXML

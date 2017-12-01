@@ -93,7 +93,7 @@ public class DALManager
 
         try (Connection con = cm.getConnection())
         {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = '?'");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ?");
 
             stmt.setInt(1, playlists_id);
 
