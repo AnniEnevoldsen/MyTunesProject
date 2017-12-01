@@ -25,7 +25,7 @@ public class DALManager
 {
 
     private ConnectionManager cm = new ConnectionManager();
-
+    
     public List<Songs> getAllSongs()
     {
         System.out.println("Getting all songs.");
@@ -56,6 +56,7 @@ public class DALManager
         }
         return allSongs;
     }
+    
     public List<Playlists> getAllPlaylists()
     {
         System.out.println("Getting all playlists.");

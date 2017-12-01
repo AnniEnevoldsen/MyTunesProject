@@ -8,7 +8,12 @@ package mytunes.GUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +40,8 @@ import javafx.stage.Stage;
 import mytunes.BE.Playlists;
 
 import mytunes.BE.Songs;
+import mytunes.DAL.ConnectionManager;
+import mytunes.DAL.DALManager;
 
 /**
  *
@@ -96,6 +103,7 @@ public class MainWindowController implements Initializable
     MediaView mediaView = new MediaView(player);
 
     Model model = new Model();
+    
     @FXML
     private Label currentlyPlaying;
     @FXML
@@ -257,11 +265,41 @@ public class MainWindowController implements Initializable
         
     }
 
+    
+    private ConnectionManager cm = new ConnectionManager();
+    
     @FXML
     private void clickAddSong(ActionEvent event)
     {
+        System.out.println("Adding song to playlist.");
+    
+        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+        Songs selectedSongs = lstSongs.getSelectionModel().getSelectedItem();
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
+                    //+ "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
+            
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylists.getId());
+            pstmt.setString(2, selectedSongs.getTitle());
+            pstmt.setString(3, selectedSongs.getArtist());
+            pstmt.setString(4, selectedSongs.getGenre());
+            pstmt.setString(5, selectedSongs.getTime());
+            pstmt.setString(6, selectedSongs.getFileLocation());
 
+            pstmt.executeUpdate();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
     }
+    
+
 
     @FXML
     private void clickForw(ActionEvent event)
