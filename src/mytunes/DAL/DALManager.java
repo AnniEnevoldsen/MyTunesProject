@@ -73,7 +73,6 @@ public class DALManager
                 Playlists p = new Playlists();
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
-                //p.getSongs().add
 
                 allPlaylists.add(p);
             }
