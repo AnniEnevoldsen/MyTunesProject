@@ -6,6 +6,7 @@
 package mytunes.BLL;
 
 import java.util.List;
+import mytunes.BE.Playlist;
 import mytunes.BE.Songs;
 import mytunes.BE.Playlists;
 import mytunes.DAL.DALManager;
@@ -29,10 +30,17 @@ public class BLLManager
         return dalm.getAllPlaylists();
     }
     
+    public List<Playlist> getAllSongsInPlaylist(int playlists_id)
+    {
+        return dalm.getAllSongsInPlaylist(playlists_id);
+    }
+    
+    /*
     public List<Songs> getAllSongsByTitle(String title)
     {
         return dalm.getAllSongsByTitle(title);
     }
+    */
 
     public void add(Songs songs)
     {
