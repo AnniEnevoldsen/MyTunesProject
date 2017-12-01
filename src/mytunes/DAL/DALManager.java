@@ -26,6 +26,7 @@ public class DALManager
 
     private ConnectionManager cm = new ConnectionManager();
 
+    
     public List<Songs> getAllSongs()
     {
         System.out.println("Getting all songs.");
@@ -56,12 +57,6 @@ public class DALManager
         }
         return allSongs;
     }
-    
-//      private Songs getSongsByID(int id)
-//    {
-//        return Songs;
-//    }
-      //get list of songs
        
     public List<Playlists> getAllPlaylists()
     {
@@ -79,7 +74,6 @@ public class DALManager
                 Playlists p = new Playlists();
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
-                //p.getSongs().add
 
                 allPlaylists.add(p);
             }

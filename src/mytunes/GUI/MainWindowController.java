@@ -103,6 +103,7 @@ public class MainWindowController implements Initializable
     MediaView mediaView = new MediaView(player);
 
     Model model = new Model();
+    
     @FXML
     private Label currentlyPlaying;
     @FXML
@@ -300,6 +301,8 @@ public class MainWindowController implements Initializable
     
     private ConnectionManager cm = new ConnectionManager();
     private Playlists playlists = new Playlists();
+
+    
     
     @FXML
     private void clickAddSong(ActionEvent event)
@@ -314,6 +317,9 @@ public class MainWindowController implements Initializable
             String sql
                     = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
                     + "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
+=======
+                    = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
+                    //+ "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
             
             
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -330,12 +336,15 @@ public class MainWindowController implements Initializable
                 throw new SQLException("Song could not be added");
             }
 
+            pstmt.executeUpdate();
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
     }
+    
+
 
     @FXML
     private void clickForw(ActionEvent event)
