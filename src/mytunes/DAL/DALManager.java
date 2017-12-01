@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
 
@@ -84,7 +85,39 @@ public class DALManager
         return allPlaylists;
     }
     
-       
+    public List<Playlist> getAllSongsInPlaylist(int playlists_id)
+    {
+        System.out.println("Getting all songs in playlist.");
+
+        List<Playlist> allSongsInPlaylist = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = '?'");
+            stmt.setInt(1, playlists_id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Playlist p = new Playlist();
+                p.setId(rs.getInt("id"));
+                p.setPlaylistsId(rs.getInt("playlists_id"));
+                p.setSongsTitle(rs.getString("songs_title"));
+                p.setSongsArtist(rs.getString("songs_artist"));
+                p.setSongsGenre(rs.getString("songs_genre"));
+                p.setSongsTime(rs.getString("songs_time"));
+                p.setSongsFileLocation(rs.getString("songs_fileLocation"));
+
+                allSongsInPlaylist.add(p);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allSongsInPlaylist;
+    }
+    
     public List<Songs> getAllSongsByTitle(
             String title)
     {

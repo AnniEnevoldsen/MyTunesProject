@@ -37,6 +37,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 
 import mytunes.BE.Songs;
@@ -52,16 +53,20 @@ public class MainWindowController implements Initializable
 
     private Label label;
     @FXML
-    private ListView<Playlists> lstPlaylists; //add something instead of ?
+    
+    private ListView<Playlists> lstPlaylists;
     @FXML
+    
     private Button btnNewPlaylist;
     @FXML
     private Button btnEditPlaylist;
     @FXML
     private Button btnDeletePlaylist;
     @FXML
-    private ListView<?> lstSongsInPlaylist; //add something instead of ?
+    
+    private ListView<Playlist> lstSongsInPlaylist;
     @FXML
+    
     private Button btnUp;
     @FXML
     private Button btnDown;
@@ -116,15 +121,26 @@ public class MainWindowController implements Initializable
 
         lstSongs.setItems(model.getSongsList());
         lstPlaylists.setItems(model.getPlaylistsList());
+        lstSongsInPlaylist.setItems(model.getSongsInPlaylistList());
 
-        lstSongs.getSelectionModel()
-                .selectedItemProperty().addListener(
-                        new ChangeListener()
+        lstSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
                 {
                     @Override
                     public void changed(ObservableValue observable, Object oldValue, Object newValue)
                     {
                         //fillTextFields();
+                    }
+                }
+                );
+        
+        lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
+                {
+                    int playlists_id = 0;
+                    
+                    @Override
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue)
+                    {
+                        model.loadAllSP(playlists_id);
                     }
                 }
                 );
@@ -278,10 +294,7 @@ public class MainWindowController implements Initializable
         
         try (Connection con = cm.getConnection())
         {
-            String sql
-                    = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
-                    //+ "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
-            
+            String sql = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
             
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, selectedPlaylists.getId());
