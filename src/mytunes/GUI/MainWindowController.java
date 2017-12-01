@@ -52,7 +52,12 @@ import mytunes.DAL.DALManager;
  */
 public class MainWindowController implements Initializable
 {
-
+    private Media media;
+    private MediaPlayer player;
+    private MediaView mediaView;
+    private Model model = new Model();
+    
+    JFXPanel fxPanel = new JFXPanel();
     private Label label;
     @FXML
     
@@ -100,25 +105,16 @@ public class MainWindowController implements Initializable
     private Polygon playPane;
     @FXML
     private Pane pausePane;
-
-    JFXPanel fxPanel = new JFXPanel();
-    String path = "song1.mp3";
-    Media media = new Media(new File(path).toURI().toString());
-    private MediaPlayer player = new MediaPlayer(media);
-    MediaView mediaView = new MediaView(player);
-
-    Model model = new Model();
-    
     @FXML
     private Label currentlyPlaying;
     @FXML
     private Button btnLoadSongs;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        volumeControl();
-
+        
         lstSongs.setItems(model.getSongsList());
         lstPlaylists.setItems(model.getPlaylistsList());
         lstSongsInPlaylist.setItems(model.getSongsInPlaylistList());
@@ -150,11 +146,36 @@ public class MainWindowController implements Initializable
         );
 
     }
-
+    
+    public String getSongSelected()
+    {
+     return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
+    }
+    
+    private void Media(){
+        media = new Media(new File(getSongSelected()).toURI().toString());
+        player = new MediaPlayer(media);
+        mediaView = new MediaView(player);
+    }
+     private void volumeControl()
+    {   
+        Media();
+        volumeControl.setValue(player.getVolume() * 100);
+        volumeControl.valueProperty().addListener(new InvalidationListener()
+        {
+            @Override
+            public void invalidated(Observable observable)
+            {
+                player.setVolume(volumeControl.getValue() / 100);
+            }
+        });
+    }
+    
     @FXML
     public void clickPlay(ActionEvent event)
-    {
-        if (!player.isAutoPlay())
+    {   
+        Media();
+            if (!player.isAutoPlay())
         {
             player.setAutoPlay(true);
             playPane.setOpacity(0);
@@ -167,20 +188,6 @@ public class MainWindowController implements Initializable
             pausePane.setOpacity(0);
         }
     }
-
-    private void volumeControl()
-    {
-        volumeControl.setValue(player.getVolume() * 100);
-        volumeControl.valueProperty().addListener(new InvalidationListener()
-        {
-            @Override
-            public void invalidated(Observable observable)
-            {
-                player.setVolume(volumeControl.getValue() / 100);
-            }
-        });
-    }
-
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
