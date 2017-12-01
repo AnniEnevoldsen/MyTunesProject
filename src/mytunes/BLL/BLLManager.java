@@ -54,8 +54,13 @@ public class BLLManager
         dalm.removeP(selectedPlaylists);
     }
 
-    public void update(Songs songs)
+    public void editSongs(Songs songs)
     {
-        dalm.update(songs);
+        dalm.editSongs(songs);
     }
+    
+    public void editPlaylists(Playlists playlists) {
+        dalm.editPlaylists(playlists);
+    }
+    
 }

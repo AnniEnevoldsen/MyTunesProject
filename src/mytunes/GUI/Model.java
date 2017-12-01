@@ -72,8 +72,12 @@ public class Model
         pList.remove(selectedPlaylists);
     }
     
-    public void update(Songs songs)
+    public void editSongs(Songs songs)
     {
-        bllm.update(songs);
+        bllm.editSongs(songs);
+    }
+    
+    public void editPlaylists(Playlists playlists) {
+        bllm.editPlaylists(playlists);
     }
 }

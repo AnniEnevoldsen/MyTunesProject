@@ -242,7 +242,7 @@ public class DALManager
         }
     }
     
-    public void update(Songs songs)
+    public void editSongs(Songs songs)
     {
         try (Connection con = cm.getConnection())
         {
@@ -272,4 +272,27 @@ public class DALManager
         }
     }
 
+    
+    public void editPlaylists(Playlists playlists) {
+        
+        try (Connection con = cm.getConnection()) {
+            String sql
+                    = "UPDATE Playlists SET "
+                    + "name=?"
+                    + "WHERE id=?";
+            PreparedStatement pstmt
+                    = con.prepareStatement(sql);
+            pstmt.setString(1, playlists.getName());
+            pstmt.setInt(2, playlists.getId());
+
+            int affected = pstmt.executeUpdate();
+            if (affected<1)
+                throw new SQLException("Prisoner could not be updated");
+
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 }
