@@ -18,6 +18,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -68,10 +70,8 @@ public class MainWindowController implements Initializable
     @FXML
     private Button btnPlaylistDelete;
     @FXML
-
     private ListView<Songs> lstSongs;
     @FXML
-
     private Button btnNewSong;
     @FXML
     private Button btnEditSong;
@@ -128,6 +128,7 @@ public class MainWindowController implements Initializable
                     }
                 }
                 );
+        lstPlaylists.setEditable(true);
     }
 
     @FXML
@@ -175,11 +176,16 @@ public class MainWindowController implements Initializable
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
-
+        newWindow.setTitle("Add a Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
     }
-
+    
+    public Playlists getSelected()
+    {
+        return lstPlaylists.getSelectionModel().getSelectedItem();
+    }
+    
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException
     {
@@ -196,14 +202,12 @@ public class MainWindowController implements Initializable
 
         Scene scene = new Scene(root);
 
+        newWindow.setTitle("Edit Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
         
-                Songs songs
-                = lstSongs.getSelectionModel().getSelectedItem();
-        playlists.setName(txtName.getText());
-
-        playlists.setId(txtId.getText());
+                Playlists playlists
+                = lstPlaylists.getSelectionModel().getSelectedItem();
         
         model.editPlaylists(playlists);
     
@@ -248,7 +252,8 @@ public class MainWindowController implements Initializable
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
-
+        
+        newWindow.setTitle("Add a Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
         
@@ -269,19 +274,19 @@ public class MainWindowController implements Initializable
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
-
+        newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
    
         Songs songs
                 = lstSongs.getSelectionModel().getSelectedItem();
-        songs.setTitle(txtTitle.getText());
-        songs.setArtist(txtArtist.getText());
-        songs.setGenre(txtGenre.getText());
-        songs.setTime(txtTime.getText());
-        songs.setFileLocation(txtFileLocation.getText());
-        songs.setId(txtId.getText());
-        
+//        songs.setTitle(txtTitle.getText());
+//        songs.setArtist(txtArtist.getText());
+//        songs.setGenre(txtGenre.getText());
+//        songs.setTime(txtTime.getText());
+//        songs.setFileLocation(txtFileLocation.getText());
+//        songs.setId(txtId.getText());
+//        
         model.editSongs(songs);
     }
 
@@ -298,11 +303,12 @@ public class MainWindowController implements Initializable
     {
         
     }
+
     
     private ConnectionManager cm = new ConnectionManager();
     private Playlists playlists = new Playlists();
 
-    
+
     
     @FXML
     private void clickAddSong(ActionEvent event)
@@ -315,11 +321,11 @@ public class MainWindowController implements Initializable
         try (Connection con = cm.getConnection())
         {
             String sql
+
                     = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
                     + "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
-=======
-                    = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
-                    //+ "Playlists_id=?, Songs_title=?, Songs_artist=?, Songs_genre=?, Songs_time=?, Songs_fileLocation=? ";
+
+                   
             
             
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -330,13 +336,16 @@ public class MainWindowController implements Initializable
             pstmt.setString(5, selectedSongs.getTime());
             pstmt.setString(6, selectedSongs.getFileLocation());
 
+
             int affected = pstmt.executeUpdate();
             if (affected < 1)
             {
                 throw new SQLException("Song could not be added");
             }
 
+
             pstmt.executeUpdate();
+
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(

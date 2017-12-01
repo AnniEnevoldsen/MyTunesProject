@@ -24,7 +24,7 @@ public class MyTunes extends Application
         Parent root = FXMLLoader.load(getClass().getResource("GUI/MainWindow.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.setTitle("MyTunes - Group Group");
         stage.setScene(scene);
         stage.show();
     }

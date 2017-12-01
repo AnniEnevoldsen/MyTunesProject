@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.BE.Playlists;
+import mytunes.BE.Songs;
 
 /**
  * FXML Controller class
@@ -65,5 +66,10 @@ public class NewPlaylistController implements Initializable
     public void setParentWindowController(MainWindowController parent)
     {
         this.parent = parent;
-    }
+        txtName.setText(parent.getSelected().getName());
+        //get selected
+        }
+
+    
+    
 }

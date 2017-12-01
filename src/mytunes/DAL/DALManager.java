@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
+import mytunes.GUI.MainWindowController;
+import mytunes.GUI.NewPlaylistController;
 
 /**
  *
@@ -25,7 +27,6 @@ public class DALManager
 {
 
     private ConnectionManager cm = new ConnectionManager();
-
     
     public List<Songs> getAllSongs()
     {
@@ -266,6 +267,7 @@ public class DALManager
         }
     }
 
+
     
     public void editPlaylists(Playlists playlists) {
         
@@ -288,5 +290,7 @@ public class DALManager
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
+
+      
     }
 }
