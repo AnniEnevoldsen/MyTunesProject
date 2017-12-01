@@ -56,6 +56,13 @@ public class DALManager
         }
         return allSongs;
     }
+    
+//      private Songs getSongsByID(int id)
+//    {
+//        return Songs;
+//    }
+      //get list of songs
+       
     public List<Playlists> getAllPlaylists()
     {
         System.out.println("Getting all playlists.");
@@ -72,6 +79,7 @@ public class DALManager
                 Playlists p = new Playlists();
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
+                //p.getSongs().add
 
                 allPlaylists.add(p);
             }
@@ -83,6 +91,7 @@ public class DALManager
         return allPlaylists;
     }
     
+       
     public List<Songs> getAllSongsByTitle(
             String title)
     {

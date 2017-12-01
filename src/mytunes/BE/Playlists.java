@@ -6,9 +6,12 @@
 package mytunes.BE;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -18,6 +21,20 @@ public class Playlists {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
+    private final ListProperty<Songs> songs = new SimpleListProperty<>();
+
+    public ObservableList getSongs() {
+        return songs.get();
+    }
+
+    public void setSongs(ObservableList value) {
+        songs.set(value);
+    }
+
+    public ListProperty songsProperty() {
+        return songs;
+    }
+    
     //also song list, number of songs etc.
 
     public String getName() {
