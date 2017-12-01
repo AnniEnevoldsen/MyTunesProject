@@ -152,14 +152,12 @@ public class MainWindowController implements Initializable
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
     }
     
-    private void Media(){
-        media = new Media(new File(getSongSelected()).toURI().toString());
-        player = new MediaPlayer(media);
-        mediaView = new MediaView(player);
-    }
+    
      private void volumeControl()
     {   
-        Media();
+             
+        volumeControl.setValue(player.getVolume()*100);
+        
         volumeControl.setValue(player.getVolume() * 100);
         volumeControl.valueProperty().addListener(new InvalidationListener()
         {
@@ -170,12 +168,17 @@ public class MainWindowController implements Initializable
             }
         });
     }
-    
+    private void mediaPlayer(){
+        media = new Media(new File(getSongSelected()).toURI().toString());
+        player = new MediaPlayer(media);
+        mediaView = new MediaView(player);
+        volumeControl();
+    }    
     @FXML
     public void clickPlay(ActionEvent event)
     {   
-        Media();
-            if (!player.isAutoPlay())
+        mediaPlayer();
+        if (!player.isAutoPlay())
         {
             player.setAutoPlay(true);
             playPane.setOpacity(0);
