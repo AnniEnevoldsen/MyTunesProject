@@ -135,7 +135,7 @@ public class MainWindowController implements Initializable
         
         lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
                 {
-                    int playlists_id = 0;
+                    int playlists_id = 1;
                     
                     @Override
                     public void changed(ObservableValue observable, Object oldValue, Object newValue)
