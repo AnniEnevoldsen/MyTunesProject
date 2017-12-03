@@ -20,7 +20,6 @@ public class Model
 {
 
     private BLLManager bllm = new BLLManager();
-
     private ObservableList<Songs> sList = FXCollections.observableArrayList();
     private ObservableList<Playlists> pList = FXCollections.observableArrayList();
     private ObservableList<Playlist> spList = FXCollections.observableArrayList();
@@ -58,6 +57,10 @@ public class Model
         spList.addAll(bllm.getAllSongsInPlaylist(playlists_id));
     }
 
+    public void search(String title)
+    {
+       bllm.getAllSongsByTitle(title);
+    }
     
     public void add(Songs songs)
     {
@@ -71,7 +74,6 @@ public class Model
         pList.add(playlists);
     }
     
-
     public void remove(Songs selectedSongs)
     {
         bllm.remove(selectedSongs);
@@ -83,6 +85,12 @@ public class Model
         bllm.removeP(selectedPlaylists);
         pList.remove(selectedPlaylists);
     }
+    
+     public void removeFromPlaylist(Playlist selectedPlaylist)
+     {
+         bllm.removeFromPlaylist(selectedPlaylist);
+         spList.remove(selectedPlaylist);
+     }
     
     public void editSongs(Songs songs)
     {

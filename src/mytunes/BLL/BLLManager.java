@@ -35,12 +35,10 @@ public class BLLManager
         return dalm.getAllSongsInPlaylist(playlists_id);
     }
     
-    /*
     public List<Songs> getAllSongsByTitle(String title)
     {
         return dalm.getAllSongsByTitle(title);
     }
-    */
 
     public void add(Songs songs)
     {
@@ -61,13 +59,19 @@ public class BLLManager
     {
         dalm.removeP(selectedPlaylists);
     }
+        
+    public void removeFromPlaylist(Playlist selectedPlaylist)
+    {
+        dalm.removeFromPlaylist(selectedPlaylist);
+    }
 
     public void editSongs(Songs songs)
     {
         dalm.editSongs(songs);
     }
     
-    public void editPlaylists(Playlists playlists) {
+    public void editPlaylists(Playlists playlists) 
+    {
         dalm.editPlaylists(playlists);
     }
     

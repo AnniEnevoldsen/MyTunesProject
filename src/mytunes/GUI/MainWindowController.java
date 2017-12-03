@@ -41,7 +41,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
-
 import mytunes.BE.Songs;
 import mytunes.DAL.ConnectionManager;
 import mytunes.DAL.DALManager;
@@ -52,28 +51,27 @@ import mytunes.DAL.DALManager;
  */
 public class MainWindowController implements Initializable
 {
+    JFXPanel fxPanel = new JFXPanel();
     private Media media;
     private MediaPlayer player;
     private MediaView mediaView;
     private Model model = new Model();
+    private ConnectionManager cm = new ConnectionManager();
+    private Playlists playlists = new Playlists();
     
-    JFXPanel fxPanel = new JFXPanel();
+    @FXML
     private Label label;
     @FXML
-    
     private ListView<Playlists> lstPlaylists;
     @FXML
-    
     private Button btnNewPlaylist;
     @FXML
     private Button btnEditPlaylist;
     @FXML
     private Button btnDeletePlaylist;
     @FXML
-    
     private ListView<Playlist> lstSongsInPlaylist;
     @FXML
-    
     private Button btnUp;
     @FXML
     private Button btnDown;
@@ -145,6 +143,7 @@ public class MainWindowController implements Initializable
             }
         );
 
+        //initialize cell factory for tableview
     }
     
     public String getSongSelected()
@@ -211,6 +210,7 @@ public class MainWindowController implements Initializable
         newWindow.showAndWait();
     }
     
+    //can we please rename it to getSelectedPlaylist?
     public Playlists getSelected()
     {
         return lstPlaylists.getSelectionModel().getSelectedItem();
@@ -264,6 +264,8 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickPlaylistDelete(ActionEvent event)
     {
+        Playlist selectedPlaylist = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+        model.removeFromPlaylist(selectedPlaylist);
     }
 
     @FXML
@@ -287,7 +289,12 @@ public class MainWindowController implements Initializable
         newWindow.showAndWait();
         
     }
-
+    
+    public Songs getSelectedSong()
+    {
+        return lstSongs.getSelectionModel().getSelectedItem();
+    }
+    
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException
     {
@@ -309,13 +316,7 @@ public class MainWindowController implements Initializable
    
         Songs songs
                 = lstSongs.getSelectionModel().getSelectedItem();
-//        songs.setTitle(txtTitle.getText());
-//        songs.setArtist(txtArtist.getText());
-//        songs.setGenre(txtGenre.getText());
-//        songs.setTime(txtTime.getText());
-//        songs.setFileLocation(txtFileLocation.getText());
-//        songs.setId(txtId.getText());
-//        
+
         model.editSongs(songs);
     }
 
@@ -327,17 +328,19 @@ public class MainWindowController implements Initializable
         model.remove(selectedSongs);
     }
 
+//    public void getSearchText()
+//    {
+//        return txtSearch; 
+//    }
+//    
     @FXML
     private void clickSearch(ActionEvent event)
     {
-        
+        model.search(txtSearch.getText());
+        //update list?
+        System.out.println("Searching for song");
     }
-
     
-    private ConnectionManager cm = new ConnectionManager();
-    private Playlists playlists = new Playlists();
-
-
     
     @FXML
     private void clickAddSong(ActionEvent event)
@@ -349,7 +352,9 @@ public class MainWindowController implements Initializable
         
         try (Connection con = cm.getConnection())
         {
-            String sql = "INSERT INTO Playlist (Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Playlist "
+                    + "(Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
 
             
             PreparedStatement pstmt = con.prepareStatement(sql);

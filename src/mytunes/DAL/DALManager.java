@@ -26,7 +26,7 @@ import mytunes.GUI.NewPlaylistController;
  */
 public class DALManager
 {
-
+    
     private ConnectionManager cm = new ConnectionManager();
     
     public List<Songs> getAllSongs()
@@ -122,7 +122,6 @@ public class DALManager
         return allSongsInPlaylist;
     }
     
-    /*
     public List<Songs> getAllSongsByTitle(
             String title)
     {
@@ -162,8 +161,7 @@ public class DALManager
         return allSongs;
 
     }
-    */
-
+    
     public void add(Songs songs)
     {
         System.out.println("Adding song to database.");
@@ -274,6 +272,23 @@ public class DALManager
         }
     }
     
+        public void removeFromPlaylist(Playlist selectedPlaylist)
+    {
+        System.out.println("Removing song from playlist");
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM Playlist WHERE id=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylist.getId());
+            pstmt.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+    
     public void editSongs(Songs songs)
     {
         try (Connection con = cm.getConnection())
@@ -303,8 +318,6 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-
-
     
     public void editPlaylists(Playlists playlists) {
         
@@ -320,7 +333,7 @@ public class DALManager
 
             int affected = pstmt.executeUpdate();
             if (affected<1)
-                throw new SQLException("Prisoner could not be updated");
+                throw new SQLException("Playlist could not be updated");
 
         }
         catch (SQLException ex) {

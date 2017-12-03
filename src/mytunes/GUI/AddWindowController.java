@@ -56,10 +56,6 @@ public class AddWindowController implements Initializable
         // TODO
     }
 
-    public void setParentWindowController(MainWindowController parent)
-    {
-        this.parent = parent;
-    }
 
     @FXML
     private void clickChoose(ActionEvent event)
@@ -99,6 +95,16 @@ public class AddWindowController implements Initializable
     
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
+    }
+    
+    public void setParentWindowController(MainWindowController parent)
+    {
+        this.parent = parent;
+        txtTitle.setText(parent.getSelectedSong().getTitle());
+        txtArtist.setText(parent.getSelectedSong().getTitle());
+        txtGenre.setText(parent.getSelectedSong().getGenre());
+        txtTime.setText(parent.getSelectedSong().getTime());       
+        txtFileLocation.setText(parent.getSelectedSong().getFileLocation());
     }
 
 }
