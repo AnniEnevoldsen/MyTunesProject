@@ -325,7 +325,7 @@ public class DALManager
             String sql
                     = "UPDATE Playlists SET "
                     + "name=?"
-                    + "WHERE id=?";
+                    + "WHERE id=?"; //maybe where id is selected?
             PreparedStatement pstmt
                     = con.prepareStatement(sql);
             pstmt.setString(1, playlists.getName());

@@ -30,7 +30,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -60,25 +63,17 @@ public class MainWindowController implements Initializable
     private Playlists playlists = new Playlists();
     
     @FXML
-    private Label label;
-    @FXML
-    private ListView<Playlists> lstPlaylists;
-    @FXML
     private Button btnNewPlaylist;
     @FXML
     private Button btnEditPlaylist;
     @FXML
     private Button btnDeletePlaylist;
     @FXML
-    private ListView<Playlist> lstSongsInPlaylist;
-    @FXML
     private Button btnUp;
     @FXML
     private Button btnDown;
     @FXML
     private Button btnPlaylistDelete;
-    @FXML
-    private ListView<Songs> lstSongs;
     @FXML
     private Button btnNewSong;
     @FXML
@@ -107,11 +102,49 @@ public class MainWindowController implements Initializable
     private Label currentlyPlaying;
     @FXML
     private Button btnLoadSongs;
+    @FXML
+    private TableView<Playlists> lstPlaylists;
+    @FXML
+    private TableColumn<Playlists, String> PlaylistView;
+    @FXML
+    private TableView<Playlist> lstSongsInPlaylist;
+    @FXML
+    private TableColumn<Playlist, String> titleView;
+    //now putting it over doesn't work, sorry jesper
+    @FXML
+    private TableView<Songs> lstSongs;
+    @FXML
+    private TableColumn<Songs, String> columnTitle;
+    @FXML
+    private TableColumn<Songs, String> columnArtist;
+    @FXML
+    private TableColumn<Songs, String> columnGenre;
+    @FXML
+    private TableColumn<Songs, String> columnTime;
+    @FXML
+    private TableColumn<Songs, String> columnFileLocation;
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        PlaylistView.setCellValueFactory(
+            new PropertyValueFactory("name"));
+        
+        titleView.setCellValueFactory(
+            new PropertyValueFactory("title"));
+        //is it not supposed to be title?
+        
+        columnTitle.setCellValueFactory(
+            new PropertyValueFactory("title"));
+        columnArtist.setCellValueFactory(
+            new PropertyValueFactory("artist"));
+        columnGenre.setCellValueFactory(
+            new PropertyValueFactory("genre"));
+        columnTime.setCellValueFactory(
+            new PropertyValueFactory("time"));
+        columnFileLocation.setCellValueFactory(
+            new PropertyValueFactory("fileLocation"));
         
         lstSongs.setItems(model.getSongsList());
         lstPlaylists.setItems(model.getPlaylistsList());
@@ -151,8 +184,12 @@ public class MainWindowController implements Initializable
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
     }
     
+        public String getTheSongSelected()
+    { 
+     return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
+    }
     
-     private void volumeControl()
+    private void volumeControl()
     {   
              
         volumeControl.setValue(player.getVolume()*100);
@@ -167,12 +204,16 @@ public class MainWindowController implements Initializable
             }
         });
     }
+    
     private void mediaPlayer(){
         media = new Media(new File(getSongSelected()).toURI().toString());
+        //this should make it possible to play from the other list as well
+        media = new Media(new File(getTheSongSelected()).toURI().toString());
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
         volumeControl();
     }    
+    
     @FXML
     public void clickPlay(ActionEvent event)
     {   
@@ -190,6 +231,7 @@ public class MainWindowController implements Initializable
             pausePane.setOpacity(0);
         }
     }
+    
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException
     {
@@ -240,7 +282,7 @@ public class MainWindowController implements Initializable
                 = lstPlaylists.getSelectionModel().getSelectedItem();
         
         model.editPlaylists(playlists);
-    
+
     }
 
     @FXML
@@ -321,18 +363,30 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickDeleteSong(ActionEvent event)
+    private void clickDeleteSong(ActionEvent event) throws IOException
     {
+        Stage newWindow = new Stage();
+
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteWindow.fxml"));
+
+        Parent root = fxLoader.load();
+
+        DeleteWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Delete");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+        
         Songs selectedSongs = lstSongs.getSelectionModel().getSelectedItem();
 
         model.remove(selectedSongs);
     }
 
-//    public void getSearchText()
-//    {
-//        return txtSearch; 
-//    }
-//    
+    //evt get text method 
     @FXML
     private void clickSearch(ActionEvent event)
     {
@@ -340,8 +394,7 @@ public class MainWindowController implements Initializable
         //update list?
         System.out.println("Searching for song");
     }
-    
-    
+     
     @FXML
     private void clickAddSong(ActionEvent event)
     {
@@ -391,7 +444,6 @@ public class MainWindowController implements Initializable
     private void clickBack(ActionEvent event)
     {
     }
-
 
     @FXML
     private void clickLoadSDB(ActionEvent event) {

@@ -86,7 +86,7 @@ public class AddWindowController implements Initializable
         Songs s = new Songs();
         s.setId(-1);
         s.setTitle(txtTitle.getText());
-        s.setArtist(txtArtist.getText());
+        s.setGenre(txtGenre.getText());
         s.setGenre(txtGenre.getText());
         s.setTime(txtTime.getText());
         s.setFileLocation(txtFileLocation.getText());
@@ -100,6 +100,7 @@ public class AddWindowController implements Initializable
     public void setParentWindowController(MainWindowController parent)
     {
         this.parent = parent;
+        //this is making add do like edit. use if edit clicked fill, else do nothing
         txtTitle.setText(parent.getSelectedSong().getTitle());
         txtArtist.setText(parent.getSelectedSong().getTitle());
         txtGenre.setText(parent.getSelectedSong().getGenre());

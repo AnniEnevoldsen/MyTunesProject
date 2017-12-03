@@ -66,9 +66,11 @@ public class NewPlaylistController implements Initializable
     public void setParentWindowController(MainWindowController parent)
     {
         this.parent = parent;
+        
+        //same here, make if statement.
         txtName.setText(parent.getSelected().getName());
     }
 
-    
+   
     
 }
