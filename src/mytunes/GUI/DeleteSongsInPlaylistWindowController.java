@@ -12,52 +12,56 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import mytunes.BE.Songs;
+import mytunes.BE.Playlist;
 
 /**
  * FXML Controller class
  *
  * @author Anni
  */
-public class DeleteWindowController implements Initializable {
+public class DeleteSongsInPlaylistWindowController implements Initializable
+{
 
     @FXML
     private Button btnCancel;
-    private MainWindowController parent;
     @FXML
     private Button btnDelete;
 
+    private MainWindowController parent;
+    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
-    }    
+    }
 
     @FXML
-    private void clickAcceptDelete(ActionEvent event) 
+    private void clickAcceptDelete(ActionEvent event)
     {
         Model model = new Model();
         
         this.parent = parent;
-        Songs selected = parent.getSelectedSong();
+        Playlist selected = parent.getSelectedSongInPlaylist();
         
-        model.remove(selected);
+        model.removeSP(selected);
         
         Stage window = (Stage) btnCancel.getScene().getWindow();
-        window.close();    
+        window.close();
     }
 
     @FXML
-    private void clickCancelDelete(ActionEvent event) 
+    private void clickCancelDelete(ActionEvent event)
     {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
+
     public void setParentWindowController(MainWindowController parent)
     {
         this.parent = parent;
     }
-    
+
 }

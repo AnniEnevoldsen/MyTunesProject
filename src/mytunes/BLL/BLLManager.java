@@ -60,9 +60,9 @@ public class BLLManager
         dalm.removeP(selectedPlaylists);
     }
         
-    public void removeFromPlaylist(Playlist selectedPlaylist)
+    public void removeSP(Playlist selectedPlaylist)
     {
-        dalm.removeFromPlaylist(selectedPlaylist);
+        dalm.removeSP(selectedPlaylist);
     }
 
     public void editSongs(Songs songs)

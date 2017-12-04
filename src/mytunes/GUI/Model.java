@@ -88,9 +88,9 @@ public class Model
         pList.remove(selectedPlaylists);
     }
     
-     public void removeFromPlaylist(Playlist selectedPlaylist)
+     public void removeSP(Playlist selectedPlaylist)
      {
-         bllm.removeFromPlaylist(selectedPlaylist);
+         bllm.removeSP(selectedPlaylist);
          spList.remove(selectedPlaylist);
      }
     

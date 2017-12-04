@@ -282,7 +282,7 @@ public class MainWindowController implements Initializable
     {
               Stage newWindow = new Stage();
               
-        //newWindow.initModality(Modality.APPLICATION_MODAL);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("NewPlaylist.fxml"));
 
@@ -305,44 +305,36 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickDeletePlaylist(ActionEvent event)
+    private void clickDeletePlaylist(ActionEvent event) throws IOException
     {
-        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+        Stage newWindow = new Stage();
 
-        model.removeP(selectedPlaylists);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeletePlaylistWindow.fxml"));
+
+        Parent root = fxLoader.load();
+
+        DeletePlaylistWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Delete");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
     }
 
     private void moveSong(int moveIndex)
     {
+        /*
         int selectedSongId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
         int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
         
         lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
         
         int selectedSongNewId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        */
         
-        try (Connection con = cm.getConnection())
-        {
-            String sql = "SELECT * FROM Playlist "
-                    + "UPDATE Playlist "
-                    + "SET id = ? "
-                    + "WHERE id = ? "
-                    + "SET id = ? "
-                    + "WHERE id = ?";
-            
-            System.out.println(sql);
-            
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedSongNewId);
-            pstmt.setInt(2, selectedSongId);
-            pstmt.setInt(3, selectedSongId);
-            pstmt.setInt(4, selectedSongNewId);
-            pstmt.execute();
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DALManager.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
         
         Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
         model.loadAllSP(selectedPlaylist.getId());
@@ -361,10 +353,23 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickPlaylistDelete(ActionEvent event)
+    private void clickPlaylistDelete(ActionEvent event) throws IOException
     {
-        Playlist selectedPlaylist = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
-        model.removeFromPlaylist(selectedPlaylist);
+        Stage newWindow = new Stage();
+
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteSongInPlaylistWindow.fxml"));
+
+        Parent root = fxLoader.load();
+
+        DeleteSongsInPlaylistWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Delete");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
     }
 
 
@@ -372,8 +377,6 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
     {
-         
-        
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -397,6 +400,16 @@ public class MainWindowController implements Initializable
     {
         return lstSongs.getSelectionModel().getSelectedItem();
     }
+    
+    public Playlists getSelectedPlaylist()
+    {
+        return lstPlaylists.getSelectionModel().getSelectedItem();
+    }
+    
+    public Playlist getSelectedSongInPlaylist()
+    {
+        return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+    }
       
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException
@@ -404,7 +417,7 @@ public class MainWindowController implements Initializable
         getSelectedSong();
         Stage newWindow = new Stage();
 
-        //newWindow.initModality(Modality.APPLICATION_MODAL);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
 
@@ -442,10 +455,6 @@ public class MainWindowController implements Initializable
         newWindow.setTitle("Delete");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-        
-        Songs selectedSongs = lstSongs.getSelectionModel().getSelectedItem();
-
-        model.remove(selectedSongs);
     }
 
     //evt get text method 
@@ -472,7 +481,7 @@ public class MainWindowController implements Initializable
                     + "(Playlists_id, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
                     + "VALUES (?, ?, ?, ?, ?, ?)";
 
-            
+    
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, selectedPlaylists.getId());
             pstmt.setString(2, selectedSongs.getTitle());
@@ -480,7 +489,6 @@ public class MainWindowController implements Initializable
             pstmt.setString(4, selectedSongs.getGenre());
             pstmt.setString(5, selectedSongs.getTime());
             pstmt.setString(6, selectedSongs.getFileLocation());
-
 
             int affected = pstmt.executeUpdate();
             if (affected < 1)

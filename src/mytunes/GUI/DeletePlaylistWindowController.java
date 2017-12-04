@@ -12,20 +12,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import mytunes.BE.Songs;
+import mytunes.BE.Playlists;
 
 /**
  * FXML Controller class
  *
  * @author Anni
  */
-public class DeleteWindowController implements Initializable {
+public class DeletePlaylistWindowController implements Initializable {
 
     @FXML
     private Button btnCancel;
-    private MainWindowController parent;
     @FXML
     private Button btnDelete;
+    
+    private MainWindowController parent;
 
     /**
      * Initializes the controller class.
@@ -41,12 +42,12 @@ public class DeleteWindowController implements Initializable {
         Model model = new Model();
         
         this.parent = parent;
-        Songs selected = parent.getSelectedSong();
+        Playlists selected = parent.getSelectedPlaylist();
         
-        model.remove(selected);
+        model.removeP(selected);
         
         Stage window = (Stage) btnCancel.getScene().getWindow();
-        window.close();    
+        window.close();
     }
 
     @FXML

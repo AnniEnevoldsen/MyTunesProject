@@ -95,12 +95,22 @@ public class DALManager
 
         try (Connection con = cm.getConnection())
         {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ? ORDER BY playlistOrder");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ?");
 
             stmt.setInt(1, playlists_id);
 
             ResultSet rs = stmt.executeQuery();
-
+            
+            /*
+            while(rs.next())
+            {
+                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET playlistOrder = ?");
+                
+                pstmt.setInt(1, 1);
+             
+                pstmt.executeQuery();
+            }
+            */
             while (rs.next())
             {
                 Playlist p = new Playlist();
@@ -111,7 +121,7 @@ public class DALManager
                 p.setSongsGenre(rs.getString("songs_genre"));
                 p.setSongsTime(rs.getString("songs_time"));
                 p.setSongsFileLocation(rs.getString("songs_fileLocation"));
-                p.setPlaylistOrder(rs.getInt("playlistOrder"));
+                //p.setPlaylistOrder(rs.getInt("playlistOrder"));
 
                 allSongsInPlaylist.add(p);
             }
@@ -273,7 +283,7 @@ public class DALManager
         }
     }
     
-        public void removeFromPlaylist(Playlist selectedPlaylist)
+        public void removeSP(Playlist selectedPlaylist)
     {
         System.out.println("Removing song from playlist");
         
