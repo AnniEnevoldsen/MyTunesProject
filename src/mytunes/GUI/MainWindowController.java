@@ -327,14 +327,52 @@ public class MainWindowController implements Initializable
         model.removeP(selectedPlaylists);
     }
 
+    private void moveSong(int moveIndex)
+    {
+        int selectedSongId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+        
+        lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
+        
+        int selectedSongNewId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "SELECT * FROM Playlist "
+                    + "UPDATE Playlist "
+                    + "SET id = ? "
+                    + "WHERE id = ? "
+                    + "SET id = ? "
+                    + "WHERE id = ?";
+            
+            System.out.println(sql);
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedSongNewId);
+            pstmt.setInt(2, selectedSongId);
+            pstmt.setInt(3, selectedSongId);
+            pstmt.setInt(4, selectedSongNewId);
+            pstmt.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        
+        Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylist.getId());
+    }
+    
     @FXML
     private void clickUp(ActionEvent event)
     {
+        moveSong(-1);
     }
 
     @FXML
     private void clickDown(ActionEvent event)
     {
+        moveSong(+1);
     }
 
     @FXML
