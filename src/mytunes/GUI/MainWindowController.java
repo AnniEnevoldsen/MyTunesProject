@@ -184,7 +184,7 @@ public class MainWindowController implements Initializable
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
     }
     
-        public String getTheSongSelected()
+    public String getTheSongSelected()
     { 
      return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
     }
@@ -205,31 +205,52 @@ public class MainWindowController implements Initializable
         });
     }
     
+    private int isPlaying = 0;
+    
+    
     private void mediaPlayer(){
-        media = new Media(new File(getSongSelected()).toURI().toString());
+        //media = new Media(new File(getSongSelected()).toURI().toString());
         //this should make it possible to play from the other list as well
         media = new Media(new File(getTheSongSelected()).toURI().toString());
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
-        volumeControl();
+        volumeControl();    
+        
     }    
+    
+    public boolean mediaFilter(){
+    
+        if (isPlaying == 0) {
+            
+        return true;
+        }else{
+        
+        return false;}
+    }
+    
     
     @FXML
     public void clickPlay(ActionEvent event)
     {   
-        mediaPlayer();
-        if (!player.isAutoPlay())
-        {
-            player.setAutoPlay(true);
-            playPane.setOpacity(0);
-            pausePane.setOpacity(1);
-        } else
-        {
-            player.pause();
-            player.setAutoPlay(false);
-            playPane.setOpacity(1);
-            pausePane.setOpacity(0);
-        }
+        
+        if (mediaFilter()) {
+         mediaPlayer();
+            if(!player.isAutoPlay()){
+                player.setAutoPlay(true);
+                playPane.setOpacity(0);
+                pausePane.setOpacity(1);
+                isPlaying = isPlaying + 1;}
+            }else{
+                if(player.isAutoPlay()){
+                player.pause();
+                player.setAutoPlay(false);
+                playPane.setOpacity(1);
+                pausePane.setOpacity(0);}
+                else{
+                player.setAutoPlay(true);
+                playPane.setOpacity(0);
+                pausePane.setOpacity(1);}
+                }
     }
     
     @FXML
