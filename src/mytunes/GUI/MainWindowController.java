@@ -122,6 +122,7 @@ public class MainWindowController implements Initializable
     private TableColumn<Songs, String> columnTime;
     @FXML
     private TableColumn<Songs, String> columnFileLocation;
+    private Songs songPlaying;
     
 
     @Override
@@ -162,8 +163,6 @@ public class MainWindowController implements Initializable
     
     }
     
-    private int cancion;
-    
     public String getSongSelected()
     {
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
@@ -173,10 +172,6 @@ public class MainWindowController implements Initializable
     { 
     
      return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
-    }
-    public int getIDTheSongSelected(){
-    
-    return cancion = lstSongs.getSelectionModel().getSelectedIndex();
     }
     
     private void volumeControl()
@@ -194,59 +189,44 @@ public class MainWindowController implements Initializable
             }
         });
     }
-    
-    private int isPlaying = 0;
-    
-    
-    private void mediaPlayer(){
-        //media = new Media(new File(getSongSelected()).toURI().toString());
-        //this should make it possible to play from the other list as well
-        media = new Media(new File(getTheSongSelected()).toURI().toString());
        
-        getIDTheSongSelected();
-        player = new MediaPlayer(media);
-        mediaView = new MediaView(player);
-        volumeControl();
-        
-    }    
-    
-    public boolean mediaFilter(){
-    
-        if (isPlaying == 0 ||isPlaying == 2) {
-            
-        return true;
-        }else{
-        
-        return false;}
+    public void setPauseButton() {
+        player.setAutoPlay(true);
+        playPane.setOpacity(0);
+        pausePane.setOpacity(1);
+    }
+
+    public void setPlayButton() {
+        player.pause();
+        player.setAutoPlay(false);
+        playPane.setOpacity(1);
+        pausePane.setOpacity(0);
     }
     
     @FXML
     public void clickPlay(ActionEvent event)
     {   
-       
-        if (mediaFilter()) {
-         mediaPlayer();
-            if(!player.isAutoPlay()){
-                player.setAutoPlay(true);
-                playPane.setOpacity(0);
-                pausePane.setOpacity(1);
-                isPlaying = 1;
-            }else{
-                player.stop();
-                player.setAutoPlay(true);
+       if (player != null && getSelectedSong() == songPlaying) {
+            if (!player.isAutoPlay()) {
+
+                setPauseButton();
+            } else {
+
+                setPlayButton();
             }
-            }else{
-                if(player.isAutoPlay()){
-                player.pause();
-                player.setAutoPlay(false);
-                playPane.setOpacity(1);
-                pausePane.setOpacity(0);}
-                else{
-                player.setAutoPlay(true);
-                playPane.setOpacity(0);
-                pausePane.setOpacity(1);}
-                }
-        
+        } else {
+            if (player != null) {
+                player.stop();
+                
+            }
+
+            media = new Media(new File(getSongSelected()).toURI().toString());
+            player = new MediaPlayer(media);
+            mediaView = new MediaView(player);
+            volumeControl();
+            setPauseButton();
+        }
+        songPlaying = getSelectedSong();
     }
     
     @FXML
