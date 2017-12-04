@@ -21,7 +21,8 @@ public class Songs
     private final StringProperty artist = new SimpleStringProperty();
     private final StringProperty genre = new SimpleStringProperty();
     private final StringProperty time = new SimpleStringProperty();
-    private final StringProperty fileLocation = new SimpleStringProperty(); 
+    private final StringProperty fileLocation = new SimpleStringProperty();
+    private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
     
     public int getId() {
         return id.get();
@@ -98,6 +99,18 @@ public class Songs
 
     public StringProperty fileLocationProperty() {
         return fileLocation;
+    }
+    
+    public int getPlaylistOrder() {
+        return id.get();
+    }
+
+    public void setPlaylistOrder(int value) {
+        id.set(value);
+    }
+
+    public IntegerProperty playlistOrderProperty() {
+        return id;
     }
 
     @Override

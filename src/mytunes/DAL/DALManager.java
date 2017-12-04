@@ -95,7 +95,7 @@ public class DALManager
 
         try (Connection con = cm.getConnection())
         {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ? ORDER BY playlistOrder");
 
             stmt.setInt(1, playlists_id);
 
@@ -111,6 +111,7 @@ public class DALManager
                 p.setSongsGenre(rs.getString("songs_genre"));
                 p.setSongsTime(rs.getString("songs_time"));
                 p.setSongsFileLocation(rs.getString("songs_fileLocation"));
+                p.setPlaylistOrder(rs.getInt("playlistOrder"));
 
                 allSongsInPlaylist.add(p);
             }

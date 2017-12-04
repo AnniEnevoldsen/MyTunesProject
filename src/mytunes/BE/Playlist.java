@@ -24,6 +24,7 @@ public class Playlist
     private final StringProperty songs_genre = new SimpleStringProperty();
     private final StringProperty songs_time = new SimpleStringProperty();
     private final StringProperty songs_fileLocation = new SimpleStringProperty();
+    private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
 
     public int getId()
     {
@@ -39,7 +40,19 @@ public class Playlist
     {
         return id;
     }
+        
+    public int getPlaylistOrder() {
+        return playlistOrder.get();
+    }
 
+    public void setPlaylistOrder(int value) {
+        playlistOrder.set(value);
+    }
+
+    public IntegerProperty playlistOrderProperty() {
+        return playlistOrder;
+    }
+    
     public int getPlaylistsId()
     {
         return playlists_id.get();
