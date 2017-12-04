@@ -164,6 +164,8 @@ public class MainWindowController implements Initializable
     
     }
     
+    private int cancion;
+    
     public String getSongSelected()
     {
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
@@ -171,7 +173,12 @@ public class MainWindowController implements Initializable
     
     public String getTheSongSelected()
     { 
+    
      return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
+    }
+    public int getIDTheSongSelected(){
+    
+    return cancion = lstSongs.getSelectionModel().getSelectedIndex();
     }
     
     private void volumeControl()
@@ -190,31 +197,58 @@ public class MainWindowController implements Initializable
         });
     }
     
+    private int isPlaying = 0;
+    
+    
     private void mediaPlayer(){
-        media = new Media(new File(getSongSelected()).toURI().toString());
+        //media = new Media(new File(getSongSelected()).toURI().toString());
         //this should make it possible to play from the other list as well
         media = new Media(new File(getTheSongSelected()).toURI().toString());
+       
+        getIDTheSongSelected();
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
         volumeControl();
+        
     }    
+    
+    public boolean mediaFilter(){
+    
+        if (isPlaying == 0 ||isPlaying == 2) {
+            
+        return true;
+        }else{
+        
+        return false;}
+    }
     
     @FXML
     public void clickPlay(ActionEvent event)
     {   
-        mediaPlayer();
-        if (!player.isAutoPlay())
-        {
-            player.setAutoPlay(true);
-            playPane.setOpacity(0);
-            pausePane.setOpacity(1);
-        } else
-        {
-            player.pause();
-            player.setAutoPlay(false);
-            playPane.setOpacity(1);
-            pausePane.setOpacity(0);
-        }
+       
+        if (mediaFilter()) {
+         mediaPlayer();
+            if(!player.isAutoPlay()){
+                player.setAutoPlay(true);
+                playPane.setOpacity(0);
+                pausePane.setOpacity(1);
+                isPlaying = 1;
+            }else{
+                player.stop();
+                player.setAutoPlay(true);
+            }
+            }else{
+                if(player.isAutoPlay()){
+                player.pause();
+                player.setAutoPlay(false);
+                playPane.setOpacity(1);
+                pausePane.setOpacity(0);}
+                else{
+                player.setAutoPlay(true);
+                playPane.setOpacity(0);
+                pausePane.setOpacity(1);}
+                }
+        
     }
     
     @FXML
@@ -278,14 +312,52 @@ public class MainWindowController implements Initializable
         model.removeP(selectedPlaylists);
     }
 
+    private void moveSong(int moveIndex)
+    {
+        int selectedSongId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+        
+        lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
+        
+        int selectedSongNewId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "SELECT * FROM Playlist "
+                    + "UPDATE Playlist "
+                    + "SET id = ? "
+                    + "WHERE id = ? "
+                    + "SET id = ? "
+                    + "WHERE id = ?";
+            
+            System.out.println(sql);
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedSongNewId);
+            pstmt.setInt(2, selectedSongId);
+            pstmt.setInt(3, selectedSongId);
+            pstmt.setInt(4, selectedSongNewId);
+            pstmt.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        
+        Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylist.getId());
+    }
+    
     @FXML
     private void clickUp(ActionEvent event)
     {
+        moveSong(-1);
     }
 
     @FXML
     private void clickDown(ActionEvent event)
     {
+        moveSong(+1);
     }
 
     @FXML
