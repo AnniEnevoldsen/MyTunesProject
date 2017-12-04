@@ -100,8 +100,6 @@ public class MainWindowController implements Initializable
     @FXML
     private Pane pausePane;
     @FXML
-    private Label currentlyPlaying;
-    @FXML
     private Button btnLoadSongs;
     @FXML
     private TableView<Playlists> lstPlaylists;
@@ -366,14 +364,11 @@ public class MainWindowController implements Initializable
         Playlist selectedPlaylist = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
         model.removeFromPlaylist(selectedPlaylist);
     }
-
-
         
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
     {
          
-        
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -418,10 +413,7 @@ public class MainWindowController implements Initializable
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-        
-   
-        
-  
+
     }
     
     @FXML
@@ -453,8 +445,7 @@ public class MainWindowController implements Initializable
     private void clickSearch(ActionEvent event)
     {
         model.search(txtSearch.getText());
-        
-        //update list?
+
         System.out.println("Searching for song");
     }
      

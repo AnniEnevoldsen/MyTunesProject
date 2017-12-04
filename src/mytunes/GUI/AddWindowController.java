@@ -44,6 +44,7 @@ public class AddWindowController implements Initializable
     private MainWindowController parent;
     private Window stage;
     Model model = new Model();
+    private Songs editZong;
     
     /**
      * Initializes the controller class.
@@ -81,7 +82,7 @@ public class AddWindowController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-        if (((Button) event.getSource()).getText().equals("New")){
+        if (editZong==null){
         Songs s = new Songs();
         s.setId(-1);
         s.setTitle(txtTitle.getText());
@@ -90,22 +91,23 @@ public class AddWindowController implements Initializable
         s.setTime(txtTime.getText());
         s.setFileLocation(txtFileLocation.getText());
         model.add(s);
+        
         }
-       else if (((Button) event.getSource()).getText().equals("Edit")){
-       Songs songs = parent.getSelectedSong();
-       songs.setTitle(txtTitle.getText());
-       songs.setArtist(txtArtist.getText());
-        model.editSongs(songs);
+       else {
+       editZong.setTitle(txtTitle.getText());
+       editZong.setArtist(txtArtist.getText());
+        model.editSongs(editZong);
     }
         
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
     }
         
-    public void setParentWindowController(MainWindowController parent,Songs getSelectedSong)
+    public void setParentWindowController(MainWindowController parent, Songs getSelectedSong)
     {
         this.parent = parent;
-
+        this.editZong = getSelectedSong;
+        
          if(getSelectedSong!=null){
         txtTitle.setText(parent.getSelectedSong().getTitle());
         txtArtist.setText(parent.getSelectedSong().getArtist());

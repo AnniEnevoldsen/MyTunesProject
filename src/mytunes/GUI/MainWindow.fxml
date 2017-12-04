@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.MainWindowController">
    <children>
@@ -57,11 +56,6 @@
       </Pane>
       <Slider fx:id="volumeControl" blockIncrement="5.0" layoutX="49.0" layoutY="72.0" prefHeight="14.0" prefWidth="146.0" value="50.0" />
       <Button fx:id="btnLoadSongs" layoutX="610.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickLoadSDB" text="Load songs" />
-      <Label fx:id="currentlyPlaying" layoutX="259.0" layoutY="25.0">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Label>
       <Button layoutX="29.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickLoadPDB" text="Load Playlists" />
       <TableView fx:id="lstPlaylists" layoutX="30.0" layoutY="130.0" prefHeight="426.0" prefWidth="160.0">
         <columns>
