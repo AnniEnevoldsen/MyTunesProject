@@ -96,8 +96,8 @@ public class Model
     
     public void editSongs(Songs songs)
     {
-        
         bllm.editSongs(songs);
+       
     }
     
     public void editPlaylists(Playlists playlists) {
