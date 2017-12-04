@@ -81,7 +81,7 @@ public class AddWindowController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
-        //if (((Button) event.getSource()).getText().equals("New...")){
+        if (((Button) event.getSource()).getText().equals("New")){
         Songs s = new Songs();
         s.setId(-1);
         s.setTitle(txtTitle.getText());
@@ -90,13 +90,13 @@ public class AddWindowController implements Initializable
         s.setTime(txtTime.getText());
         s.setFileLocation(txtFileLocation.getText());
         model.add(s);
-        //}
-//       else if (((Button) event.getSource()).getText().equals("Edit...")){
-//       Songs songs = parent.getSelectedSong();
-//       songs.setTitle(txtTitle.getText());
-//       songs.setArtist(txtArtist.getText());
-//        model.editSongs(songs);
-//    }
+        }
+       else if (((Button) event.getSource()).getText().equals("Edit")){
+       Songs songs = parent.getSelectedSong();
+       songs.setTitle(txtTitle.getText());
+       songs.setArtist(txtArtist.getText());
+        model.editSongs(songs);
+    }
         
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
