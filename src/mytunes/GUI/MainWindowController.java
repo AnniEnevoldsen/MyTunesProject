@@ -179,6 +179,8 @@ public class MainWindowController implements Initializable
         //initialize cell factory for tableview
     }
     
+    private int cancion;
+    
     public String getSongSelected()
     {
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
@@ -186,7 +188,12 @@ public class MainWindowController implements Initializable
     
     public String getTheSongSelected()
     { 
+    
      return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
+    }
+    public int getIDTheSongSelected(){
+    
+    return cancion = lstSongs.getSelectionModel().getSelectedIndex();
     }
     
     private void volumeControl()
@@ -212,15 +219,17 @@ public class MainWindowController implements Initializable
         //media = new Media(new File(getSongSelected()).toURI().toString());
         //this should make it possible to play from the other list as well
         media = new Media(new File(getTheSongSelected()).toURI().toString());
+       
+        getIDTheSongSelected();
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
-        volumeControl();    
+        volumeControl();
         
     }    
     
     public boolean mediaFilter(){
     
-        if (isPlaying == 0) {
+        if (isPlaying == 0 ||isPlaying == 2) {
             
         return true;
         }else{
@@ -228,18 +237,21 @@ public class MainWindowController implements Initializable
         return false;}
     }
     
-    
     @FXML
     public void clickPlay(ActionEvent event)
     {   
-        
+       
         if (mediaFilter()) {
          mediaPlayer();
             if(!player.isAutoPlay()){
                 player.setAutoPlay(true);
                 playPane.setOpacity(0);
                 pausePane.setOpacity(1);
-                isPlaying = isPlaying + 1;}
+                isPlaying = 1;
+            }else{
+                player.stop();
+                player.setAutoPlay(true);
+            }
             }else{
                 if(player.isAutoPlay()){
                 player.pause();
@@ -251,6 +263,7 @@ public class MainWindowController implements Initializable
                 playPane.setOpacity(0);
                 pausePane.setOpacity(1);}
                 }
+        
     }
     
     @FXML
