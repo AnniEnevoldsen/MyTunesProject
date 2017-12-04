@@ -59,7 +59,9 @@ public class Model
 
     public void search(String title)
     {
-       bllm.getAllSongsByTitle(title);
+       
+        sList.clear();
+        sList.addAll(bllm.getAllSongsByTitle(title));
     }
     
     public void add(Songs songs)
@@ -94,6 +96,7 @@ public class Model
     
     public void editSongs(Songs songs)
     {
+        
         bllm.editSongs(songs);
     }
     

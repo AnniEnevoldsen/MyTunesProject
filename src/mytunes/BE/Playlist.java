@@ -19,7 +19,7 @@ public class Playlist
 
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final IntegerProperty playlists_id = new SimpleIntegerProperty();
-    private final StringProperty songs_title = new SimpleStringProperty();
+    private final StringProperty songsTitle = new SimpleStringProperty();
     private final StringProperty songs_artist = new SimpleStringProperty();
     private final StringProperty songs_genre = new SimpleStringProperty();
     private final StringProperty songs_time = new SimpleStringProperty();
@@ -71,17 +71,17 @@ public class Playlist
     
     public String getSongsTitle()
     {
-        return songs_title.get();
+        return songsTitle.get();
     }
 
     public void setSongsTitle(String value)
     {
-        songs_title.set(value);
+        songsTitle.set(value);
     }
 
     public StringProperty songsTitleProperty()
     {
-        return songs_title;
+        return songsTitle;
     }
 
     public String getSongsArtist()
@@ -147,6 +147,6 @@ public class Playlist
     @Override
     public String toString()
     {
-        return "" + songs_title.getValue() + "\t" + songs_artist.getValue() + "\t" + songs_genre.getValue() + "\t" + songs_time.getValue() + "\t" + songs_fileLocation.getValue();
+        return "" + songsTitle.getValue() + "\t" + songs_artist.getValue() + "\t" + songs_genre.getValue() + "\t" + songs_time.getValue() + "\t" + songs_fileLocation.getValue();
     }
 }

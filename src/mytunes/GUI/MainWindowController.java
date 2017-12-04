@@ -61,6 +61,7 @@ public class MainWindowController implements Initializable
     private Model model = new Model();
     private ConnectionManager cm = new ConnectionManager();
     private Playlists playlists = new Playlists();
+    private Songs sSong;
     
     @FXML
     private Button btnNewPlaylist;
@@ -132,7 +133,7 @@ public class MainWindowController implements Initializable
             new PropertyValueFactory("name"));
         
         titleView.setCellValueFactory(
-            new PropertyValueFactory("title"));
+            new PropertyValueFactory("songsTitle"));
         //is it not supposed to be title?
         
         columnTitle.setCellValueFactory(
@@ -150,22 +151,6 @@ public class MainWindowController implements Initializable
         lstPlaylists.setItems(model.getPlaylistsList());
         lstSongsInPlaylist.setItems(model.getSongsInPlaylistList());
 
-        /*
-        lstSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
-                {
-                    @Override
-                    public void changed(ObservableValue observable, Object oldValue, Object newValue)
-                    {
-                        //fillTextFields();
-                    }
-                }
-
-                );
-        lstPlaylists.setEditable(true);
-
-            );
-        */
-
         lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlists>()
             { 
                 @Override
@@ -176,7 +161,7 @@ public class MainWindowController implements Initializable
             }
         );
 
-        //initialize cell factory for tableview
+    
     }
     
     private int cancion;
@@ -296,7 +281,7 @@ public class MainWindowController implements Initializable
     private void clickEditPlaylist(ActionEvent event) throws IOException
     {
               Stage newWindow = new Stage();
-
+              
         //newWindow.initModality(Modality.APPLICATION_MODAL);
 
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("NewPlaylist.fxml"));
@@ -382,9 +367,13 @@ public class MainWindowController implements Initializable
         model.removeFromPlaylist(selectedPlaylist);
     }
 
+
+        
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
     {
+         
+        
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -394,24 +383,25 @@ public class MainWindowController implements Initializable
         Parent root = fxLoader.load();
 
         AddWindowController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
+        controller.setParentWindowController(this, null);
 
         Scene scene = new Scene(root);
         
         newWindow.setTitle("Add a Song");
         newWindow.setScene(scene);
-        newWindow.showAndWait();
-        
+        newWindow.showAndWait(); 
+       
     }
     
     public Songs getSelectedSong()
     {
         return lstSongs.getSelectionModel().getSelectedItem();
     }
-    
+      
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException
     {
+        getSelectedSong();
         Stage newWindow = new Stage();
 
         //newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -421,19 +411,19 @@ public class MainWindowController implements Initializable
         Parent root = fxLoader.load();
 
         AddWindowController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
+        
+        controller.setParentWindowController(this, getSelectedSong());
 
         Scene scene = new Scene(root);
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
    
-        Songs songs
-                = lstSongs.getSelectionModel().getSelectedItem();
-
-        model.editSongs(songs);
+        
+  
     }
-
+    
     @FXML
     private void clickDeleteSong(ActionEvent event) throws IOException
     {
@@ -463,6 +453,7 @@ public class MainWindowController implements Initializable
     private void clickSearch(ActionEvent event)
     {
         model.search(txtSearch.getText());
+        
         //update list?
         System.out.println("Searching for song");
     }

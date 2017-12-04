@@ -51,6 +51,7 @@ public class NewPlaylistController implements Initializable
         p.setName(txtName.getText());
   
         model.addP(p); 
+        
     
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
