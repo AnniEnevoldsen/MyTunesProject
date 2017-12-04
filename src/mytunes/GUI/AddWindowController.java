@@ -34,8 +34,6 @@ public class AddWindowController implements Initializable
     @FXML
     private TextField txtTime;
     @FXML
-    private TextField txtFile;
-    @FXML
     private Button btnChoose;
     @FXML
     private Button btnCancel;
@@ -79,33 +77,46 @@ public class AddWindowController implements Initializable
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
-
+    
     @FXML
     private void clickSave(ActionEvent event)
     {
+        //if (((Button) event.getSource()).getText().equals("New...")){
         Songs s = new Songs();
         s.setId(-1);
         s.setTitle(txtTitle.getText());
-        s.setGenre(txtGenre.getText());
+        s.setArtist(txtArtist.getText());
         s.setGenre(txtGenre.getText());
         s.setTime(txtTime.getText());
         s.setFileLocation(txtFileLocation.getText());
-
         model.add(s);
-    
+        //}
+//       else if (((Button) event.getSource()).getText().equals("Edit...")){
+//       Songs songs = parent.getSelectedSong();
+//       songs.setTitle(txtTitle.getText());
+//       songs.setArtist(txtArtist.getText());
+//        model.editSongs(songs);
+//    }
+        
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
     }
-    
-    public void setParentWindowController(MainWindowController parent)
+        
+    public void setParentWindowController(MainWindowController parent,Songs getSelectedSong)
     {
         this.parent = parent;
-        //this is making add do like edit. use if edit clicked fill, else do nothing
+
+         if(getSelectedSong!=null){
         txtTitle.setText(parent.getSelectedSong().getTitle());
-        txtArtist.setText(parent.getSelectedSong().getTitle());
+        txtArtist.setText(parent.getSelectedSong().getArtist());
         txtGenre.setText(parent.getSelectedSong().getGenre());
         txtTime.setText(parent.getSelectedSong().getTime());       
         txtFileLocation.setText(parent.getSelectedSong().getFileLocation());
+        
+        
+        }      
     }
+
+ 
 
 }
