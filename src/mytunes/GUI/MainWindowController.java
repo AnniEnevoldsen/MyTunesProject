@@ -165,8 +165,6 @@ public class MainWindowController implements Initializable
     
     }
     
-    private int cancion;
-    
     public String getSongSelected()
     {
      return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
@@ -176,10 +174,6 @@ public class MainWindowController implements Initializable
     { 
     
      return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
-    }
-    public int getIDTheSongSelected(){
-    
-    return cancion = lstSongs.getSelectionModel().getSelectedIndex();
     }
     
     private void volumeControl()
@@ -228,7 +222,7 @@ public class MainWindowController implements Initializable
                 
             }
 
-            media = new Media(new File(getTheSongSelected()).toURI().toString());
+            media = new Media(new File(getSongSelected()).toURI().toString());
             player = new MediaPlayer(media);
             mediaView = new MediaView(player);
             volumeControl();
