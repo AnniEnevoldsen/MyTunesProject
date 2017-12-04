@@ -353,10 +353,6 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException
     {
-<<<<<<< HEAD
-=======
-         
->>>>>>> 86f1670532808761a8e18ae22c3c40d3e4db468f
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
