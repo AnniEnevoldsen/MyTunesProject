@@ -35,9 +35,9 @@ public class BLLManager
         return dalm.getAllSongsInPlaylist(playlists_id);
     }
     
-    public List<Songs> getAllSongsByTitle(String title)
+    public List<Songs> getAllSongsByTitle(String title, String artist)
     {
-        return dalm.getAllSongsByTitle(title);
+        return dalm.getAllSongsByTitle(title, artist);
     }
 
     public void add(Songs songs)

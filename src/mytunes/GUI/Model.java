@@ -57,11 +57,10 @@ public class Model
         spList.addAll(bllm.getAllSongsInPlaylist(playlists_id));
     }
 
-    public void search(String title)
-    {
-       
+    public void searchTitle(String title, String artist)
+    { 
         sList.clear();
-        sList.addAll(bllm.getAllSongsByTitle(title));
+        sList.addAll(bllm.getAllSongsByTitle(title, artist));
     }
     
     public void add(Songs songs)
