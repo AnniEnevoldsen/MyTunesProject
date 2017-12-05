@@ -122,7 +122,7 @@ public class MainWindowController implements Initializable {
     private TableColumn<Songs, String> columnTime;
     @FXML
     private TableColumn<Songs, String> columnFileLocation;
-    private Songs songPlaying;
+    private Playlist songPlaying;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,9 +168,6 @@ public class MainWindowController implements Initializable {
     }
 
     private void volumeControl() {
-
-        volumeControl.setValue(player.getVolume() * 100);
-
         volumeControl.setValue(player.getVolume() * 100);
         volumeControl.valueProperty().addListener(new InvalidationListener() {
             @Override
@@ -193,6 +190,16 @@ public class MainWindowController implements Initializable {
         pausePane.setOpacity(0);
     }
 
+    private void stopOrPlayNewMusic() {
+        if (player != null) {
+            player.stop();
+
+        }
+        playerMediaPlayer();
+        volumeControl();
+        setPauseButton();
+    }
+
     private void playerMediaPlayer() {
 
         media = new Media(new File(getSongSelected()).toURI().toString());
@@ -200,26 +207,36 @@ public class MainWindowController implements Initializable {
         mediaView = new MediaView(player);
     }
 
-    @FXML
-    private void clickPlay(ActionEvent event) {
-        if (player != null && getSelectedSong() == songPlaying) {
-            if (!player.isAutoPlay()) {
+    private void switchPlayPauseAction() {
+        if (!player.isAutoPlay()) {
 
-                setPauseButton();
-            } else {
+            setPauseButton();
+        } else {
+
+            setPlayButton();
+        }
+    }
+    private void playOrPause(){
+    if (player.isAutoPlay()) {
 
                 setPlayButton();
-            }
-        } else {
-            if (player != null) {
-                player.stop();
+            } else {
 
+                setPauseButton();
             }
-            playerMediaPlayer();
-            volumeControl();
-            setPauseButton();
+    
+    }
+    private void compareSongs(){
+        if (player != null && getSelectedSongInPlaylist().equals(songPlaying)) {
+            playOrPause();
+        } else {
+            stopOrPlayNewMusic();
         }
-        songPlaying = getSelectedSong();
+        songPlaying = getSelectedSongInPlaylist();
+    }
+    @FXML
+    private void clickPlay(ActionEvent event) {
+        compareSongs();
     }
 
     @FXML
@@ -411,11 +428,9 @@ public class MainWindowController implements Initializable {
     //evt get text method 
     @FXML
 
-    private void clickSearch(ActionEvent event)
-    {
-        model.searchTitle(txtSearch.getText(),txtSearch.getText());
+    private void clickSearch(ActionEvent event) {
+        model.searchTitle(txtSearch.getText(), txtSearch.getText());
         System.out.println("Searching for song or artist");
-
 
     }
 
