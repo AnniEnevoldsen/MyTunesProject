@@ -430,7 +430,6 @@ public class MainWindowController implements Initializable {
 
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, selectedPlaylists.getId());
-            //pstmt.setInt(2, selectedPlaylists.getId());
             pstmt.setString(2, selectedSongs.getTitle());
             pstmt.setString(3, selectedSongs.getArtist());
             pstmt.setString(4, selectedSongs.getGenre());

@@ -49,7 +49,6 @@ public class Playlists {
         return name;
     }
     
-
     public int getId() {
         return id.get();
     }
@@ -61,7 +60,6 @@ public class Playlists {
     public IntegerProperty idProperty() {
         return id;
     }
-
 
   @Override
     public String toString() {
