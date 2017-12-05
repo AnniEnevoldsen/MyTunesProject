@@ -122,7 +122,7 @@ public class MainWindowController implements Initializable {
     private TableColumn<Songs, String> columnTime;
     @FXML
     private TableColumn<Songs, String> columnFileLocation;
-    private Songs songPlaying;
+    private Playlist songPlaying;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,9 +168,6 @@ public class MainWindowController implements Initializable {
     }
 
     private void volumeControl() {
-
-        volumeControl.setValue(player.getVolume() * 100);
-
         volumeControl.setValue(player.getVolume() * 100);
         volumeControl.valueProperty().addListener(new InvalidationListener() {
             @Override
@@ -200,15 +197,35 @@ public class MainWindowController implements Initializable {
         mediaView = new MediaView(player);
     }
 
+    private void switchPlayPauseAction() {
+        if (!player.isAutoPlay()) {
+
+            setPauseButton();
+        } else {
+
+            setPlayButton();
+        }
+    }
+
+    private void switchStopAction() {
+        if (player != null) {
+            player.stop();
+
+        }
+        playerMediaPlayer();
+        volumeControl();
+        setPauseButton();
+    }
+
     @FXML
     private void clickPlay(ActionEvent event) {
-        if (player != null && getSelectedSong() == songPlaying) {
-            if (!player.isAutoPlay()) {
-
-                setPauseButton();
-            } else {
+        if (player != null && getSelectedSongInPlaylist().equals(songPlaying)) {
+            if (player.isAutoPlay()) {
 
                 setPlayButton();
+            } else {
+
+                setPauseButton();
             }
         } else {
             if (player != null) {
@@ -219,7 +236,10 @@ public class MainWindowController implements Initializable {
             volumeControl();
             setPauseButton();
         }
-        songPlaying = getSelectedSong();
+        songPlaying = getSelectedSongInPlaylist();
+//        if (songPlaying.getFileLocation().equals(getSelectedSongInPlaylist().getSongsFileLocation())) {
+//            
+//        }
     }
 
     @FXML
@@ -411,11 +431,9 @@ public class MainWindowController implements Initializable {
     //evt get text method 
     @FXML
 
-    private void clickSearch(ActionEvent event)
-    {
-        model.searchTitle(txtSearch.getText(),txtSearch.getText());
+    private void clickSearch(ActionEvent event) {
+        model.searchTitle(txtSearch.getText(), txtSearch.getText());
         System.out.println("Searching for song or artist");
-
 
     }
 
