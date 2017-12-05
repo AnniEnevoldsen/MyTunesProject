@@ -190,6 +190,16 @@ public class MainWindowController implements Initializable {
         pausePane.setOpacity(0);
     }
 
+    private void stopOrPlayNewMusic() {
+        if (player != null) {
+            player.stop();
+
+        }
+        playerMediaPlayer();
+        volumeControl();
+        setPauseButton();
+    }
+
     private void playerMediaPlayer() {
 
         media = new Media(new File(getSongSelected()).toURI().toString());
@@ -206,40 +216,27 @@ public class MainWindowController implements Initializable {
             setPlayButton();
         }
     }
-
-    private void switchStopAction() {
-        if (player != null) {
-            player.stop();
-
-        }
-        playerMediaPlayer();
-        volumeControl();
-        setPauseButton();
-    }
-
-    @FXML
-    private void clickPlay(ActionEvent event) {
-        if (player != null && getSelectedSongInPlaylist().equals(songPlaying)) {
-            if (player.isAutoPlay()) {
+    private void playOrPause(){
+    if (player.isAutoPlay()) {
 
                 setPlayButton();
             } else {
 
                 setPauseButton();
             }
+    
+    }
+    private void compareSongs(){
+        if (player != null && getSelectedSongInPlaylist().equals(songPlaying)) {
+            playOrPause();
         } else {
-            if (player != null) {
-                player.stop();
-
-            }
-            playerMediaPlayer();
-            volumeControl();
-            setPauseButton();
+            stopOrPlayNewMusic();
         }
         songPlaying = getSelectedSongInPlaylist();
-//        if (songPlaying.getFileLocation().equals(getSelectedSongInPlaylist().getSongsFileLocation())) {
-//            
-//        }
+    }
+    @FXML
+    private void clickPlay(ActionEvent event) {
+        compareSongs();
     }
 
     @FXML
