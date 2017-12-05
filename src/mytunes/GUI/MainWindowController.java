@@ -410,10 +410,13 @@ public class MainWindowController implements Initializable {
 
     //evt get text method 
     @FXML
-    private void clickSearch(ActionEvent event) {
-        model.search(txtSearch.getText());
 
-        System.out.println("Searching for song");
+    private void clickSearch(ActionEvent event)
+    {
+        model.searchTitle(txtSearch.getText(),txtSearch.getText());
+        System.out.println("Searching for song or artist");
+
+
     }
 
     @FXML

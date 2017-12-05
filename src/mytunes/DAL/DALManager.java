@@ -134,7 +134,7 @@ public class DALManager
     }
     
     public List<Songs> getAllSongsByTitle(
-            String title)
+            String title, String artist)
     {
 
         List<Songs> allSongs = new ArrayList();
@@ -145,11 +145,14 @@ public class DALManager
             String query
                     = "SELECT * FROM Songs "
                     + "WHERE title LIKE ? "
-                    + "ORDER BY id";
+                    + "OR " 
+                    + "artist LIKE ? "
+                    + "ORDER BY id ";
 
             PreparedStatement pstmt
                     = con.prepareStatement(query);
             pstmt.setString(1, "%" + title + "%");
+            pstmt.setString(2, "%" + artist + "%");
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next())
