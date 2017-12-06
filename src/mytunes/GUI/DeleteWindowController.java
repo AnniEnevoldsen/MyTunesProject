@@ -33,31 +33,29 @@ public class DeleteWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    @FXML
-    private void clickAcceptDelete(ActionEvent event) 
-    {
-        Model model = new Model();
-        
-        this.parent = parent;
-        Songs selected = parent.getSelectedSong();
-        
-        model.remove(selected);
-        
-        Stage window = (Stage) btnCancel.getScene().getWindow();
-        window.close();    
     }
 
     @FXML
-    private void clickCancelDelete(ActionEvent event) 
-    {
+    private void clickAcceptDelete(ActionEvent event) {
+        Model model = new Model();
+
+        this.parent = parent;
+        Songs selected = parent.getSelectedSong();
+
+        model.remove(selected);
+
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
-    public void setParentWindowController(MainWindowController parent)
-    {
+
+    @FXML
+    private void clickCancelDelete(ActionEvent event) {
+        Stage window = (Stage) btnCancel.getScene().getWindow();
+        window.close();
+    }
+
+    public void setParentWindowController(MainWindowController parent) {
         this.parent = parent;
     }
-    
+
 }

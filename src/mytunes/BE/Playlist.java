@@ -14,8 +14,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author Jesper
  */
-public class Playlist
-{
+public class Playlist {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final IntegerProperty playlists_id = new SimpleIntegerProperty();
@@ -25,22 +24,30 @@ public class Playlist
     private final StringProperty songs_genre = new SimpleStringProperty();
     private final StringProperty songs_time = new SimpleStringProperty();
     private final StringProperty songs_fileLocation = new SimpleStringProperty();
+<<<<<<< HEAD
 
     public int getId()
     {
+=======
+    private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
+    /*
+    * id methods
+    */
+    public int getId() {
+>>>>>>> e39e35f6cb6f575473d5a25b3268996b6bd10e8e
         return id.get();
     }
 
-    public void setId(int value)
-    {
+    public void setId(int value) {
         id.set(value);
     }
 
-    public IntegerProperty idProperty()
-    {
+    public IntegerProperty idProperty() {
         return id;
     }
-        
+    /*
+    * playlist_order methods
+    */
     public int getPlaylistOrder() {
         return playlistOrder.get();
     }
@@ -52,101 +59,85 @@ public class Playlist
     public IntegerProperty playlistOrderProperty() {
         return playlistOrder;
     }
-    
-    public int getPlaylistsId()
-    {
+    /*
+    * playlists_id methods
+    */
+    public int getPlaylistsId() {
         return playlists_id.get();
     }
 
-    public void setPlaylistsId(int value)
-    {
+    public void setPlaylistsId(int value) {
         playlists_id.set(value);
     }
 
-    public IntegerProperty PlaylistsIdProperty()
-    {
+    public IntegerProperty PlaylistsIdProperty() {
         return playlists_id;
     }
-
-    
-    public String getSongsTitle()
-    {
+    /*
+    * songs methods
+    */
+    public String getSongsTitle() {
         return songsTitle.get();
     }
 
-    public void setSongsTitle(String value)
-    {
+    public void setSongsTitle(String value) {
         songsTitle.set(value);
     }
 
-    public StringProperty songsTitleProperty()
-    {
+    public StringProperty songsTitleProperty() {
         return songsTitle;
     }
 
-    public String getSongsArtist()
-    {
+    public String getSongsArtist() {
         return songs_artist.get();
     }
 
-    public void setSongsArtist(String value)
-    {
+    public void setSongsArtist(String value) {
         songs_artist.set(value);
     }
 
-    public StringProperty songsArtistProperty()
-    {
+    public StringProperty songsArtistProperty() {
         return songs_artist;
     }
 
-    public String getSongsGenre()
-    {
+    public String getSongsGenre() {
         return songs_genre.get();
     }
 
-    public void setSongsGenre(String value)
-    {
+    public void setSongsGenre(String value) {
         songs_genre.set(value);
     }
 
-    public StringProperty songsGenreProperty()
-    {
+    public StringProperty songsGenreProperty() {
         return songs_genre;
     }
 
-    public String getSongsTime()
-    {
+    public String getSongsTime() {
         return songs_time.get();
     }
 
-    public void setSongsTime(String value)
-    {
+    public void setSongsTime(String value) {
         songs_time.set(value);
     }
 
-    public StringProperty songsTimeProperty()
-    {
+    public StringProperty songsTimeProperty() {
         return songs_time;
     }
 
-    public String getSongsFileLocation()
-    {
+    public String getSongsFileLocation() {
         return songs_fileLocation.get();
     }
 
-    public void setSongsFileLocation(String value)
-    {
+    public void setSongsFileLocation(String value) {
         songs_fileLocation.set(value);
     }
 
-    public StringProperty songsFileLocationProperty()
-    {
+    public StringProperty songsFileLocationProperty() {
         return songs_fileLocation;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "" + songsTitle.getValue() + "\t" + songs_artist.getValue() + "\t" + songs_genre.getValue() + "\t" + songs_time.getValue() + "\t" + songs_fileLocation.getValue();
     }
 }

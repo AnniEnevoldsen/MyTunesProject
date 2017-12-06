@@ -23,8 +23,8 @@ import mytunes.BE.Songs;
  *
  * @author Jesper
  */
-public class AddWindowController implements Initializable
-{
+public class AddWindowController implements Initializable {
+
     @FXML
     private TextField txtTitle;
     @FXML
@@ -45,80 +45,69 @@ public class AddWindowController implements Initializable
     private Window stage;
     Model model = new Model();
     private Songs editZong;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
-
     @FXML
-    private void clickChoose(ActionEvent event)
-    {
+    private void clickChoose(ActionEvent event) {
         String absolutePath = null;
-        
+
         final FileChooser fileChooser = new FileChooser();
-        
+
         File song = fileChooser.showOpenDialog(stage);
-        if (song != null)
-        {
+        if (song != null) {
             absolutePath = song.getAbsolutePath();
         }
-        
-        txtFileLocation.setText(absolutePath);    
+
+        txtFileLocation.setText(absolutePath);
     }
 
     @FXML
-    private void clickCancel(ActionEvent event)
-    {
+    private void clickCancel(ActionEvent event) {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
-    
+
     @FXML
-    private void clickSave(ActionEvent event)
-    {
-        if (editZong==null){
-        Songs s = new Songs();
-        s.setId(-1);
-        s.setTitle(txtTitle.getText());
-        s.setArtist(txtArtist.getText());
-        s.setGenre(txtGenre.getText());
-        s.setTime(txtTime.getText());
-        s.setFileLocation(txtFileLocation.getText());
-        model.add(s);
-        
+    private void clickSave(ActionEvent event) {
+        if (editZong == null) {
+            Songs s = new Songs();
+            s.setId(-1);
+            s.setTitle(txtTitle.getText());
+            s.setArtist(txtArtist.getText());
+            s.setGenre(txtGenre.getText());
+            s.setTime(txtTime.getText());
+            s.setFileLocation(txtFileLocation.getText());
+            model.add(s);
+
+        } else {
+            editZong.setTitle(txtTitle.getText());
+            editZong.setArtist(txtArtist.getText());
+            model.editSongs(editZong);
         }
-       else {
-       editZong.setTitle(txtTitle.getText());
-       editZong.setArtist(txtArtist.getText());
-        model.editSongs(editZong);
-    }
-        
+
         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
     }
-        
-    public void setParentWindowController(MainWindowController parent, Songs getSelectedSong)
-    {
+
+    public void setParentWindowController(MainWindowController parent, Songs getSelectedSong) {
         this.parent = parent;
         this.editZong = getSelectedSong;
-        
-        if(getSelectedSong!=null){
-        txtTitle.setText(parent.getSelectedSong().getTitle());
-        txtArtist.setText(parent.getSelectedSong().getArtist());
-        txtGenre.setText(parent.getSelectedSong().getGenre());
-        txtTime.setText(parent.getSelectedSong().getTime());       
-        txtFileLocation.setText(parent.getSelectedSong().getFileLocation());
-        
-        
-        }      
-    }
 
- 
+        if (getSelectedSong != null) {
+            txtTitle.setText(parent.getSelectedSong().getTitle());
+            txtArtist.setText(parent.getSelectedSong().getArtist());
+            txtGenre.setText(parent.getSelectedSong().getGenre());
+            txtTime.setText(parent.getSelectedSong().getTime());
+            txtFileLocation.setText(parent.getSelectedSong().getFileLocation());
+
+        }
+    }
 
 }
