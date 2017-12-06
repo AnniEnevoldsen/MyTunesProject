@@ -402,8 +402,6 @@ public class MainWindowController implements Initializable
                     Level.SEVERE, null, ex);
         }
 
-        System.out.println("hello");
-
         try (Connection con = cm.getConnection())
         {
             String sql = "UPDATE Playlist"
@@ -419,8 +417,6 @@ public class MainWindowController implements Initializable
             {
                 throw new SQLException("Song could not be moved");
             }
-
-            System.out.println("hello1");
 
             Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
             model.loadAllSP(selectedPlaylist.getId());
