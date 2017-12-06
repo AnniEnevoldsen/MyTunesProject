@@ -108,7 +108,7 @@ public class AddWindowController implements Initializable
         this.parent = parent;
         this.editZong = getSelectedSong;
         
-         if(getSelectedSong!=null){
+        if(getSelectedSong!=null){
         txtTitle.setText(parent.getSelectedSong().getTitle());
         txtArtist.setText(parent.getSelectedSong().getArtist());
         txtGenre.setText(parent.getSelectedSong().getGenre());

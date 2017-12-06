@@ -26,9 +26,9 @@ import mytunes.GUI.NewPlaylistController;
  */
 public class DALManager
 {
-    
+
     private ConnectionManager cm = new ConnectionManager();
-    
+
     public List<Songs> getAllSongs()
     {
         System.out.println("Getting all songs.");
@@ -59,7 +59,7 @@ public class DALManager
         }
         return allSongs;
     }
-       
+
     public List<Playlists> getAllPlaylists()
     {
         System.out.println("Getting all playlists.");
@@ -86,7 +86,7 @@ public class DALManager
         }
         return allPlaylists;
     }
-    
+
     public List<Playlist> getAllSongsInPlaylist(int playlists_id)
     {
         System.out.println("Getting all songs in playlist.");
@@ -101,16 +101,6 @@ public class DALManager
 
             ResultSet rs = stmt.executeQuery();
             
-            /*
-            while(rs.next())
-            {
-                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET playlistOrder = ?");
-                
-                pstmt.setInt(1, 1);
-             
-                pstmt.executeQuery();
-            }
-            */
             while (rs.next())
             {
                 Playlist p = new Playlist();
@@ -121,7 +111,6 @@ public class DALManager
                 p.setSongsGenre(rs.getString("songs_genre"));
                 p.setSongsTime(rs.getString("songs_time"));
                 p.setSongsFileLocation(rs.getString("songs_fileLocation"));
-                //p.setPlaylistOrder(rs.getInt("playlistOrder"));
 
                 allSongsInPlaylist.add(p);
             }
@@ -132,20 +121,21 @@ public class DALManager
         }
         return allSongsInPlaylist;
     }
-    
-    public List<Songs> getAllSongsByTitle(
+
+    public List<Songs> getAllSongsByTitle
+        (
             String title, String artist)
-    {
+        {
 
         List<Songs> allSongs = new ArrayList();
 
         try (Connection con = cm.getConnection())
         {
-            
+
             String query
                     = "SELECT * FROM Songs "
                     + "WHERE title LIKE ? "
-                    + "OR " 
+                    + "OR "
                     + "artist LIKE ? "
                     + "ORDER BY id ";
 
@@ -175,7 +165,7 @@ public class DALManager
         return allSongs;
 
     }
-    
+
     public void add(Songs songs)
     {
         System.out.println("Adding song to database.");
@@ -214,7 +204,7 @@ public class DALManager
         }
     }
 
-     public void addP(Playlists playlists)
+    public void addP(Playlists playlists)
     {
         System.out.println("Adding playlist to database.");
 
@@ -230,8 +220,6 @@ public class DALManager
                             sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1, playlists.getName());
-
-
 
             int affected = pstmt.executeUpdate();
             if (affected < 1)
@@ -251,11 +239,11 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-     
+
     public void remove(Songs selectedSongs)
     {
         System.out.println("Removing song");
-        
+
         try (Connection con = cm.getConnection())
         {
             String sql = "DELETE FROM Songs WHERE id=?";
@@ -268,11 +256,11 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-    
+
     public void removeP(Playlists selectedPlaylists)
     {
         System.out.println("Removing playlist");
-        
+
         try (Connection con = cm.getConnection())
         {
             String sql = "DELETE FROM Playlists WHERE id=?";
@@ -285,11 +273,11 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-    
-        public void removeSP(Playlist selectedPlaylist)
+
+    public void removeSP(Playlist selectedPlaylist)
     {
         System.out.println("Removing song from playlist");
-        
+
         try (Connection con = cm.getConnection())
         {
             String sql = "DELETE FROM Playlist WHERE id=?";
@@ -302,7 +290,7 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-    
+
     public void editSongs(Songs songs)
     {
         try (Connection con = cm.getConnection())
@@ -311,7 +299,7 @@ public class DALManager
                     = "UPDATE Songs SET "
                     + "title=?, artist=?, genre=?, time=?, fileLocation=? "
                     + "WHERE id=?";
-            
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, songs.getTitle());
             pstmt.setString(2, songs.getArtist());
@@ -332,29 +320,32 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-    
-    public void editPlaylists(Playlists playlists) {
-        
-        try (Connection con = cm.getConnection()) {
+
+    public void editPlaylists(Playlists playlists)
+    {
+
+        try (Connection con = cm.getConnection())
+        {
             String sql
                     = "UPDATE Playlists SET "
-                    + "name=?"
-                    + "WHERE id=?"; //maybe where id is selected?
+                    + "name = ?"
+                    + "WHERE id = ?";
             PreparedStatement pstmt
                     = con.prepareStatement(sql);
             pstmt.setString(1, playlists.getName());
             pstmt.setInt(2, playlists.getId());
 
             int affected = pstmt.executeUpdate();
-            if (affected<1)
+            if (affected < 1)
+            {
                 throw new SQLException("Playlist could not be updated");
+            }
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
 
-      
     }
 }
