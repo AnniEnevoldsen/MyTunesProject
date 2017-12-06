@@ -335,32 +335,58 @@ public class MainWindowController implements Initializable {
     private void moveSong(int moveIndex)
     {   
         int selectedPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+        int selectedPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
         int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
-        
+
         lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
         
-        int selectedSongNewId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+        int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
         
         try (Connection con = cm.getConnection())
         {
-            String sql = "UPDATE Playlist SET playlistOrder = ? WHERE playlistOrder = ? SET playlistOrder = ? WHERE playlistOrder = ?";
-            
-            System.out.println(sql);
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE playlistOrder = ?";
             
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedSongNewId);
-            pstmt.setInt(2, selectedPlaylistOrder);
-            pstmt.setInt(3, selectedPlaylistOrder);
-            pstmt.setInt(4, selectedSongNewId);
-            pstmt.execute();
-        } catch (SQLException ex)
+            pstmt.setInt(1, selectedNewPlaylistOrder);
+            pstmt.setInt(2, selectedPlaylistId);
+            
+            int affected = pstmt.executeUpdate();
+            if (affected < 1) {
+                throw new SQLException("Song could not be moved");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+              
+        System.out.println("hello");
+        
+        try (Connection con = cm.getConnection())
         {
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE playlistOrder = ?";
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylistOrder);
+            pstmt.setInt(2, selectedNewPlaylistId);
+            
+            int affected = pstmt.executeUpdate();
+            if (affected < 1) {
+                throw new SQLException("Song could not be moved");
+            }
+        } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
         
-        Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
-        model.loadAllSP(selectedPlaylist.getId());
+        System.out.println("hello1");
+        
+        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylists.getId());
     }
 
     @FXML
@@ -390,6 +416,9 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Delete");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylists.getId());
     }
 
     @FXML
@@ -465,36 +494,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void clickAddSong(ActionEvent event) {
-        System.out.println("Adding song to playlist.");
-        
-        Random random = new Random();
-        int r = random.nextInt(2147483647);
-                
-        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
-        Songs selectedSongs = lstSongs.getSelectionModel().getSelectedItem();
-
-        try (Connection con = cm.getConnection()) {
-            String sql = "INSERT INTO Playlist "
-                    + "(Playlists_id, PlaylistOrder, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedPlaylists.getId());
-            pstmt.setInt(2, r);
-            pstmt.setString(3, selectedSongs.getTitle());
-            pstmt.setString(4, selectedSongs.getArtist());
-            pstmt.setString(5, selectedSongs.getGenre());
-            pstmt.setString(6, selectedSongs.getTime());
-            pstmt.setString(7, selectedSongs.getFileLocation());
-
-            int affected = pstmt.executeUpdate();
-            if (affected < 1) {
-                throw new SQLException("Song could not be added");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DALManager.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
+        model.addSongToPlaylist(lstPlaylists.getSelectionModel().getSelectedItem(), lstSongs.getSelectionModel().getSelectedItem());
         
         Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
         model.loadAllSP(selectedPlaylist.getId());

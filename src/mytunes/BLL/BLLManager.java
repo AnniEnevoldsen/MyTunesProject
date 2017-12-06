@@ -40,6 +40,11 @@ public class BLLManager
         return dalm.getAllSongsByTitle(title, artist);
     }
 
+    public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
+    {
+        dalm.addSongToPlaylist(selectedPlaylists, selectedSongs);
+    }
+    
     public void add(Songs songs)
     {
         dalm.add(songs);

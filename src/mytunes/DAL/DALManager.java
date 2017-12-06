@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.BE.Playlist;
@@ -89,13 +90,11 @@ public class DALManager
 
     public List<Playlist> getAllSongsInPlaylist(int playlists_id)
     {
-        System.out.println("Getting all songs in playlist.");
-
         List<Playlist> allSongsInPlaylist = new ArrayList();
 
         try (Connection con = cm.getConnection())
         {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Playlist WHERE playlists_id = ? ORDER BY playlistOrder");
 
             stmt.setInt(1, playlists_id);
 
@@ -106,6 +105,7 @@ public class DALManager
                 Playlist p = new Playlist();
                 p.setId(rs.getInt("id"));
                 p.setPlaylistsId(rs.getInt("playlists_id"));
+                p.setPlaylistOrder(rs.getInt("playlistOrder"));
                 p.setSongsTitle(rs.getString("songs_title"));
                 p.setSongsArtist(rs.getString("songs_artist"));
                 p.setSongsGenre(rs.getString("songs_genre"));
@@ -166,6 +166,37 @@ public class DALManager
 
     }
 
+    public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
+    {
+        System.out.println("Adding song to playlist.");
+        
+        Random random = new Random();
+        int r = random.nextInt(2147483647);
+
+        try (Connection con = cm.getConnection()) {
+            String sql = "INSERT INTO Playlist "
+                    + "(Playlists_id, PlaylistOrder, Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylists.getId());
+            pstmt.setInt(2, r);
+            pstmt.setString(3, selectedSongs.getTitle());
+            pstmt.setString(4, selectedSongs.getArtist());
+            pstmt.setString(5, selectedSongs.getGenre());
+            pstmt.setString(6, selectedSongs.getTime());
+            pstmt.setString(7, selectedSongs.getFileLocation());
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1) {
+                throw new SQLException("Song could not be added");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+        
     public void add(Songs songs)
     {
         System.out.println("Adding song to database.");

@@ -63,6 +63,12 @@ public class Model
         sList.addAll(bllm.getAllSongsByTitle(title, artist));
     }
     
+    public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
+    {
+        bllm.addSongToPlaylist(selectedPlaylists, selectedSongs);
+    }
+
+    
     public void add(Songs songs)
     {
         bllm.add(songs);

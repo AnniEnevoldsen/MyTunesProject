@@ -19,12 +19,12 @@ public class Playlist
 
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final IntegerProperty playlists_id = new SimpleIntegerProperty();
+    private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
     private final StringProperty songsTitle = new SimpleStringProperty();
     private final StringProperty songs_artist = new SimpleStringProperty();
     private final StringProperty songs_genre = new SimpleStringProperty();
     private final StringProperty songs_time = new SimpleStringProperty();
     private final StringProperty songs_fileLocation = new SimpleStringProperty();
-    private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
 
     public int getId()
     {
