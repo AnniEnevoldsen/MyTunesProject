@@ -16,7 +16,8 @@ import mytunes.BLL.BLLManager;
  *
  * @author Jesper
  */
-public class Model {
+public class Model
+{
 
     private BLLManager bllm = new BLLManager();
     private ObservableList<Songs> sList = FXCollections.observableArrayList();
@@ -26,100 +27,102 @@ public class Model {
     /*
     * get methods
      */
-    public ObservableList<Songs> getSongsList() {
+    public ObservableList<Songs> getSongsList()
+    {
         return sList;
     }
 
-    public ObservableList<Playlists> getPlaylistsList() {
+    public ObservableList<Playlists> getPlaylistsList()
+    {
         return pList;
     }
 
-    public ObservableList<Playlist> getSongsInPlaylistList() {
+    public ObservableList<Playlist> getSongsInPlaylistList()
+    {
         return spList;
     }
 
     /*
     * load methods
-     */
-    public void loadAll() {
+    */
+    public void loadAll()
+    {
         sList.clear();
         sList.addAll(bllm.getAllSongs());
     }
 
-    public void loadAllP() {
+    public void loadAllP()
+    {
         pList.clear();
         pList.addAll(bllm.getAllPlaylists());
     }
 
-    public void loadAllSP(int playlists_id) {
+    public void loadAllSP(int playlists_id)
+    {
         spList.clear();
         spList.addAll(bllm.getAllSongsInPlaylist(playlists_id));
     }
 
-<<<<<<< HEAD
-    public void searchTitle(String title, String artist)
-    { 
-        sList.clear();
-        sList.addAll(bllm.getAllSongsByTitle(title, artist));
-    }
-    
+    /*
+    * add methods
+    */
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
     {
         bllm.addSongToPlaylist(selectedPlaylists, selectedSongs);
     }
 
-    
     public void add(Songs songs)
     {
-=======
-    /*
-    * add methods
-     */
-    public void add(Songs songs) {
->>>>>>> e39e35f6cb6f575473d5a25b3268996b6bd10e8e
         bllm.add(songs);
         sList.add(songs);
     }
 
-    public void addP(Playlists playlists) {
+    public void addP(Playlists playlists)
+    {
         bllm.addP(playlists);
         pList.add(playlists);
     }
 
     /*
     * remove methods
-     */
-    public void remove(Songs selectedSongs) {
+    */
+    public void remove(Songs selectedSongs)
+    {
         bllm.remove(selectedSongs);
         sList.remove(selectedSongs);
     }
 
-    public void removeP(Playlists selectedPlaylists) {
+    public void removeP(Playlists selectedPlaylists)
+    {
         bllm.removeP(selectedPlaylists);
         pList.remove(selectedPlaylists);
     }
 
-    public void removeSP(Playlist selectedPlaylist) {
+    public void removeSP(Playlist selectedPlaylist)
+    {
         bllm.removeSP(selectedPlaylist);
         spList.remove(selectedPlaylist);
     }
 
     /*
     * edit methods
-     */
-
-    public void editSongs(Songs songs) {
+    */
+    public void editSongs(Songs songs)
+    {
         bllm.editSongs(songs);
 
     }
 
-    public void editPlaylists(Playlists playlists) {
+    public void editPlaylists(Playlists playlists)
+    {
         bllm.editPlaylists(playlists);
     }
+
     /*
     * rest of methods
     */
-    public void searchTitle(String title, String artist) {
+    public void searchTitle(String title, String artist)
+    {
         sList.clear();
         sList.addAll(bllm.getAllSongsByTitle(title, artist));
     }

@@ -20,7 +20,8 @@ import mytunes.BE.Playlists;
  *
  * @author Jesper
  */
-public class NewPlaylistController implements Initializable {
+public class NewPlaylistController implements Initializable
+{
 
     @FXML
     private TextField txtName;
@@ -36,12 +37,14 @@ public class NewPlaylistController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
     }
 
     @FXML
-    private void clickSave(ActionEvent event) {
+    private void clickSave(ActionEvent event)
+    {
         Playlists p = new Playlists();
         p.setId(-1);
         p.setName(txtName.getText());
@@ -53,20 +56,17 @@ public class NewPlaylistController implements Initializable {
     }
 
     @FXML
-    private void clickCancel(ActionEvent event) {
+    private void clickCancel(ActionEvent event)
+    {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
     }
 
-    public void setParentWindowController(MainWindowController parent) {
+    public void setParentWindowController(MainWindowController parent)
+    {
         this.parent = parent;
-<<<<<<< HEAD
-        
+        //still an error here
         //txtName.setText(parent.getSelectedPlaylist().getName());
-=======
-
-        txtName.setText(parent.getSelectedPlaylist().getName());
->>>>>>> e39e35f6cb6f575473d5a25b3268996b6bd10e8e
     }
 
 }
