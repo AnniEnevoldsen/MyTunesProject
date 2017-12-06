@@ -30,6 +30,10 @@ public class DALManager
 
     private ConnectionManager cm = new ConnectionManager();
 
+    /**
+     * Gets all songs in a list from the table called Songs in the db called Songs
+     * via the ConnectionManager and with a prepared statement.
+     */
     public List<Songs> getAllSongs()
     {
         System.out.println("Getting all songs.");
@@ -60,7 +64,11 @@ public class DALManager
         }
         return allSongs;
     }
-
+    
+    /**
+     * 
+     * Gets all playlists in a list, from the db Songs, table Playlists. 
+     */
     public List<Playlists> getAllPlaylists()
     {
         System.out.println("Getting all playlists.");
@@ -87,7 +95,11 @@ public class DALManager
         }
         return allPlaylists;
     }
-
+    
+    /**
+     * 
+     * Gets each and every playlist with songs from db Songs, table Playlist.
+     */
     public List<Playlist> getAllSongsInPlaylist(int playlists_id)
     {
         List<Playlist> allSongsInPlaylist = new ArrayList();
@@ -122,7 +134,12 @@ public class DALManager
         return allSongsInPlaylist;
     }
 
-    public List<Songs> getAllSongsByTitle
+    /**
+     * 
+     * This gets text from the txtFilter and uses it to search in the db for a song 
+     * by songtitle and artist 
+     */
+    public List<Songs> getAllSongsBySearching
         (
             String title, String artist)
         {
@@ -166,6 +183,11 @@ public class DALManager
 
     }
 
+    /**
+     * 
+     * this uses primary keys to add a song from the table Songs and Playlists to Playlist
+     * where we can then show the playlist we have created.
+     */
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
     {
         System.out.println("Adding song to playlist.");
@@ -196,7 +218,11 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
     }
-        
+    
+    /**
+     * 
+     * This adds a new song by inserting data into the database.
+     */
     public void add(Songs songs)
     {
         System.out.println("Adding song to database.");
@@ -235,6 +261,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This adds a new Playlist in the Playlists table in the database. 
+     */
     public void addP(Playlists playlists)
     {
         System.out.println("Adding playlist to database.");
@@ -271,6 +301,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This removes a song from the database.
+     */
     public void remove(Songs selectedSongs)
     {
         System.out.println("Removing song");
@@ -288,6 +322,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This removes a playlist from the list of playlists in the database.
+     */
     public void removeP(Playlists selectedPlaylists)
     {
         System.out.println("Removing playlist");
@@ -305,6 +343,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This removes a song from a playlist, so it removes a field in the table Playlist. 
+     */
     public void removeSP(Playlist selectedPlaylist)
     {
         System.out.println("Removing song from playlist");
@@ -322,6 +364,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This allows us to edit the songs in the table Songs.
+     */
     public void editSongs(Songs songs)
     {
         try (Connection con = cm.getConnection())
@@ -352,6 +398,10 @@ public class DALManager
         }
     }
 
+    /**
+     * 
+     * This allows us to edit the name of the individual playlist in the Playlists table. 
+     */
     public void editPlaylists(Playlists playlists)
     {
 
@@ -377,6 +427,6 @@ public class DALManager
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-
     }
+    
 }

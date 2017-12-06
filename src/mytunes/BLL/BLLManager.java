@@ -19,62 +19,109 @@ public class BLLManager
 {
 
     DALManager dalm = new DALManager();
-
+    
+    /**
+     * Gets all songs from the db.
+     */
     public List<Songs> getAllSongs()
     {
         return dalm.getAllSongs();
     }
     
+    /**
+     * 
+     * gets all playlists from the db.
+     */
     public List<Playlists> getAllPlaylists()
     {
         return dalm.getAllPlaylists();
     }
     
+    /**
+     * 
+     * gets all songs in each playlist.
+     */
     public List<Playlist> getAllSongsInPlaylist(int playlists_id)
     {
         return dalm.getAllSongsInPlaylist(playlists_id);
     }
     
-    public List<Songs> getAllSongsByTitle(String title, String artist)
+    /**
+     * 
+     * Gets all songs with artist/title like text in txtFilter.
+     */
+    public List<Songs> getAllSongsBySearching(String title, String artist)
     {
-        return dalm.getAllSongsByTitle(title, artist);
+        return dalm.getAllSongsBySearching(title, artist);
     }
 
+    /**
+     * 
+     * Adds a song to a playlist.
+     */
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
     {
         dalm.addSongToPlaylist(selectedPlaylists, selectedSongs);
     }
     
+    /**
+     * 
+     * Adds song to db.
+     */
     public void add(Songs songs)
     {
         dalm.add(songs);
     }
     
+    /**
+     * 
+     * Adds playlist to db.
+     */
     public void addP(Playlists playlists)
     {
         dalm.addP(playlists);
     }
 
+    /**
+     * 
+     * Removes song from db.
+     */
     public void remove(Songs selectedSongs)
     {
         dalm.remove(selectedSongs);
     }
     
+    /**
+     * 
+     * Removes playlist from db. 
+     */
         public void removeP(Playlists selectedPlaylists)
     {
         dalm.removeP(selectedPlaylists);
     }
         
+    /**
+     * 
+     * Removes song from playlist.
+     */    
     public void removeSP(Playlist selectedPlaylist)
     {
         dalm.removeSP(selectedPlaylist);
     }
 
+    /**
+     * 
+     * Edits song in db.
+     */
     public void editSongs(Songs songs)
     {
         dalm.editSongs(songs);
     }
     
+    /**
+     * 
+     * Edits playlist name in db.
+     */
     public void editPlaylists(Playlists playlists) 
     {
         dalm.editPlaylists(playlists);

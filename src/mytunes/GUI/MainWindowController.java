@@ -539,7 +539,7 @@ public class MainWindowController implements Initializable
         @FXML
         private void clickSearch(ActionEvent event) 
         {
-            model.searchTitle(txtSearch.getText(), txtSearch.getText());
+            model.search(txtSearch.getText(), txtSearch.getText());
             System.out.println("Searching for song or artist");
         }
 
