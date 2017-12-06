@@ -15,14 +15,12 @@ import javafx.stage.Stage;
  *
  * @author Jesper
  */
-public class MyTunes extends Application
-{
-    
+public class MyTunes extends Application {
+
     @Override
-    public void start(Stage stage) throws Exception
-    {
+    public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("GUI/MainWindow.fxml"));
-        
+
         Scene scene = new Scene(root);
         stage.setTitle("MyTunes - Group Group");
         stage.setScene(scene);
@@ -32,9 +30,8 @@ public class MyTunes extends Application
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

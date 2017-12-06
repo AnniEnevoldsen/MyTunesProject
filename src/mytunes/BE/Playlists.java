@@ -34,9 +34,8 @@ public class Playlists {
     public ListProperty songsProperty() {
         return songs;
     }
-    
-    //also song list, number of songs etc.
 
+    //also song list, number of songs etc.
     public String getName() {
         return name.get();
     }
@@ -48,7 +47,7 @@ public class Playlists {
     public StringProperty nameProperty() {
         return name;
     }
-    
+
     public int getId() {
         return id.get();
     }
@@ -61,10 +60,9 @@ public class Playlists {
         return id;
     }
 
-  @Override
+    @Override
     public String toString() {
         return "" + name.getValue();
     }
 
- 
 }

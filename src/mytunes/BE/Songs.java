@@ -14,8 +14,8 @@ import javafx.beans.property.StringProperty;
  *
  * @author Jesper
  */
-public class Songs
-{
+public class Songs {
+
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty artist = new SimpleStringProperty();
@@ -23,7 +23,9 @@ public class Songs
     private final StringProperty time = new SimpleStringProperty();
     private final StringProperty fileLocation = new SimpleStringProperty();
     private final IntegerProperty playlistOrder = new SimpleIntegerProperty();
-    
+    /*
+    * id methods
+    */
     public int getId() {
         return id.get();
     }
@@ -35,8 +37,9 @@ public class Songs
     public IntegerProperty idProperty() {
         return id;
     }
-    
-    
+    /*
+    * title methods
+    */
     public String getTitle() {
         return title.get();
     }
@@ -48,8 +51,9 @@ public class Songs
     public StringProperty titleProperty() {
         return title;
     }
-    
-    
+    /*
+    * artist methods
+    */
     public String getArtist() {
         return artist.get();
     }
@@ -61,8 +65,9 @@ public class Songs
     public StringProperty artistProperty() {
         return artist;
     }
-    
-    
+    /*
+    * genre methods
+    */
     public String getGenre() {
         return genre.get();
     }
@@ -74,8 +79,9 @@ public class Songs
     public StringProperty genreProperty() {
         return genre;
     }
-    
-    
+    /*
+    * time methods
+    */
     public String getTime() {
         return time.get();
     }
@@ -87,8 +93,9 @@ public class Songs
     public StringProperty timeProperty() {
         return time;
     }
-    
-    
+    /*
+    * file location methods
+    */
     public String getFileLocation() {
         return fileLocation.get();
     }
@@ -100,7 +107,9 @@ public class Songs
     public StringProperty fileLocationProperty() {
         return fileLocation;
     }
-    
+    /*
+    * playlist_order methods
+    */
     public int getPlaylistOrder() {
         return id.get();
     }

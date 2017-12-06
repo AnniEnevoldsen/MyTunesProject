@@ -19,8 +19,7 @@ import mytunes.BE.Playlist;
  *
  * @author Anni
  */
-public class DeleteSongsInPlaylistWindowController implements Initializable
-{
+public class DeleteSongsInPlaylistWindowController implements Initializable {
 
     @FXML
     private Button btnCancel;
@@ -28,39 +27,35 @@ public class DeleteSongsInPlaylistWindowController implements Initializable
     private Button btnDelete;
 
     private MainWindowController parent;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
     @FXML
-    private void clickAcceptDelete(ActionEvent event)
-    {
+    private void clickAcceptDelete(ActionEvent event) {
         Model model = new Model();
-        
+
         this.parent = parent;
         Playlist selected = parent.getSelectedSongInPlaylist();
-        
+
         model.removeSP(selected);
-        
+
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
 
     @FXML
-    private void clickCancelDelete(ActionEvent event)
-    {
+    private void clickCancelDelete(ActionEvent event) {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
 
-    public void setParentWindowController(MainWindowController parent)
-    {
+    public void setParentWindowController(MainWindowController parent) {
         this.parent = parent;
     }
 

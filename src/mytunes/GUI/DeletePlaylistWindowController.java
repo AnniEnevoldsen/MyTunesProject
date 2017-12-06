@@ -25,7 +25,7 @@ public class DeletePlaylistWindowController implements Initializable {
     private Button btnCancel;
     @FXML
     private Button btnDelete;
-    
+
     private MainWindowController parent;
 
     /**
@@ -34,31 +34,29 @@ public class DeletePlaylistWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
-    private void clickAcceptDelete(ActionEvent event) 
-    {
+    private void clickAcceptDelete(ActionEvent event) {
         Model model = new Model();
-        
+
         this.parent = parent;
         Playlists selected = parent.getSelectedPlaylist();
-        
+
         model.removeP(selected);
-        
+
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
 
     @FXML
-    private void clickCancelDelete(ActionEvent event) 
-    {
+    private void clickCancelDelete(ActionEvent event) {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
-    public void setParentWindowController(MainWindowController parent)
-    {
+
+    public void setParentWindowController(MainWindowController parent) {
         this.parent = parent;
     }
-    
+
 }
