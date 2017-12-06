@@ -188,10 +188,14 @@ public class MainWindowController implements Initializable {
      */
     @FXML
     private void clickPlay(ActionEvent event) {
-        checkPlayer();
+        if (lstSongs.isHover()) {
+            playSongFromSongList();
+        }
+        
+        playSongFromPlaylist();
     }
 
-    private void checkPlayer() {
+    private void playSongFromSongList() {
 
         if (player != null && getSelectedSong().equals(songPlaying)) {
             playOrPause();
@@ -200,7 +204,14 @@ public class MainWindowController implements Initializable {
         }
         songPlaying = getSelectedSong();
     }
-
+    private void playSongFromPlaylist(){
+        if (player != null && getSelectedSongInPlaylist().equals(playlistSongPlaying)) {
+            playOrPause();
+        } else {
+            stopOrPlayNewMusic();
+        }
+        playlistSongPlaying = getSelectedSongInPlaylist();
+    }
     private void playOrPause() {
         if (player.isAutoPlay()) {
 
