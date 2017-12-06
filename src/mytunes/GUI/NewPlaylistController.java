@@ -68,7 +68,12 @@ public class NewPlaylistController implements Initializable
     {
         this.parent = parent;
         
+<<<<<<< HEAD
 //        txtName.setText(parent.getSelected().getName());
+=======
+        //same here, make if statement.
+        txtName.setText(parent.getSelectedPlaylist().getName());
+>>>>>>> 354ea1abe8d56083659c882bdfc96815c3184f72
     }
 
    

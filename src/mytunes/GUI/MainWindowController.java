@@ -123,7 +123,8 @@ public class MainWindowController implements Initializable {
     private TableColumn<Songs, String> columnTime;
     @FXML
     private TableColumn<Songs, String> columnFileLocation;
-    private Playlist songPlaying;
+    private Songs songPlaying;
+    private Playlist playlistSongPlaying;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,12 +160,23 @@ public class MainWindowController implements Initializable {
 
     }
 
-    private String getSongSelected() {
+    public Songs getSelectedSong() {
+        return lstSongs.getSelectionModel().getSelectedItem();
+    }
+
+    public Playlists getSelectedPlaylist() {
+        return lstPlaylists.getSelectionModel().getSelectedItem();
+    }
+
+    public Playlist getSelectedSongInPlaylist() {
+        return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+    }
+
+    private String getSongInPlaylistSelectedLocation() {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
     }
 
-    private String getTheSongSelected() {
-
+    private String getSongSelectedLocation() {
         return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
     }
 
@@ -201,11 +213,22 @@ public class MainWindowController implements Initializable {
         setPauseButton();
     }
 
-    private void playerMediaPlayer() {
+    private Runnable getEndOfMedia() {
+        return player.getOnEndOfMedia();
+    }
 
-        media = new Media(new File(getSongSelected()).toURI().toString());
+    private void setEndOfMedia() {
+        player.setOnEndOfMedia(getEndOfMedia());
+    }
+
+    private void playerMediaPlayer() {
+        
+        media = new Media(new File(getSongSelectedLocation()).toURI().toString());
+       
+
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
+
     }
 
     private void switchPlayPauseAction() {
@@ -217,27 +240,32 @@ public class MainWindowController implements Initializable {
             setPlayButton();
         }
     }
-    private void playOrPause(){
-    if (player.isAutoPlay()) {
 
-                setPlayButton();
-            } else {
+    private void playOrPause() {
+        if (player.isAutoPlay()) {
 
-                setPauseButton();
-            }
-    
-    }
-    private void compareSongs(){
-        if (player != null && getSelectedSongInPlaylist().equals(songPlaying)) {
-            playOrPause();
+            setPlayButton();
         } else {
+            
+            setPauseButton();
+        }
+
+    }
+
+    private void checkPlayer() {
+
+        if (player != null && getSelectedSong().equals(songPlaying)) {
+            playOrPause();
+        }
+        else {
             stopOrPlayNewMusic();
         }
-        songPlaying = getSelectedSongInPlaylist();
+        songPlaying = getSelectedSong();
     }
+
     @FXML
     private void clickPlay(ActionEvent event) {
-        compareSongs();
+        checkPlayer();
     }
 
     @FXML
@@ -257,11 +285,6 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Add a Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-    }
-
-    //can we please rename it to getSelectedPlaylist?
-    public Playlists getSelected() {
-        return lstPlaylists.getSelectionModel().getSelectedItem();
     }
 
     @FXML
@@ -388,18 +411,6 @@ public class MainWindowController implements Initializable {
         newWindow.setScene(scene);
         newWindow.showAndWait();
 
-    }
-
-    public Songs getSelectedSong() {
-        return lstSongs.getSelectionModel().getSelectedItem();
-    }
-
-    public Playlists getSelectedPlaylist() {
-        return lstPlaylists.getSelectionModel().getSelectedItem();
-    }
-
-    public Playlist getSelectedSongInPlaylist() {
-        return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
     @FXML
