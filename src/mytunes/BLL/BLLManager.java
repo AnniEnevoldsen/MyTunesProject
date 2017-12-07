@@ -66,7 +66,7 @@ public class BLLManager
     }
     
     /**
-     * Moves a song eihter up or down in the Playlist depending on moveIndex.
+     * Moves a song eihter up or down in the Playlist depending on if its eihter +1 or -1.
      */
     public void moveSong(int selectedPlaylistOrder, int selectedPlaylistId,
             int selectedNewPlaylistOrder, int selectedNewPlaylistId) throws SQLException
