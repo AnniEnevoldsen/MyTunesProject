@@ -189,17 +189,14 @@ public class MainWindowController implements Initializable
     /*
     * get methods
     */
-    protected Songs getSelectedSong()
-    {
-        return lstSongs.getSelectionModel().getSelectedItem();
-    }
+    
 
-    protected Playlist getSelectedSongInPlaylist()
+    public Playlist getSelectedSongInPlaylist()
     {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
-    protected Playlists getSelectedPlaylist()
+    public Playlists getSelectedPlaylist()
     {
         return lstPlaylists.getSelectionModel().getSelectedItem();
     }
@@ -340,7 +337,7 @@ public class MainWindowController implements Initializable
         Parent root = fxLoader.load();
 
         NewPlaylistController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
+        controller.setParentWindowController(this, null);
 
         Scene scene = new Scene(root);
         newWindow.setTitle("Add a Playlist");
@@ -351,6 +348,7 @@ public class MainWindowController implements Initializable
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException
     {
+        getSelectedPlaylist();
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -360,7 +358,7 @@ public class MainWindowController implements Initializable
         Parent root = fxLoader.load();
 
         NewPlaylistController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
+        controller.setParentWindowController(this, getSelectedPlaylist());
 
         Scene scene = new Scene(root);
 
@@ -478,6 +476,11 @@ public class MainWindowController implements Initializable
 
     }
 
+    public Songs getSelectedSong()
+    {
+        return lstSongs.getSelectionModel().getSelectedItem();
+    }
+    
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException
     {

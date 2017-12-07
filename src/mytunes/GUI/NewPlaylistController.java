@@ -32,6 +32,7 @@ public class NewPlaylistController implements Initializable
 
     private MainWindowController parent;
     private Model model = new Model();
+    private Playlists editPlaylist;
 
     /**
      * Initializes the controller class.
@@ -45,13 +46,20 @@ public class NewPlaylistController implements Initializable
     @FXML
     private void clickSave(ActionEvent event)
     {
+        if (editPlaylist == null) {
         Playlists p = new Playlists();
         p.setId(-1);
         p.setName(txtName.getText());
 
         model.addP(p);
-
-        Stage window = (Stage) btnCancel.getScene().getWindow();
+       
+        } else
+        {
+            editPlaylist.setName(txtName.getText());
+            model.editPlaylists(editPlaylist);
+        }
+        
+         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
 
@@ -62,11 +70,14 @@ public class NewPlaylistController implements Initializable
         stage.close();
     }
 
-    public void setParentWindowController(MainWindowController parent)
+    public void setParentWindowController(MainWindowController parent, Playlists getSelectedPlaylist)
     {
         this.parent = parent;
-        //still an error here
+        this.editPlaylist = getSelectedPlaylist;
+        
+        if (getSelectedPlaylist != null) {
         txtName.setText(parent.getSelectedPlaylist().getName());
+        }
     }
 
 }

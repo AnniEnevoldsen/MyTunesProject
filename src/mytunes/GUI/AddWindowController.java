@@ -78,7 +78,6 @@ public class AddWindowController implements Initializable {
     private void clickSave(ActionEvent event) {
         if (editZong == null) {
             Songs s = new Songs();
-            s.setId(-1);
             s.setTitle(txtTitle.getText());
             s.setArtist(txtArtist.getText());
             s.setGenre(txtGenre.getText());
@@ -89,6 +88,9 @@ public class AddWindowController implements Initializable {
         } else {
             editZong.setTitle(txtTitle.getText());
             editZong.setArtist(txtArtist.getText());
+            editZong.setGenre(txtGenre.getText());
+            editZong.setTime(txtTime.getText());
+            editZong.setFileLocation(txtFileLocation.getText());
             model.editSongs(editZong);
         }
 
@@ -106,7 +108,6 @@ public class AddWindowController implements Initializable {
             txtGenre.setText(parent.getSelectedSong().getGenre());
             txtTime.setText(parent.getSelectedSong().getTime());
             txtFileLocation.setText(parent.getSelectedSong().getFileLocation());
-
         }
     }
 
