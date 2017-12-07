@@ -111,7 +111,6 @@ public class MainWindowController implements Initializable
     private TableView<Playlist> lstSongsInPlaylist;
     @FXML
     private TableColumn<Playlist, String> titleView;
-    //now putting it over doesn't work, sorry jesper
     @FXML
     private TableView<Songs> lstSongs;
     @FXML
@@ -135,7 +134,6 @@ public class MainWindowController implements Initializable
 
         titleView.setCellValueFactory(
                 new PropertyValueFactory("songsTitle"));
-        //is it not supposed to be title?
 
         columnTitle.setCellValueFactory(
                 new PropertyValueFactory("title"));
@@ -369,70 +367,48 @@ public class MainWindowController implements Initializable
 
     /*
     * Song methods
-     */
-    private void moveSong(int moveIndex) throws SQLException
-    {
-        int selectedPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
-        int selectedPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
-        int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+    */
 
-        lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
-
-        int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
-        int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
-
-        try (Connection con = cm.getConnection())
-        {
-            String sql = "UPDATE Playlist"
-                    + " SET playlistOrder = ?"
-                    + " WHERE playlistOrder = ?";
-
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedNewPlaylistOrder);
-            pstmt.setInt(2, selectedPlaylistId);
-
-            int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
-                throw new SQLException("Song could not be moved");
-            }
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DALManager.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
-
-        try (Connection con = cm.getConnection())
-        {
-            String sql = "UPDATE Playlist"
-                    + " SET playlistOrder = ?"
-                    + " WHERE playlistOrder = ?";
-
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, selectedPlaylistOrder);
-            pstmt.setInt(2, selectedNewPlaylistId);
-
-            int affected = pstmt.executeUpdate();
-            if (affected < 1)
-            {
-                throw new SQLException("Song could not be moved");
-            }
-
-            Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
-            model.loadAllSP(selectedPlaylist.getId());
-        }
-    }
-        
+        /**
+        * Moves a song eihter up or down in the Playlist depending on if its eihter +1 or -1.
+        */
         @FXML
         private void clickUp(ActionEvent event) throws SQLException
         {
-            moveSong(-1);
+            int selectedPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+            int selectedPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+            int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+
+            lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex - 1);
+
+            int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+            int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+            
+            model.moveSong(selectedPlaylistOrder, selectedPlaylistId, selectedNewPlaylistOrder, selectedNewPlaylistId);
+            
+            Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
+            model.loadAllSP(selectedPlaylist.getId());
         }
 
+        /**
+        * Moves a song eihter up or down in the Playlist depending on if its eihter +1 or -1.
+        */
         @FXML
         private void clickDown(ActionEvent event) throws SQLException
         {
-            moveSong(+1);
+            int selectedPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+            int selectedPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+            int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+
+            lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + 1);
+
+            int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+            int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+            
+            model.moveSong(selectedPlaylistOrder, selectedPlaylistId, selectedNewPlaylistOrder, selectedNewPlaylistId);
+            
+            Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
+            model.loadAllSP(selectedPlaylist.getId());
         }
 
         @FXML
@@ -500,7 +476,6 @@ public class MainWindowController implements Initializable
             newWindow.setTitle("Edit Song");
             newWindow.setScene(scene);
             newWindow.showAndWait();
-
         }
 
         @FXML

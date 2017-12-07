@@ -5,6 +5,7 @@
  */
 package mytunes.BLL;
 
+import java.sql.SQLException;
 import java.util.List;
 import mytunes.BE.Playlist;
 import mytunes.BE.Songs;
@@ -62,6 +63,15 @@ public class BLLManager
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
     {
         dalm.addSongToPlaylist(selectedPlaylists, selectedSongs);
+    }
+    
+    /**
+     * Moves a song eihter up or down in the Playlist depending on moveIndex.
+     */
+    public void moveSong(int selectedPlaylistOrder, int selectedPlaylistId,
+            int selectedNewPlaylistOrder, int selectedNewPlaylistId) throws SQLException
+    {
+        dalm.moveSong(selectedPlaylistOrder, selectedPlaylistId, selectedNewPlaylistOrder, selectedNewPlaylistId);
     }
     
     /**

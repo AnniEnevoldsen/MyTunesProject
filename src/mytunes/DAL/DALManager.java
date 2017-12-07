@@ -185,7 +185,7 @@ public class DALManager
 
     /**
      * 
-     * this uses primary keys to add a song from the table Songs and Playlists to Playlist
+     * This uses primary keys to add a song from the table Songs and Playlists to Playlist
      * where we can then show the playlist we have created.
      */
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
@@ -216,6 +216,52 @@ public class DALManager
         } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * 
+     * Switches playlistOrder of two songs in the Playlist.
+     */
+    public void moveSong(int selectedPlaylistOrder, int selectedPlaylistId,
+            int selectedNewPlaylistOrder, int selectedNewPlaylistId) throws SQLException
+    {
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE id = ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedNewPlaylistOrder);
+            pstmt.setInt(2, selectedPlaylistId);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Song could not be moved");
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        
+        try (Connection con = cm.getConnection())
+        {
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE id = ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylistOrder);
+            pstmt.setInt(2, selectedNewPlaylistId);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Song could not be moved");
+            }
         }
     }
     

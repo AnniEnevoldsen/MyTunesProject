@@ -5,6 +5,7 @@
  */
 package mytunes.GUI;
 
+import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.BE.Playlist;
@@ -83,6 +84,15 @@ public class Model
         bllm.addSongToPlaylist(selectedPlaylists, selectedSongs);
     }
 
+    /**
+     * Moves a song eihter up or down in the Playlist depending on moveIndex.
+     */
+    public void moveSong(int selectedPlaylistOrder, int selectedPlaylistId,
+            int selectedNewPlaylistOrder, int selectedNewPlaylistId) throws SQLException
+    {
+        bllm.moveSong(selectedPlaylistOrder, selectedPlaylistId, selectedNewPlaylistOrder, selectedNewPlaylistId);
+    }
+    
     /**
      * Adds a song to Songs in db and to list lstSongs.
      */
