@@ -53,8 +53,7 @@ import mytunes.DAL.DALManager;
  *
  * @author Jesper
  */
-public class MainWindowController implements Initializable
-{
+public class MainWindowController implements Initializable {
 
     JFXPanel fxPanel = new JFXPanel();
     private Media media;
@@ -125,10 +124,10 @@ public class MainWindowController implements Initializable
     private TableColumn<Songs, String> columnFileLocation;
     private Songs songPlaying;
     private Playlist playlistSongPlaying;
+    private String lastFocus = "";
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         PlaylistView.setCellValueFactory(
                 new PropertyValueFactory("name"));
 
@@ -150,13 +149,31 @@ public class MainWindowController implements Initializable
         lstPlaylists.setItems(model.getPlaylistsList());
         lstSongsInPlaylist.setItems(model.getSongsInPlaylistList());
 
-        lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlists>()
-        {
+        lstPlaylists.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlists>() {
             @Override
-            public void changed(ObservableValue<? extends Playlists> observable, Playlists oldValue, Playlists newValue)
-            {
+            public void changed(ObservableValue<? extends Playlists> observable, Playlists oldValue, Playlists newValue) {
                 model.loadAllSP(newValue.getId());
             }
+        }
+        );
+
+        lstSongs.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                lastFocus = "Songs";
+            }
+
+        }
+        );
+
+        lstSongsInPlaylist.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                lastFocus = "Playlist";
+            }
+
         }
         );
 
@@ -165,28 +182,15 @@ public class MainWindowController implements Initializable
     /*
     * get methods
      */
-    public Songs getSelectedSong()
-    {
+    protected Songs getSelectedSong() {
         return lstSongs.getSelectionModel().getSelectedItem();
     }
 
-    private String getSongSelectedLocation()
-    {
-        return lstSongs.getSelectionModel().getSelectedItem().getFileLocation();
-    }
-
-    public Playlist getSelectedSongInPlaylist()
-    {
+    protected Playlist getSelectedSongInPlaylist() {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
-    private String getSongInPlaylistSelectedLocation()
-    {
-        return lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation();
-    }
-
-    public Playlists getSelectedPlaylist()
-    {
+    protected Playlists getSelectedPlaylist() {
         return lstPlaylists.getSelectionModel().getSelectedItem();
     }
 
@@ -194,86 +198,81 @@ public class MainWindowController implements Initializable
     * Play button methods
      */
     @FXML
-    private void clickPlay(ActionEvent event)
-    {
-        if (lstSongs.isHover())
-        {
+    private void clickPlay(ActionEvent event) {
+        if (lastFocus.equals("Songs")) {
             playSongFromSongList();
+        } else if (lastFocus.equals("Playlist")) {
+            playSongFromPlaylist();
+        } else {
+            System.out.println("You are not able to play nothing yet.");
         }
-
-        playSongFromPlaylist();
     }
 
-    private void playSongFromSongList()
-    {
+    private void playSongFromSongList() {
 
-        if (player != null && getSelectedSong().equals(songPlaying))
-        {
+        if (player != null && getSelectedSong().equals(songPlaying)) {
             playOrPause();
-        } else
-        {
-            stopOrPlayNewMusic();
+        } else {
+            stopOrPlayNewMusicB();
         }
         songPlaying = getSelectedSong();
     }
 
-    private void playSongFromPlaylist()
-    {
-        if (player != null && getSelectedSongInPlaylist().equals(playlistSongPlaying))
-        {
+    private void playSongFromPlaylist() {
+        if (player != null && getSelectedSongInPlaylist().equals(playlistSongPlaying)) {
             playOrPause();
-        } else
-        {
+        } else {
             stopOrPlayNewMusic();
         }
         playlistSongPlaying = getSelectedSongInPlaylist();
     }
 
-    private void playOrPause()
-    {
-        if (player.isAutoPlay())
-        {
+    private void playOrPause() {
+        if (player.isAutoPlay()) {
 
             setPlayButton();
-        } else
-        {
+        } else {
 
             setPauseButton();
         }
 
     }
 
-    private void setPauseButton()
-    {
+    private void setPauseButton() {
         player.setAutoPlay(true);
         playPane.setOpacity(0);
         pausePane.setOpacity(1);
     }
 
-    private void setPlayButton()
-    {
+    private void setPlayButton() {
         player.pause();
         player.setAutoPlay(false);
         playPane.setOpacity(1);
         pausePane.setOpacity(0);
     }
 
-    private void stopOrPlayNewMusic()
-    {
-        if (player != null)
-        {
+    private void stopOrPlayNewMusic() {
+        if (player != null) {
             player.stop();
-
         }
-        playerMediaPlayer();
+        playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
         volumeControl();
         setPauseButton();
     }
 
-    private void playerMediaPlayer()
-    {
+    private void stopOrPlayNewMusicB() {
+        if (player != null) {
+            player.stop();
 
-        media = new Media(new File(getSongSelectedLocation()).toURI().toString());
+        }
+        playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
+        volumeControl();
+        setPauseButton();
+    }
+
+    private void playerMediaPlayer(String songLocation) {
+
+        media = new Media(new File(songLocation).toURI().toString());
 
         player = new MediaPlayer(media);
         mediaView = new MediaView(player);
@@ -283,14 +282,11 @@ public class MainWindowController implements Initializable
     /*
     * Volume method
      */
-    private void volumeControl()
-    {
+    private void volumeControl() {
         volumeControl.setValue(player.getVolume() * 100);
-        volumeControl.valueProperty().addListener(new InvalidationListener()
-        {
+        volumeControl.valueProperty().addListener(new InvalidationListener() {
             @Override
-            public void invalidated(Observable observable)
-            {
+            public void invalidated(Observable observable) {
                 player.setVolume(volumeControl.getValue() / 100);
             }
         });
@@ -300,8 +296,7 @@ public class MainWindowController implements Initializable
     * Playlist methods
      */
     @FXML
-    private void clickNewPlaylist(ActionEvent event) throws IOException
-    {
+    private void clickNewPlaylist(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -320,8 +315,7 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event) throws IOException
-    {
+    private void clickEditPlaylist(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -346,8 +340,7 @@ public class MainWindowController implements Initializable
     }
 
     @FXML
-    private void clickDeletePlaylist(ActionEvent event) throws IOException
-    {
+    private void clickDeletePlaylist(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -367,6 +360,7 @@ public class MainWindowController implements Initializable
 
     /*
     * Song methods
+<<<<<<< HEAD
     */
 
         /**
@@ -380,6 +374,51 @@ public class MainWindowController implements Initializable
             int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
 
             lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex - 1);
+=======
+     */
+    //refactor. gui accessing to database
+    private void moveSong(int moveIndex) throws SQLException {
+        int selectedPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+        int selectedPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+
+        lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + moveIndex);
+
+        int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
+        int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
+        
+        try (Connection con = cm.getConnection()) {
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE playlistOrder = ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedNewPlaylistOrder);
+            pstmt.setInt(2, selectedPlaylistId);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1) {
+                throw new SQLException("Song could not be moved");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+
+        try (Connection con = cm.getConnection()) {
+            String sql = "UPDATE Playlist"
+                    + " SET playlistOrder = ?"
+                    + " WHERE playlistOrder = ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, selectedPlaylistOrder);
+            pstmt.setInt(2, selectedNewPlaylistId);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1) {
+                throw new SQLException("Song could not be moved");
+            }
+>>>>>>> a8678767bb1031b73bf7662450d99a49f92549d5
 
             int selectedNewPlaylistOrder = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getPlaylistOrder();
             int selectedNewPlaylistId = lstSongsInPlaylist.getSelectionModel().getSelectedItem().getId();
@@ -389,6 +428,7 @@ public class MainWindowController implements Initializable
             Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
             model.loadAllSP(selectedPlaylist.getId());
         }
+<<<<<<< HEAD
 
         /**
         * Moves a song eihter up or down in the Playlist depending on if its eihter +1 or -1.
@@ -410,135 +450,147 @@ public class MainWindowController implements Initializable
             Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
             model.loadAllSP(selectedPlaylist.getId());
         }
+=======
+    }
 
-        @FXML
-        private void clickPlaylistDelete(ActionEvent event) throws IOException 
-        {
-            Stage newWindow = new Stage();
+    @FXML
+    private void clickUp(ActionEvent event) throws SQLException {
+        moveSong(-1);
+    }
+>>>>>>> a8678767bb1031b73bf7662450d99a49f92549d5
 
-            newWindow.initModality(Modality.APPLICATION_MODAL);
+    @FXML
+    private void clickDown(ActionEvent event) throws SQLException {
+        moveSong(+1);
+    }
 
-            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteSongInPlaylistWindow.fxml"));
+    @FXML
+    private void clickPlaylistDelete(ActionEvent event) throws IOException {
+        Stage newWindow = new Stage();
 
-            Parent root = fxLoader.load();
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
-            DeleteSongsInPlaylistWindowController controller = fxLoader.getController();
-            controller.setParentWindowController(this);
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteSongInPlaylistWindow.fxml"));
 
-            Scene scene = new Scene(root);
-            newWindow.setTitle("Delete");
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
+        Parent root = fxLoader.load();
 
-            Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
-            model.loadAllSP(selectedPlaylists.getId());
-        }
+        DeleteSongsInPlaylistWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
 
-        @FXML
-        private void clickNewSong(ActionEvent event) throws IOException 
-        {
-            Stage newWindow = new Stage();
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Delete");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
 
-            newWindow.initModality(Modality.APPLICATION_MODAL);
+        Playlists selectedPlaylists = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylists.getId());
+    }
 
-            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
+    @FXML
+    private void clickNewSong(ActionEvent event) throws IOException {
+        Stage newWindow = new Stage();
 
-            Parent root = fxLoader.load();
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
-            AddWindowController controller = fxLoader.getController();
-            controller.setParentWindowController(this, null);
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
 
-            Scene scene = new Scene(root);
+        Parent root = fxLoader.load();
 
-            newWindow.setTitle("Add a Song");
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
+        AddWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this, null);
 
-        }
+        Scene scene = new Scene(root);
 
-        @FXML
-        private void clickEditSong(ActionEvent event) throws IOException
-        {
-            getSelectedSong();
-            Stage newWindow = new Stage();
+        newWindow.setTitle("Add a Song");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
 
-            newWindow.initModality(Modality.APPLICATION_MODAL);
+    }
 
-            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
+    @FXML
+    private void clickEditSong(ActionEvent event) throws IOException {
+        getSelectedSong();
+        Stage newWindow = new Stage();
 
-            Parent root = fxLoader.load();
+        newWindow.initModality(Modality.APPLICATION_MODAL);
 
-            AddWindowController controller = fxLoader.getController();
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
 
-            controller.setParentWindowController(this, getSelectedSong());
+        Parent root = fxLoader.load();
 
+        AddWindowController controller = fxLoader.getController();
+
+<<<<<<< HEAD
             Scene scene = new Scene(root);
             newWindow.setTitle("Edit Song");
             newWindow.setScene(scene);
             newWindow.showAndWait();
         }
+=======
+        controller.setParentWindowController(this, getSelectedSong());
 
-        @FXML
-        private void clickDeleteSong(ActionEvent event) throws IOException 
-        {
-            Stage newWindow = new Stage();
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Edit Song");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+>>>>>>> a8678767bb1031b73bf7662450d99a49f92549d5
 
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-
-            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteWindow.fxml"));
-
-            Parent root = fxLoader.load();
-
-            DeleteWindowController controller = fxLoader.getController();
-            controller.setParentWindowController(this);
-
-            Scene scene = new Scene(root);
-            newWindow.setTitle("Delete");
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
-        }
-
-        @FXML
-        private void clickAddSong(ActionEvent event) 
-        {
-            model.addSongToPlaylist(lstPlaylists.getSelectionModel().getSelectedItem(), lstSongs.getSelectionModel().getSelectedItem());
-
-            Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
-            model.loadAllSP(selectedPlaylist.getId());
-        }
-
-        /*
-        * Rest of methods
-        */
-        //evt get text method 
-        @FXML
-        private void clickSearch(ActionEvent event) 
-        {
-            model.search(txtSearch.getText(), txtSearch.getText());
-            System.out.println("Searching for song or artist");
-        }
-
-        @FXML
-        private void clickForw(ActionEvent event) 
-        {
-        
-        }
-
-        @FXML
-        private void clickBack(ActionEvent event)
-        {
-        
-        }
-
-        @FXML
-        private void clickLoadSDB(ActionEvent event) 
-        {
-            model.loadAll();
-        }
-
-        @FXML
-        private void clickLoadPDB(ActionEvent event) 
-        {
-            model.loadAllP();
-        }
     }
+
+    @FXML
+    private void clickDeleteSong(ActionEvent event) throws IOException {
+        Stage newWindow = new Stage();
+
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("DeleteWindow.fxml"));
+
+        Parent root = fxLoader.load();
+
+        DeleteWindowController controller = fxLoader.getController();
+        controller.setParentWindowController(this);
+
+        Scene scene = new Scene(root);
+        newWindow.setTitle("Delete");
+        newWindow.setScene(scene);
+        newWindow.showAndWait();
+    }
+
+    @FXML
+    private void clickAddSong(ActionEvent event) {
+        model.addSongToPlaylist(lstPlaylists.getSelectionModel().getSelectedItem(), lstSongs.getSelectionModel().getSelectedItem());
+
+        Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
+        model.loadAllSP(selectedPlaylist.getId());
+    }
+
+    /*
+        * Rest of methods
+     */
+    //evt get text method 
+    @FXML
+    private void clickSearch(ActionEvent event) {
+        model.search(txtSearch.getText(), txtSearch.getText());
+        System.out.println("Searching for song or artist");
+    }
+
+    @FXML
+    private void clickForw(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void clickBack(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void clickLoadSDB(ActionEvent event) {
+        model.loadAll();
+    }
+
+    @FXML
+    private void clickLoadPDB(ActionEvent event) {
+        model.loadAllP();
+    }
+}
