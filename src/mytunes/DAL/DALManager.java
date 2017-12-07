@@ -450,15 +450,13 @@ public class DALManager
      */
     public void editPlaylists(Playlists playlists)
     {
-
         try (Connection con = cm.getConnection())
         {
             String sql
                     = "UPDATE Playlists SET "
-                    + "name=?"
+                    + "name=? "
                     + "WHERE id=?";
-            PreparedStatement pstmt
-                    = con.prepareStatement(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, playlists.getName());
             pstmt.setInt(2, playlists.getId());
 

@@ -361,15 +361,10 @@ public class MainWindowController implements Initializable
         controller.setParentWindowController(this, getSelectedPlaylist());
 
         Scene scene = new Scene(root);
-
         newWindow.setTitle("Edit Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
 
-        Playlists playlists
-                = lstPlaylists.getSelectionModel().getSelectedItem();
-
-        model.editPlaylists(playlists);
     }
 
     @FXML
@@ -495,12 +490,12 @@ public class MainWindowController implements Initializable
 
         AddWindowController controller = fxLoader.getController();
 
+        controller.setParentWindowController(this, getSelectedSong());
+        
         Scene scene = new Scene(root);
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
-        newWindow.showAndWait();
-
-        controller.setParentWindowController(this, getSelectedSong());
+        newWindow.showAndWait();      
     }
 
     @FXML

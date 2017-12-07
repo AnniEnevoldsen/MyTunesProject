@@ -53,13 +53,12 @@ public class NewPlaylistController implements Initializable
 
         model.addP(p);
        
-        } else
-        {
+        } else {
             editPlaylist.setName(txtName.getText());
             model.editPlaylists(editPlaylist);
         }
         
-         Stage window = (Stage) btnCancel.getScene().getWindow();
+         Stage window = (Stage) btnSave.getScene().getWindow();
         window.close();
     }
 
