@@ -98,15 +98,15 @@ public class MainWindowController implements Initializable {
     @FXML
     private TableColumn<Songs, String> columnTime;
     @FXML
-    
+
     private JFXPanel fxPanel = new JFXPanel();
     private ConnectionManager cm = new ConnectionManager();
     private Playlists playlists = new Playlists();
     private Model model = new Model();
-    
+
     private Media media;
     private MediaPlayer player;
-    private MediaView mediaView; 
+    private MediaView mediaView;
     private Songs sSong;
     private TableColumn<Songs, String> columnFileLocation;
     private Songs songPlaying;
@@ -170,24 +170,24 @@ public class MainWindowController implements Initializable {
     * get methods
      */
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     protected Songs getSelectedSong() {
         return lstSongs.getSelectionModel().getSelectedItem();
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     protected Playlist getSelectedSongInPlaylist() {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     protected Playlists getSelectedPlaylist() {
         return lstPlaylists.getSelectionModel().getSelectedItem();
@@ -197,8 +197,8 @@ public class MainWindowController implements Initializable {
     * Play button methods
      */
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void clickPlay(ActionEvent event) {
@@ -213,7 +213,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void playSongFromSongList() {
 
@@ -226,7 +226,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void playSongFromPlaylist() {
         if (player != null && getSelectedSongInPlaylist().equals(playlistSongPlaying)) {
@@ -238,7 +238,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void playOrPause() {
         if (player.isAutoPlay()) {
@@ -251,7 +251,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void setPauseButton() {
         player.setAutoPlay(true);
@@ -260,7 +260,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void setPlayButton() {
         player.pause();
@@ -270,7 +270,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void stopOrPlayNewMusic() {
         if (player != null) {
@@ -288,7 +288,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     private void stopOrPlayNewMusicB() {
         if (player != null) {
@@ -307,8 +307,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
-     * @param songLocation 
+     *
+     * @param songLocation
      */
     private void playerMediaPlayer(String songLocation) {
 
@@ -319,10 +319,9 @@ public class MainWindowController implements Initializable {
 
     }
 
-<<<<<<< HEAD
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     private boolean getEndOfMedia() {
         if (media.durationProperty().equals(player.currentCountProperty())) {
@@ -336,9 +335,6 @@ public class MainWindowController implements Initializable {
             System.out.println("ll");
         }
     }
-
-=======
->>>>>>> SamBranch
     /*
     * Volume method
      */
@@ -375,9 +371,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException {
@@ -401,9 +397,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickDeletePlaylist(ActionEvent event) throws IOException {
@@ -426,12 +422,12 @@ public class MainWindowController implements Initializable {
 
     /*
     * Song methods
-    */
-     /**
-     * 
+     */
+    /**
+     *
      * @param event
-     * @throws SQLException 
-     * moves a song up, due to the - 1 behind selectedSongIndex.
+     * @throws SQLException moves a song up, due to the - 1 behind
+     * selectedSongIndex.
      */
     @FXML
     private void clickUp(ActionEvent event) throws SQLException {
@@ -451,10 +447,10 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws SQLException 
-     * moves a song down, due to the + 1 behind selectedSongIndex.
+     * @throws SQLException moves a song down, due to the + 1 behind
+     * selectedSongIndex.
      */
     @FXML
     private void clickDown(ActionEvent event) throws SQLException {
@@ -474,9 +470,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickPlaylistDelete(ActionEvent event) throws IOException {
@@ -501,9 +497,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
@@ -527,9 +523,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
@@ -545,17 +541,17 @@ public class MainWindowController implements Initializable {
         AddWindowController controller = fxLoader.getController();
 
         controller.setParentWindowController(this, getSelectedSong());
-        
+
         Scene scene = new Scene(root);
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
-        newWindow.showAndWait();      
+        newWindow.showAndWait();
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void clickDeleteSong(ActionEvent event) throws IOException {
@@ -577,9 +573,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
-     * Adds a song to the Playlist table in the db.
+     *
+     * @param event Adds a song to the Playlist table in the db.
      */
     @FXML
     private void clickAddSong(ActionEvent event) {
@@ -596,12 +591,11 @@ public class MainWindowController implements Initializable {
     private void clickSearch(ActionEvent event) {
         model.search(txtSearch.getText(), txtSearch.getText());
         System.out.println("Searching for song or artist");
-        
+
         if (((Button) event.getSource()).getText().equals("Search")) {
 
-             setClearButton(); 
-        } 
-        else {
+            setClearButton();
+        } else {
             setSearchButton();
         }
     }
@@ -614,7 +608,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * Sets the text on btnSearch to Search, clears txtSearch and loads all songs.
+     * Sets the text on btnSearch to Search, clears txtSearch and loads all
+     * songs.
      */
     private void setSearchButton() {
         btnSearch.setText("Search");
@@ -623,8 +618,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void clickLoadSDB(ActionEvent event) {
@@ -632,8 +627,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void clickLoadPDB(ActionEvent event) {
