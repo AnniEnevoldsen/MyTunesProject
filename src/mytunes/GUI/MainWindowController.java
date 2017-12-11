@@ -89,10 +89,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button btnAddSong;
     @FXML
-    private Button forwButton;
-    @FXML
-    private Button backButton;
-    @FXML
     private Button ppButton;
     @FXML
     private Slider volumeControl;
@@ -197,6 +193,10 @@ public class MainWindowController implements Initializable {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * 
+     * @return 
+     */
     protected Playlists getSelectedPlaylist() {
         return lstPlaylists.getSelectionModel().getSelectedItem();
     }
@@ -585,41 +585,37 @@ public class MainWindowController implements Initializable {
         model.loadAllSP(selectedPlaylist.getId());
     }
 
-    /*
-    * Rest of methods
+    /**
+     * Search for title or artist
      */
-    //evt get text method 
     @FXML
     private void clickSearch(ActionEvent event) {
         model.search(txtSearch.getText(), txtSearch.getText());
         System.out.println("Searching for song or artist");
-    }
+        
+        if (((Button) event.getSource()).getText().equals("Search")) {
 
-        /**
-     * 
-     */
-    private void SearchOrClear() {
-        if (player.isAutoPlay()) {
-
+             setClearButton(); 
+        } 
+        else {
             setSearchButton();
-        } else {
-
-            setClearButton();
         }
     }
 
     /**
-     * 
+     * Sets the text on btnSearch to Clear
      */
     private void setClearButton() {
         btnSearch.setText("Clear");
     }
 
     /**
-     * 
+     * Sets the text on btnSearch to Search, clears txtSearch and loads all songs.
      */
     private void setSearchButton() {
         btnSearch.setText("Search");
+        txtSearch.clear();
+        model.loadAll();
     }
     
     /**
@@ -637,6 +633,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private void clickBack(ActionEvent event) {
     }
+
 
     /**
      * 
