@@ -18,7 +18,7 @@ import mytunes.BE.Playlists;
 /**
  * FXML Controller class
  *
- * @author Jesper
+ * @author Anni
  */
 public class NewPlaylistController implements Initializable
 {
@@ -43,6 +43,10 @@ public class NewPlaylistController implements Initializable
         // TODO
     }
 
+    /**
+     * Saves or updates a playlistname depending on if a Playlist is selected.
+     * @param event 
+     */
     @FXML
     private void clickSave(ActionEvent event)
     {
@@ -62,6 +66,10 @@ public class NewPlaylistController implements Initializable
         window.close();
     }
 
+    /**
+     * Cancels creating new playlist and closes the window.
+     * @param event 
+     */
     @FXML
     private void clickCancel(ActionEvent event)
     {
@@ -69,6 +77,12 @@ public class NewPlaylistController implements Initializable
         stage.close();
     }
 
+    /**
+     * Sets the parent to MainWindowController and decides if txtfields should be filled out in 
+     * order to edit the name of the selected playlist
+     * @param parent
+     * @param getSelectedPlaylist 
+     */
     public void setParentWindowController(MainWindowController parent, Playlists getSelectedPlaylist)
     {
         this.parent = parent;

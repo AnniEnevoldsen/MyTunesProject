@@ -43,6 +43,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.runtime.ScriptRuntime;
 import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
@@ -504,6 +505,7 @@ public class MainWindowController implements Initializable {
      */
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
+        
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);

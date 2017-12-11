@@ -21,7 +21,7 @@ import mytunes.BE.Songs;
 /**
  * FXML Controller class
  *
- * @author Jesper
+ * @author Anni
  */
 public class AddWindowController implements Initializable {
 
@@ -54,6 +54,10 @@ public class AddWindowController implements Initializable {
         // TODO
     }
 
+    /**
+     * Lets you pick a file from your computer.
+     * @param event 
+     */
     @FXML
     private void clickChoose(ActionEvent event) {
         String absolutePath = null;
@@ -68,12 +72,20 @@ public class AddWindowController implements Initializable {
         txtFileLocation.setText(absolutePath);
     }
 
+    /**
+     * Cancels new song and closes the window.
+     * @param event 
+     */
     @FXML
     private void clickCancel(ActionEvent event) {
         Stage window = (Stage) btnCancel.getScene().getWindow();
         window.close();
     }
 
+    /**
+     * Either saves or updates a song, depending on if a song is selected or not.
+     * @param event 
+     */
     @FXML
     private void clickSave(ActionEvent event) {
         if (editZong == null) {
@@ -98,6 +110,12 @@ public class AddWindowController implements Initializable {
         window.close();
     }
 
+    /**
+     * Sets the parent to MainWindowController, also choses if txtfields should be filled out
+     * in order to edit a song.
+     * @param parent
+     * @param getSelectedSong 
+     */
     public void setParentWindowController(MainWindowController parent, Songs getSelectedSong) {
         this.parent = parent;
         this.editZong = getSelectedSong;
