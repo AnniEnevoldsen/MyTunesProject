@@ -18,8 +18,6 @@ import java.util.logging.Logger;
 import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
-import mytunes.GUI.MainWindowController;
-import mytunes.GUI.NewPlaylistController;
 
 /**
  *
@@ -98,7 +96,7 @@ public class DALManager
     
     /**
      * 
-     * Gets each and every playlist with songs from db Songs, table Playlist.
+     * Gets each and every song in the Playlist table where the songs playlist_id is equal the selected playlists playlists_id.
      */
     public List<Playlist> getAllSongsInPlaylist(int playlists_id)
     {
@@ -188,8 +186,9 @@ public class DALManager
 
     /**
      * 
-     * This uses primary keys to add a song from the table Songs and Playlists to Playlist
-     * where we can then show the playlist we have created.
+     * This uses Playlists_id from the Playlists table, a random int for its ordering and 
+     * Songs_title, Songs_artist, Songs_genre, Songs_time, Songs_fileLocation from the Songs table, and
+     * adds it all to the Playlist table.
      */
     public void addSongToPlaylist(Playlists selectedPlaylists, Songs selectedSongs)
     {
@@ -224,7 +223,7 @@ public class DALManager
     
     /**
      * 
-     * Switches playlistOrder of two songs in the Playlist.
+     * Switches playlistOrder of two songs in the Playlist table.
      */
     public void moveSong(int selectedPlaylistOrder, int selectedPlaylistId,
             int selectedNewPlaylistOrder, int selectedNewPlaylistId) throws SQLException
@@ -270,7 +269,7 @@ public class DALManager
     
     /**
      * 
-     * This adds a new song by inserting data into the database.
+     * This adds a new song by inserting data into the Songs table in the database.
      */
     public void add(Songs songs)
     {
@@ -352,7 +351,7 @@ public class DALManager
 
     /**
      * 
-     * This removes a song from the database.
+     * This removes a song from the table Songs.
      */
     public void remove(Songs selectedSongs)
     {
@@ -373,7 +372,7 @@ public class DALManager
 
     /**
      * 
-     * This removes a playlist from the list of playlists in the database.
+     * This removes a playlist from table Playlists in the database.
      */
     public void removeP(Playlists selectedPlaylists)
     {
@@ -415,7 +414,7 @@ public class DALManager
 
     /**
      * 
-     * This allows us to edit the songs in the table Songs.
+     * This allows us to edit the song in the table Songs.
      */
     public void editSongs(Songs songs)
     {
