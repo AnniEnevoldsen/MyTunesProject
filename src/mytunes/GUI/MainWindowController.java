@@ -176,6 +176,7 @@ public class MainWindowController implements Initializable {
 
         }
         );
+
     }
 
     /*
@@ -205,6 +206,7 @@ public class MainWindowController implements Initializable {
         } else {
             System.out.println("You are not able to play nothing yet.");
         }
+
     }
 
     private void playSongFromSongList() {
@@ -241,7 +243,6 @@ public class MainWindowController implements Initializable {
         player.setAutoPlay(true);
         playPane.setOpacity(0);
         pausePane.setOpacity(1);
-        System.out.println(player.getTotalDuration().toSeconds());
     }
 
     private void setPlayButton() {
@@ -258,6 +259,12 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
         volumeControl();
         setPauseButton();
+        player.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                stopOrPlayNewMusic();
+            }
+        });
     }
 
     private void stopOrPlayNewMusicB() {
@@ -268,6 +275,12 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
         volumeControl();
         setPauseButton();
+        player.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                stopOrPlayNewMusicB();
+            }
+        });
     }
 
     private void playerMediaPlayer(String songLocation) {
@@ -278,6 +291,7 @@ public class MainWindowController implements Initializable {
         mediaView = new MediaView(player);
 
     }
+
     /*
     * Volume method
      */
