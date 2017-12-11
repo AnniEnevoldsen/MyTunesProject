@@ -138,6 +138,9 @@ public class DALManager
      * 
      * This gets text from the txtFilter and uses it to search in the db for a song 
      * by songtitle and artist 
+     * @param title
+     * @param artist
+     * @return 
      */
     public List<Songs> getAllSongsBySearching
         (
