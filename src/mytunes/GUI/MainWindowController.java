@@ -163,6 +163,7 @@ public class MainWindowController implements Initializable {
 
         }
         );
+
     }
 
     /*
@@ -208,6 +209,7 @@ public class MainWindowController implements Initializable {
         } else {
             System.out.println("You are not able to play nothing yet.");
         }
+
     }
 
     /**
@@ -277,6 +279,12 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
         volumeControl();
         setPauseButton();
+        player.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                stopOrPlayNewMusic();
+            }
+        });
     }
 
     /**
@@ -290,6 +298,12 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
         volumeControl();
         setPauseButton();
+        player.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                stopOrPlayNewMusicB();
+            }
+        });
     }
 
     /**
@@ -301,22 +315,11 @@ public class MainWindowController implements Initializable {
         media = new Media(new File(songLocation).toURI().toString());
 
         player = new MediaPlayer(media);
-        player.statusProperty().addListener(
-                new ChangeListener<MediaPlayer.Status>() {
-            @Override
-            public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
-                if (newValue == MediaPlayer.Status.STOPPED) {
-                    System.out.println("stopped");
-                }
-
-            }
-
-        }
-        );
         mediaView = new MediaView(player);
 
     }
 
+<<<<<<< HEAD
     /**
      * 
      * @return 
@@ -334,6 +337,8 @@ public class MainWindowController implements Initializable {
         }
     }
 
+=======
+>>>>>>> SamBranch
     /*
     * Volume method
      */
