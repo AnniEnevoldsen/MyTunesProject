@@ -89,10 +89,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button btnAddSong;
     @FXML
-    private Button forwButton;
-    @FXML
-    private Button backButton;
-    @FXML
     private Button ppButton;
     @FXML
     private Slider volumeControl;
@@ -516,15 +512,6 @@ public class MainWindowController implements Initializable {
         System.out.println("Searching for song or artist");
     }
 
-    @FXML
-    private void clickForw(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void clickBack(ActionEvent event) {
-
-    }
 
     @FXML
     private void clickLoadSDB(ActionEvent event) {
