@@ -8,18 +8,12 @@ package mytunes.GUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,14 +22,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -47,22 +38,12 @@ import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
 import mytunes.DAL.ConnectionManager;
-import mytunes.DAL.DALManager;
 
 /**
  *
  * @author Jesper
  */
 public class MainWindowController implements Initializable {
-
-    JFXPanel fxPanel = new JFXPanel();
-    private Media media;
-    private MediaPlayer player;
-    private MediaView mediaView;
-    private Model model = new Model();
-    private ConnectionManager cm = new ConnectionManager();
-    private Playlists playlists = new Playlists();
-    private Songs sSong;
 
     @FXML
     private Button btnNewPlaylist;
@@ -117,6 +98,16 @@ public class MainWindowController implements Initializable {
     @FXML
     private TableColumn<Songs, String> columnTime;
     @FXML
+    
+    private JFXPanel fxPanel = new JFXPanel();
+    private ConnectionManager cm = new ConnectionManager();
+    private Playlists playlists = new Playlists();
+    private Model model = new Model();
+    
+    private Media media;
+    private MediaPlayer player;
+    private MediaView mediaView; 
+    private Songs sSong;
     private TableColumn<Songs, String> columnFileLocation;
     private Songs songPlaying;
     private Playlist playlistSongPlaying;
@@ -430,6 +421,12 @@ public class MainWindowController implements Initializable {
 
     /*
     * Song methods
+    */
+     /**
+     * 
+     * @param event
+     * @throws SQLException 
+     * moves a song up, due to the - 1 behind selectedSongIndex.
      */
     @FXML
     private void clickUp(ActionEvent event) throws SQLException {
@@ -452,6 +449,7 @@ public class MainWindowController implements Initializable {
      * 
      * @param event
      * @throws SQLException 
+     * moves a song down, due to the + 1 behind selectedSongIndex.
      */
     @FXML
     private void clickDown(ActionEvent event) throws SQLException {
@@ -576,6 +574,7 @@ public class MainWindowController implements Initializable {
     /**
      * 
      * @param event 
+     * Adds a song to the Playlist table in the db.
      */
     @FXML
     private void clickAddSong(ActionEvent event) {
@@ -617,23 +616,6 @@ public class MainWindowController implements Initializable {
         txtSearch.clear();
         model.loadAll();
     }
-    
-    /**
-     * 
-     * @param event 
-     */
-    @FXML
-    private void clickForw(ActionEvent event) {
-    }
-    
-    /***
-     * 
-     * @param event 
-     */
-    @FXML
-    private void clickBack(ActionEvent event) {
-    }
-
 
     /**
      * 
