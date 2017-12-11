@@ -241,6 +241,7 @@ public class MainWindowController implements Initializable {
         player.setAutoPlay(true);
         playPane.setOpacity(0);
         pausePane.setOpacity(1);
+        System.out.println(player.getTotalDuration().toSeconds());
     }
 
     private void setPlayButton() {
@@ -274,35 +275,9 @@ public class MainWindowController implements Initializable {
         media = new Media(new File(songLocation).toURI().toString());
 
         player = new MediaPlayer(media);
-        player.statusProperty().addListener(
-                new ChangeListener<MediaPlayer.Status>() {
-            @Override
-            public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
-                if (newValue == MediaPlayer.Status.STOPPED) {
-                    System.out.println("stopped");
-                }
-
-            }
-
-        }
-        );
         mediaView = new MediaView(player);
 
     }
-
-    private boolean getEndOfMedia() {
-        if (media.durationProperty().equals(player.currentCountProperty())) {
-            return true;
-        }
-        return false;
-    }
-
-    private void setEndOfMedia() {
-        if (getEndOfMedia()) {
-            System.out.println("ll");
-        }
-    }
-
     /*
     * Volume method
      */
