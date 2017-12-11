@@ -262,6 +262,8 @@ public class MainWindowController implements Initializable {
         player.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
+                int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+                lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + 1);
                 stopOrPlayNewMusic();
             }
         });
@@ -278,7 +280,11 @@ public class MainWindowController implements Initializable {
         player.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
+                int selectedSongIndex = lstSongs.getSelectionModel().getSelectedIndex();
+
+                lstSongs.getSelectionModel().select(selectedSongIndex + 1);
                 stopOrPlayNewMusicB();
+
             }
         });
     }
