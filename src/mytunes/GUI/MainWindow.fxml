@@ -30,8 +30,8 @@
       <Button fx:id="btnDeleteSong" layoutX="635.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete" />
       <TextField fx:id="txtSearch" layoutX="498.0" layoutY="25.0" prefHeight="25.0" prefWidth="138.0" />
       <Button fx:id="btnSearch" layoutX="648.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickSearch" text="Search" />
-      <Button fx:id="forwButton" layoutX="155.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickForw" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
-      <Button fx:id="backButton" layoutX="56.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickBack" text="&lt;&lt;" />
+      <Button fx:id="forwButton" layoutX="155.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickForw" opacity="0.0" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
+      <Button fx:id="backButton" layoutX="56.0" layoutY="25.0" mnemonicParsing="false" onAction="#clickBack" opacity="0.0" text="&lt;&lt;" />
       <Pane layoutX="88.0" layoutY="8.0" prefHeight="59.0" prefWidth="67.0">
          <children>
             <Circle fill="#ffffff45" layoutX="33.0" layoutY="29.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
@@ -76,5 +76,55 @@
             <TableColumn fx:id="columnFileLocation" prefWidth="85.0" text="FileLocation" />
         </columns>
       </TableView>
+      <Pane layoutX="155.0" layoutY="23.0" prefHeight="30.0" prefWidth="33.0">
+         <children>
+            <Polygon fill="WHITE" layoutX="14.0" layoutY="25.0" rotate="90.0" scaleX="0.2" scaleY="0.12" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Polygon fill="WHITE" layoutX="22.0" layoutY="25.0" rotate="90.0" scaleX="0.2" scaleY="0.12" scaleZ="0.4" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="30.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="56.0" layoutY="23.0" prefHeight="30.0" prefWidth="33.0" rotate="180.0">
+         <children>
+            <Polygon fill="WHITE" layoutX="14.0" layoutY="25.0" rotate="90.0" scaleX="0.2" scaleY="0.12" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Polygon fill="WHITE" layoutX="22.0" layoutY="25.0" rotate="90.0" scaleX="0.2" scaleY="0.12" scaleZ="0.4" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="30.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -201,12 +201,13 @@ public class MainWindowController implements Initializable {
     private void clickPlay(ActionEvent event) {
         if (lastFocus.equals("Songs")) {
             playSongFromSongList();
+
         } else if (lastFocus.equals("Playlist")) {
             playSongFromPlaylist();
         } else {
             System.out.println("You are not able to play nothing yet.");
         }
-
+        volumeControl();
     }
 
     private void playSongFromSongList() {
@@ -257,9 +258,8 @@ public class MainWindowController implements Initializable {
             player.stop();
         }
         playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
-        volumeControl();
         setPauseButton();
-        
+
         int selectedSongFromPlaylistIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
         int songPlaylistSize = lstSongsInPlaylist.getItems().size();
         player.setOnEndOfMedia(new Runnable() {
@@ -279,7 +279,7 @@ public class MainWindowController implements Initializable {
 
         }
         playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
-        volumeControl();
+
         setPauseButton();
 
         int selectedSongIndex = lstSongs.getSelectionModel().getSelectedIndex();
@@ -524,12 +524,32 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void clickForw(ActionEvent event) {
-
+        if (player != null) {
+            if (lastFocus.equals("Songs")) {
+                int selectedSongIndexB = lstSongs.getSelectionModel().getSelectedIndex();
+                lstSongs.getSelectionModel().select(selectedSongIndexB + 1);
+                playSongFromSongList();
+            }else if (lastFocus.equals("Playlist")) {
+                int selectedSongFromPlaylistIndexB = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+                lstSongsInPlaylist.getSelectionModel().select(selectedSongFromPlaylistIndexB + 1);
+                playSongFromPlaylist();
+            }
+        }
     }
 
     @FXML
     private void clickBack(ActionEvent event) {
-
+        if (player != null) {
+            if (lastFocus.equals("Songs")) {
+                int selectedSongIndexB = lstSongs.getSelectionModel().getSelectedIndex();
+                lstSongs.getSelectionModel().select(selectedSongIndexB - 1);
+                playSongFromSongList();
+            } else if (lastFocus.equals("Playlist")) {
+                int selectedSongFromPlaylistIndexB = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+                lstSongsInPlaylist.getSelectionModel().select(selectedSongFromPlaylistIndexB - 1);
+                playSongFromPlaylist();
+            }
+        }
     }
 
     @FXML
