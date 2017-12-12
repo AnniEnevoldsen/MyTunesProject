@@ -259,12 +259,16 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
         volumeControl();
         setPauseButton();
+        
+        int selectedSongFromPlaylistIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+        int songPlaylistSize = lstSongsInPlaylist.getItems().size();
         player.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                int selectedSongIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
-                lstSongsInPlaylist.getSelectionModel().select(selectedSongIndex + 1);
-                stopOrPlayNewMusic();
+                for (int i = selectedSongFromPlaylistIndex; i < songPlaylistSize; i++) {
+                    lstSongsInPlaylist.getSelectionModel().select(i);
+                    playSongFromPlaylist();
+                }
             }
         });
     }
@@ -277,14 +281,16 @@ public class MainWindowController implements Initializable {
         playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
         volumeControl();
         setPauseButton();
+
+        int selectedSongIndex = lstSongs.getSelectionModel().getSelectedIndex();
+        int songListSize = lstSongs.getItems().size();
         player.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                int selectedSongIndex = lstSongs.getSelectionModel().getSelectedIndex();
-
-                lstSongs.getSelectionModel().select(selectedSongIndex + 1);
-                stopOrPlayNewMusicB();
-
+                for (int i = selectedSongIndex; i < songListSize; i++) {
+                    lstSongs.getSelectionModel().select(i);
+                    playSongFromSongList();
+                }
             }
         });
     }
