@@ -182,9 +182,11 @@ public class MainWindowController implements Initializable {
     /*
     * get methods
      */
+    
     /**
      *
-     * @return
+     * @return Return the information from the song you selected from the song
+     * list (Or right table).
      */
     protected Songs getSelectedSong() {
         return lstSongs.getSelectionModel().getSelectedItem();
@@ -192,7 +194,8 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @return
+     * @return Return the information from the song inside a playlist you 
+     * selected previously.
      */
     protected Playlist getSelectedSongInPlaylist() {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
@@ -200,7 +203,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @return
+     * @return the information of the playlist you selected.
      */
     protected Playlists getSelectedPlaylist() {
         return lstPlaylists.getSelectionModel().getSelectedItem();
@@ -209,9 +212,11 @@ public class MainWindowController implements Initializable {
     /*
     * Play button methods
      */
+    
     /**
      *
-     * @param event
+     * @param event This method runs a lot of methods which make possible
+     * listen music from the table you prefer.
      */
     @FXML
     private void clickPlay(ActionEvent event) {
@@ -227,7 +232,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
+     * Will check if the player exists or not and compare if the song which is
+     * playing is the same as the song you currently selected. In case the 
+     * player does not exist, will ask to "stopOrPlayNewMusic" to play song.
      */
     private void playSongFromSongList() {
 
@@ -240,7 +247,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
+     * The same as "playSongFromSongList". The unique difference is this method
+     * runs when the song is choosen from inside a playlist, if not, will run
+     * the previous one.
      */
     private void playSongFromPlaylist() {
         if (player != null && getSelectedSongInPlaylist().equals(playlistSongPlaying)) {
@@ -252,32 +261,35 @@ public class MainWindowController implements Initializable {
     }
 
     /**
+     * Will check if the player is currently playing.
      *
      */
     private void playOrPause() {
         if (player.isAutoPlay()) {
 
-            setPlayButton();
+            setThePauseButton();
         } else {
 
-            setPauseButton();
+            setThePlayButton();
         }
 
     }
 
     /**
-     *
+     * Will set the play button with the player on. 
+     * It modifies a bit of the layout.
      */
-    private void setPauseButton() {
+    private void setThePlayButton() {
         player.setAutoPlay(true);
         playPane.setOpacity(0);
         pausePane.setOpacity(1);
     }
 
     /**
-     *
+     * Will set the pause button with the player paused.
+     * It modifies a bit of the layout.
      */
-    private void setPlayButton() {
+    private void setThePauseButton() {
         player.pause();
         player.setAutoPlay(false);
         playPane.setOpacity(1);
@@ -285,14 +297,16 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
+     *  This method will stop the currently music or will play a new one.
+     *  Here also is where the magic occurs, everytime the song reachs the end,
+     *  the following song will be called automatically.
      */
     private void stopOrPlayNewMusic() {
         if (player != null) {
             player.stop();
         }
         playerMediaPlayer(lstSongsInPlaylist.getSelectionModel().getSelectedItem().getSongsFileLocation());
-        setPauseButton();
+        setThePlayButton();
 
         int selectedSongFromPlaylistIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
         int songPlaylistSize = lstSongsInPlaylist.getItems().size();
@@ -306,7 +320,10 @@ public class MainWindowController implements Initializable {
             }
         });
     }
-
+    /**
+     * Exactly the same as "stopOrPlayNewMusic". The unique difference is this 
+     * method runs the songs from the songlist(Or right table).
+     */
     private void stopOrPlayNewMusicB() {
         if (player != null) {
             player.stop();
@@ -314,7 +331,7 @@ public class MainWindowController implements Initializable {
         }
         playerMediaPlayer(lstSongs.getSelectionModel().getSelectedItem().getFileLocation());
 
-        setPauseButton();
+        setThePlayButton();
 
         int selectedSongIndex = lstSongs.getSelectionModel().getSelectedIndex();
         int songListSize = lstSongs.getItems().size();
@@ -345,6 +362,10 @@ public class MainWindowController implements Initializable {
     /*
     * Volume method
      */
+    
+    /**
+     * It set the volume control.
+     */
     private void volumeControl() {
         volumeControl.setValue(player.getVolume() * 100);
         volumeControl.valueProperty().addListener(new InvalidationListener() {
@@ -357,6 +378,12 @@ public class MainWindowController implements Initializable {
 
     /*
     * Playlist methods
+     */
+    
+    /**
+     * 
+     * @param event Will create a new playlist.
+     * @throws IOException 
      */
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
@@ -379,7 +406,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Will show you the option to edit a playlist.
      * @throws IOException
      */
     @FXML
@@ -410,7 +437,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Delete methot to playlists.
      * @throws IOException
      */
     @FXML
@@ -435,6 +462,7 @@ public class MainWindowController implements Initializable {
     /*
     * Song methods
      */
+    
     /**
      *
      * @param event
@@ -483,11 +511,11 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Will delete a song inside a playlist.
      * @throws IOException
      */
     @FXML
-    private void clickPlaylistDelete(ActionEvent event) throws IOException {
+    private void clickDeleteSongFromPlaylist(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
@@ -510,7 +538,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Able to add a new song from local path. .
      * @throws IOException
      */
     @FXML
@@ -536,7 +564,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Able to edit whatever song you want.
      * @throws IOException
      */
     @FXML
@@ -562,7 +590,7 @@ public class MainWindowController implements Initializable {
 
     /**
      *
-     * @param event
+     * @param event Delete method to songs.
      * @throws IOException
      */
     @FXML
@@ -599,6 +627,7 @@ public class MainWindowController implements Initializable {
     /*
     * Rest of methods
      */
+    
     /**
      *
      * Search for title or artist
@@ -629,6 +658,11 @@ public class MainWindowController implements Initializable {
          txtSearch.clear();		
          model.loadAll();		
       }
+    
+    /**
+     * 
+     * @param event Will play the following song in the list when you click it.
+     */
     @FXML
     private void clickForw(ActionEvent event) {
         if (player != null) {
@@ -643,7 +677,10 @@ public class MainWindowController implements Initializable {
             }
         }
     }
-
+    /**
+     * 
+     * @param event Will play the previous song in the list when you click it.
+     */
     @FXML
     private void clickBack(ActionEvent event) {
         if (player != null) {
