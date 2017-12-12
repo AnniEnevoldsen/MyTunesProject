@@ -515,7 +515,7 @@ public class MainWindowController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void clickDeleteSongFromPlaylist(ActionEvent event) throws IOException {
+    private void clickPlaylistDelete(ActionEvent event) throws IOException {
         Stage newWindow = new Stage();
 
         newWindow.initModality(Modality.APPLICATION_MODAL);
