@@ -8,18 +8,12 @@ package mytunes.GUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,14 +22,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -47,7 +38,6 @@ import mytunes.BE.Playlist;
 import mytunes.BE.Playlists;
 import mytunes.BE.Songs;
 import mytunes.DAL.ConnectionManager;
-import mytunes.DAL.DALManager;
 
 /**
  *
@@ -144,6 +134,9 @@ public class MainWindowController implements Initializable {
                 new PropertyValueFactory("time"));
         columnFileLocation.setCellValueFactory(
                 new PropertyValueFactory("fileLocation"));
+        
+        model.loadAll();
+        model.loadAllP();
 
         lstSongs.setItems(model.getSongsList());
         lstPlaylists.setItems(model.getPlaylistsList());
@@ -402,6 +395,8 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Add a Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        model.loadAllP();
     }
 
     /**
@@ -433,6 +428,8 @@ public class MainWindowController implements Initializable {
                 = lstPlaylists.getSelectionModel().getSelectedItem();
 
         model.editPlaylists(playlists);
+        
+        model.loadAllP();
     }
 
     /**
@@ -457,6 +454,8 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Delete");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        model.loadAllP();
     }
 
     /*
@@ -559,7 +558,8 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Add a Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-
+        
+        model.loadAll();
     }
 
     /**
@@ -584,6 +584,8 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        model.loadAll();
 
         controller.setParentWindowController(this, getSelectedSong());
     }
@@ -610,6 +612,8 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Delete");
         newWindow.setScene(scene);
         newWindow.showAndWait();
+        
+        model.loadAll();
     }
 
     /**
