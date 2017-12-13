@@ -584,10 +584,10 @@ public class MainWindowController implements Initializable {
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-        
-        model.loadAll();
 
         controller.setParentWindowController(this, getSelectedSong());
+        
+        model.loadAll();
     }
 
     /**

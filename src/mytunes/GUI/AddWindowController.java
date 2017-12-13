@@ -95,6 +95,7 @@ public class AddWindowController implements Initializable {
             s.setGenre(txtGenre.getText());
             s.setTime(txtTime.getText());
             s.setFileLocation(txtFileLocation.getText());
+            
             model.add(s);
 
         } else {
@@ -103,6 +104,7 @@ public class AddWindowController implements Initializable {
             editZong.setGenre(txtGenre.getText());
             editZong.setTime(txtTime.getText());
             editZong.setFileLocation(txtFileLocation.getText());
+            
             model.editSongs(editZong);
         }
 
