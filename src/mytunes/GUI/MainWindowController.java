@@ -52,7 +52,7 @@ public class MainWindowController implements Initializable {
     private Model model = new Model();
     private ConnectionManager cm = new ConnectionManager();
     private Playlists playlists = new Playlists();
-    private Songs sSong;
+   
 
     @FXML
     private Button btnNewPlaylist;
@@ -172,44 +172,37 @@ public class MainWindowController implements Initializable {
 
     }
 
-    /*
-    * get methods
-     */
-    
+
     /**
-     *
-     * @return Return the information from the song you selected from the song
-     * list (Or right table).
+     * Return the information from the song you selected from the song list (Or right table).
+     * @return 
+     * 
      */
     protected Songs getSelectedSong() {
         return lstSongs.getSelectionModel().getSelectedItem();
     }
 
     /**
-     *
-     * @return Return the information from the song inside a playlist you 
+     * Return the information from the song inside a playlist you 
      * selected previously.
+     * @return 
      */
     protected Playlist getSelectedSongInPlaylist() {
         return lstSongsInPlaylist.getSelectionModel().getSelectedItem();
     }
 
     /**
-     *
-     * @return the information of the playlist you selected.
+     * Return the information of the playlist you selected.
+     * @return 
      */
     protected Playlists getSelectedPlaylist() {
         return lstPlaylists.getSelectionModel().getSelectedItem();
     }
-
-    /*
-    * Play button methods
-     */
     
     /**
-     *
-     * @param event This method runs a lot of methods which make possible
+     * This method runs a lot of methods which make possible
      * listen music from the table you prefer.
+     * @param event 
      */
     @FXML
     private void clickPlay(ActionEvent event) {
@@ -340,7 +333,7 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
+     *???
      * @param songLocation
      */
     private void playerMediaPlayer(String songLocation) {
@@ -352,11 +345,8 @@ public class MainWindowController implements Initializable {
 
     }
 
-    /*
-    * Volume method
-     */
     
-    /**
+    /** 
      * It set the volume control.
      */
     private void volumeControl() {
@@ -369,13 +359,10 @@ public class MainWindowController implements Initializable {
         });
     }
 
-    /*
-    * Playlist methods
-     */
     
-    /**
-     * 
-     * @param event Will create a new playlist.
+    /** 
+     * Will create a new playlist.
+     * @param event 
      * @throws IOException 
      */
     @FXML
@@ -400,8 +387,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
-     * @param event Will show you the option to edit a playlist.
+     * Will show you the option to edit a playlist.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -419,22 +406,16 @@ public class MainWindowController implements Initializable {
         controller.setParentWindowController(this, getSelectedPlaylist());
 
         Scene scene = new Scene(root);
-
         newWindow.setTitle("Edit Playlist");
         newWindow.setScene(scene);
         newWindow.showAndWait();
-
-        Playlists playlists
-                = lstPlaylists.getSelectionModel().getSelectedItem();
-
-        model.editPlaylists(playlists);
         
         model.loadAllP();
     }
 
     /**
-     *
-     * @param event Delete methot to playlists.
+     * Delete method for deleting a playlist.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -458,14 +439,11 @@ public class MainWindowController implements Initializable {
         model.loadAllP();
     }
 
-    /*
-    * Song methods
-     */
-    
+
     /**
-     *
+     * moves a song up, due to the - 1 behind
      * @param event
-     * @throws SQLException moves a song up, due to the - 1 behind
+     * @throws SQLException 
      * selectedSongIndex.
      */
     @FXML
@@ -486,9 +464,9 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
+     * moves a song down, due to the + 1 behind
      * @param event
-     * @throws SQLException moves a song down, due to the + 1 behind
+     * @throws SQLException 
      * selectedSongIndex.
      */
     @FXML
@@ -509,8 +487,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
-     * @param event Will delete a song inside a playlist.
+     * Will delete a song inside a playlist.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -536,8 +514,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
-     * @param event Able to add a new song from local path. .
+     * Able to add a new song from local path.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -563,8 +541,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
-     * @param event Able to edit whatever song you want.
+     * Able to edit whatever song you want.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -579,20 +557,19 @@ public class MainWindowController implements Initializable {
         Parent root = fxLoader.load();
 
         AddWindowController controller = fxLoader.getController();
-
+        controller.setParentWindowController(this, getSelectedSong());
+        
         Scene scene = new Scene(root);
         newWindow.setTitle("Edit Song");
         newWindow.setScene(scene);
         newWindow.showAndWait();
 
-        controller.setParentWindowController(this, getSelectedSong());
-        
         model.loadAll();
     }
 
     /**
-     *
-     * @param event Delete method to songs.
+     * Delete method to songs.
+     * @param event 
      * @throws IOException
      */
     @FXML
@@ -617,8 +594,8 @@ public class MainWindowController implements Initializable {
     }
 
     /**
-     *
-     * @param event Adds a song to the Playlist table in the db.
+     * Adds a song to the Playlist table in the db.
+     * @param event 
      */
     @FXML
     private void clickAddSong(ActionEvent event) {
@@ -627,13 +604,8 @@ public class MainWindowController implements Initializable {
         Playlists selectedPlaylist = lstPlaylists.getSelectionModel().getSelectedItem();
         model.loadAllSP(selectedPlaylist.getId());
     }
-
-    /*
-    * Rest of methods
-     */
     
     /**
-     *
      * Search for title or artist
      */
     @FXML
@@ -646,15 +618,15 @@ public class MainWindowController implements Initializable {
             setSearchButton();
         }
     }
+    
     /**
-     * 
      * Sets the text on btnSearch to Clear
      */
      private void setClearButton(){
          btnSearch.setText("Clear");
      }
+     
    /**
-    * 
     * Sets the text on btnSearch to Search, clears txtSearch and loads all songs.
     */
     private void setSearchButton() {		
@@ -664,8 +636,8 @@ public class MainWindowController implements Initializable {
       }
     
     /**
-     * 
-     * @param event Will play the following song in the list when you click it.
+     * Will play the following song in the list when you click it.
+     * @param event 
      */
     @FXML
     private void clickForw(ActionEvent event) {
@@ -681,9 +653,10 @@ public class MainWindowController implements Initializable {
             }
         }
     }
+    
     /**
-     * 
-     * @param event Will play the previous song in the list when you click it.
+     * Will play the previous song in the list when you click it.
+     * @param event 
      */
     @FXML
     private void clickBack(ActionEvent event) {
@@ -699,16 +672,18 @@ public class MainWindowController implements Initializable {
             }
         }
     }
+    
 /**
- * 
+ * loads song to the lstSongs
  * @param event 
  */
     @FXML
     private void clickLoadSDB(ActionEvent event) {
         model.loadAll();
     }
+    
 /**
- * 
+ * loads playlists to the lstPlaylists
  * @param event 
  */
     @FXML
